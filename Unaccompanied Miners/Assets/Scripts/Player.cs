@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
     public BoardManager boardManager;
     public TurnManager turnManager; 
     public Vector2Int currentPosition;
-    public int gemCount; 
+    public int gemCount = 0; 
     public int health;
     private int miningSuccessChance = 70;
 
