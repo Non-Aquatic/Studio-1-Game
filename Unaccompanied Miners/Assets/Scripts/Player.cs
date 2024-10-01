@@ -1,18 +1,21 @@
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     public BoardManager boardManager;
     public TurnManager turnManager; 
     public Vector2Int currentPosition;
-    public int gemCount; 
+    public int gemCount;
     public int health;
     private int miningSuccessChance = 70;
 
     private void Start()
     {
+        health = 10;
+        turnManager.UpdateUI();
         currentPosition = new Vector2Int(0, 0); 
-        UpdatePlayerPosition();
+        MoveTo(currentPosition);
     }
 
     private void Update()
@@ -56,11 +59,6 @@ public class Player : MonoBehaviour
     private void MoveTo(Vector2Int newPosition)
     {
         currentPosition = newPosition;
-        UpdatePlayerPosition();
-    }
-
-    private void UpdatePlayerPosition()
-    {
         transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
     }
     public void AddGems(int amount)
@@ -72,10 +70,6 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0)
-        {
-            Debug.Log("Player is dead.");
-        }
     }
     private void AttemptMining(Vector2Int position)
     {
@@ -86,17 +80,12 @@ public class Player : MonoBehaviour
             {
                 int gemsMined = Random.Range(1, 5); 
                 AddGems(gemsMined);
-                Debug.Log("Successfully mined " +gemsMined+" gems!");
-            }
-            else
-            {
-                Debug.Log("Mining attempt failed.");
             }
             turnManager.EndPlayerTurn(); 
         }
         else
         {
-            Debug.Log("Not on a mining node!");
+            Debug.Log("Mine at a node");
         }
     }
 }

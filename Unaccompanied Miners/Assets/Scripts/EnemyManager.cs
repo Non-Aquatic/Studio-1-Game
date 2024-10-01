@@ -27,5 +27,4 @@ public class EnemyManager : MonoBehaviour
             turnManager.AddEnemy(enemy);
         }
     }
-
 }
