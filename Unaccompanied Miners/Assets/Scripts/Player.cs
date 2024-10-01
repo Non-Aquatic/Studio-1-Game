@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     private void UpdatePlayerPosition()
     {
-        transform.position = new Vector3(currentPosition.x, 0.5f, currentPosition.y);
+        transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
     }
     public void AddGems(int amount)
     {

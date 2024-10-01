@@ -33,7 +33,7 @@ public class TurnManager : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn(); 
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.1f); 
         }
 
         StartPlayerTurn();
