@@ -10,6 +10,7 @@ public class TurnManager : MonoBehaviour
     private string currentTurn = "Player's Turn";
     public TextMeshProUGUI turnText;
     public TextMeshProUGUI healthText;
+    public TextMeshProUGUI gemText;
 
     private void Start()
     {
@@ -73,6 +74,7 @@ public class TurnManager : MonoBehaviour
     {
         turnText.text = currentTurn;
         healthText.text = "Health: "+player.health;
+        gemText.text = "Gems: " + player.gemCount;
     }
     //IDK what to do here for right now
     public void EndGame(bool didYouWin)
