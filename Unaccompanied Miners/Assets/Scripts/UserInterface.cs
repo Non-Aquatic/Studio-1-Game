@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using Unity.VisualScripting;
 
 public class UserInterface : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class UserInterface : MonoBehaviour
     private Player playerScript;
 
     public GameObject pausePanel;
+    public GameObject pauseBackground;
     public Button restartButton;
     public Button saveGameButton;
     public Button mainMenuButton;
@@ -32,8 +34,9 @@ public class UserInterface : MonoBehaviour
         quotaText.text = "Quota: " + quota.ToString();
         level.text = SceneManager.GetActiveScene().name;
 
-        winText.gameObject.SetActive(false);
         pausePanel.SetActive(false);
+        pauseBackground.SetActive(false);
+        winText.gameObject.SetActive(false);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
@@ -66,6 +69,7 @@ public class UserInterface : MonoBehaviour
     void PauseGame()
     {
         pausePanel.SetActive(true);
+        pauseBackground.SetActive(true);
         Time.timeScale = 0f;
         playerScript.enabled = false;
         isPaused = true;
@@ -74,6 +78,7 @@ public class UserInterface : MonoBehaviour
     void ResumeGame()
     {
         pausePanel.SetActive(false);
+        pauseBackground.SetActive(false);
         Time.timeScale = 1f;
         playerScript.enabled = true;
         isPaused = false;
