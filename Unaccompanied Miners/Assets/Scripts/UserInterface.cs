@@ -9,9 +9,11 @@ using System;
 
 public class UserInterface : MonoBehaviour
 {
-    public TMP_Text quota;
+    public TMP_Text quotaText;
+    public int quota = 0;
     public TMP_Text gems;
     public TMP_Text level;
+    public TMP_Text winText;
     public GameObject player;
     private Player playerScript;
 
@@ -28,8 +30,10 @@ public class UserInterface : MonoBehaviour
         playerScript = player.GetComponent<Player>();
 
         gems.text = "Gems: 0";
+        quotaText.text = "Quota: " + quota.ToString();
         level.text = SceneManager.GetActiveScene().name;
 
+        winText.gameObject.SetActive(false);
         pausePanel.SetActive(false);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
@@ -40,7 +44,12 @@ public class UserInterface : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
+        if(playerScript.gemCount > quota)
+        {
+            winText.gameObject.SetActive(true);
+        }
         gems.text = "Gems: " + playerScript.gemCount.ToString();
+        
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
