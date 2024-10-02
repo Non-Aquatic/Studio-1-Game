@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Vector2Int currentPosition;
+    public Vector2Int currentPosition;
     private Vector2Int[] patrolPath;
     private int currentPatrolIndex = 0;
 
