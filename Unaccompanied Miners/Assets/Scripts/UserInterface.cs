@@ -16,6 +16,7 @@ public class UserInterface : MonoBehaviour
     public TMP_Text winText;
     public GameObject player;
     private Player playerScript;
+    private String sceneName;
 
     public GameObject pausePanel;
     public GameObject pauseBackground;
@@ -31,8 +32,11 @@ public class UserInterface : MonoBehaviour
         playerScript = player.GetComponent<Player>();
 
         gems.text = "Gems: 0";
-        quotaText.text = "Quota: " + quota.ToString();
         level.text = SceneManager.GetActiveScene().name;
+
+        sceneName = SceneManager.GetActiveScene().name;
+        SetQuota();
+        quotaText.text = "Quota: " + quota.ToString();
 
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
@@ -52,7 +56,7 @@ public class UserInterface : MonoBehaviour
         }
         gems.text = "Gems: " + playerScript.gemCount.ToString();
         
-
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -102,5 +106,17 @@ public class UserInterface : MonoBehaviour
     void ExitGame()
     {
         Application.Quit();
+    }
+
+    void SetQuota()
+    {
+        if(sceneName == "Level 1")
+        {
+            quota = 25;
+        }
+        if(sceneName == "Level 2")
+        {
+            quota = 35;
+        }
     }
 }

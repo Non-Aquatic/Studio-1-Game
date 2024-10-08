@@ -10808,7 +10808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3261384055763012357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: quota
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3261384055763012357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: player
@@ -10826,6 +10826,10 @@ PrefabInstance:
       propertyPath: pauseBackground
       value: 
       objectReference: {fileID: 2080056368}
+    - target: {fileID: 4153420539944925918, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4192298349676582336, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -10980,6 +10984,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7717210723247392864, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218406502350222246, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8764203343606947859, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
