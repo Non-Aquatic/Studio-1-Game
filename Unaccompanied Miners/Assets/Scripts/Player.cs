@@ -69,17 +69,20 @@ public class Player : MonoBehaviour
 
         if (boardManager.IsTileTraversable(targetPosition))
         {
-            MoveTo(targetPosition);
+            MoveTo(targetPosition, direction);
             turnManager.EndPlayerTurn(); 
         }
     }
 
-    private void MoveTo(Vector2Int newPosition)
+    private void MoveTo(Vector2Int newPosition, Vector2Int direction)
     {
         currentPosition = newPosition;
         targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
         PlayAudio(footstepSound);
-        animator.SetBool("IsMoving", true); 
+        animator.SetBool("IsMoving", true);
+
+        animator.SetFloat("MoveX", direction.x);
+        animator.SetFloat("MoveY", direction.y);
     }
     public void AddGems(int amount)
     {
