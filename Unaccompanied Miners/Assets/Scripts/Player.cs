@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
     public BoardManager boardManager;
     public TurnManager turnManager; 
     public Vector2Int currentPosition;
+    public float moveSpeed = 5f; 
+    private Vector3 targetPosition; 
+    private Animator animator;
     public int gemCount;
     public int health;
     private int miningSuccessChance = 70;
@@ -19,12 +22,14 @@ public class Player : MonoBehaviour
     {
         health = 10;
         turnManager.UpdateUI();
-        currentPosition = new Vector2Int(0, 0); 
-        MoveTo(currentPosition);
+        currentPosition = new Vector2Int(0, 0);
+        targetPosition = transform.position;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        MovePlayer();
         if (enabled)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -49,7 +54,15 @@ public class Player : MonoBehaviour
             }
         }
     }
+    private void MovePlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
+        if (transform.position == targetPosition)
+        {
+            animator.SetBool("IsMoving", false); 
+        }
+    }
     private void AttemptMove(Vector2Int direction)
     {
         Vector2Int targetPosition = currentPosition + direction;
@@ -64,8 +77,9 @@ public class Player : MonoBehaviour
     private void MoveTo(Vector2Int newPosition)
     {
         currentPosition = newPosition;
-        transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
+        targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
         PlayAudio(footstepSound);
+        animator.SetBool("IsMoving", true); 
     }
     public void AddGems(int amount)
     {
