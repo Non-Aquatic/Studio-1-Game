@@ -9,6 +9,11 @@ public class Player : MonoBehaviour
     public int gemCount;
     public int health;
     private int miningSuccessChance = 70;
+    public AudioClip miningSound; //Assigned to mining audio clip in inspector, plays on mine
+    public AudioClip gemCollect;
+    public AudioClip takeDamage;
+    public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
+    public float audioVolume = .5f; // Audio volume, 0-1f.
 
     private void Start()
     {
@@ -60,21 +65,25 @@ public class Player : MonoBehaviour
     {
         currentPosition = newPosition;
         transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
+        PlayAudio(footstepSound);
     }
     public void AddGems(int amount)
     {
         gemCount += amount;
         Debug.Log("Gems collected:"+gemCount);
+        PlayAudio(gemCollect, miningSound.length + .25f);
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
+        PlayAudio(takeDamage);
     }
     private void AttemptMining(Vector2Int position)
     {
         if (boardManager.IsMiningNode(position))
         {
+            PlayAudio(miningSound);
             int successRoll = Random.Range(0, 100);
             if (successRoll < miningSuccessChance)
             {
@@ -87,5 +96,26 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Mine at a node");
         }
+    }
+
+    private void PlayAudio(AudioClip audioInput)
+    {
+        if (this.TryGetComponent(out AudioSource temp))
+        {
+            temp.PlayOneShot(audioInput, audioVolume);
+        }
+
+    }
+    private void PlayAudio(AudioClip audioInput, float delay)
+    {
+        if (this.TryGetComponent(out AudioSource temp))
+        {
+            temp.loop = false;
+            temp.clip = audioInput;
+            temp.volume = audioVolume;
+            temp.PlayDelayed(.25f);
+            
+        }
+
     }
 }
