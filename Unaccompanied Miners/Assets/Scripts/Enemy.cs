@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class Enemy : MonoBehaviour
         {
             Vector2Int targetPosition = patrolPath[currentPatrolIndex];
             MoveTo(targetPosition);
-            PlayAudio(footstepSound);
+            PlayAudio(footstepSound, footstepSound.length + .25f);
 
             currentPatrolIndex++;
 
@@ -53,4 +54,17 @@ public class Enemy : MonoBehaviour
 
     }
 
+
+    private void PlayAudio(AudioClip audioInput, float delay)
+    {
+        if (this.TryGetComponent(out AudioSource temp))
+        {
+            temp.loop = false;
+            temp.clip = audioInput;
+            temp.volume = audioVolume;
+            temp.PlayDelayed(.25f);
+
+        }
+
+    }
 }

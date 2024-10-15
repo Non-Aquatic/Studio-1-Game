@@ -39,13 +39,13 @@ public class TurnManager : MonoBehaviour
     }
     private IEnumerator EnemyTurnCoroutine()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.75f);
 
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn();
             CheckCollisions();
-            yield return new WaitForSeconds(0.1f); 
+            yield return new WaitForSeconds(0.25f); 
         }
 
         StartPlayerTurn();
@@ -87,5 +87,8 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("BOOOO");
         }
+
+
+        player.enabled = false;
     }
 }
