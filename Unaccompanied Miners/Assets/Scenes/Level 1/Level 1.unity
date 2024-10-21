@@ -4043,10 +4043,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 691044647}
+  ui: {fileID: 1177427370}
   enemies: []
   turnText: {fileID: 1379875068}
   healthText: {fileID: 1783753079}
   gemText: {fileID: 1162903480}
+  quota: 1
+  gems: -1
 --- !u!114 &206796494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7850,7 +7853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -149.8, y: 0}
+  m_AnchoredPosition: {x: -146.51, y: -3.629}
   m_SizeDelta: {x: 43.0157, y: 42.742}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &906899748
@@ -7875,8 +7878,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: +
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+  m_sharedMaterial: {fileID: -9093783674819077460, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9091,6 +9094,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1020656462554458561, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
   m_PrefabInstance: {fileID: 1650102770}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1177427370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3261384055763012357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+  m_PrefabInstance: {fileID: 1650102770}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c11b71bed6a9b84892b5a18cf9a3c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1187481607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 38335279662569219, guid: 34d3f526198dae440bb2ce6005d86055, type: 3}
@@ -9428,8 +9442,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+  m_sharedMaterial: {fileID: -9093783674819077460, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11492,6 +11506,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 685519395310765879, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+    - target: {fileID: 685519395310765879, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -9093783674819077460, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+    - target: {fileID: 685519395310765879, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1020656462554458561, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -11616,6 +11642,18 @@ PrefabInstance:
       propertyPath: pauseBackground
       value: 
       objectReference: {fileID: 2080056368}
+    - target: {fileID: 4130014378284815920, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+    - target: {fileID: 4130014378284815920, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -9093783674819077460, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+    - target: {fileID: 4130014378284815920, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4153420539944925918, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11861,7 +11899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1661455707
 Transform:
   m_ObjectHideFlags: 0
@@ -12425,13 +12463,14 @@ GameObject:
   - component: {fileID: 1755712674}
   - component: {fileID: 1755712673}
   - component: {fileID: 1755712672}
+  - component: {fileID: 1755712675}
   m_Layer: 5
   m_Name: WinText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1755712672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12454,8 +12493,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You've Hit Your Quota
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
+  m_sharedMaterial: {fileID: -9093783674819077460, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12548,6 +12587,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 104}
   m_SizeDelta: {x: 410.7245, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1755712675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755712671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d241ff0300853c4e8eaf2f45073da12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 0}
+  tmpProText: {fileID: 1755712672}
+  delayBeforeStart: 1
+  timeBtwChars: 0.2
+  leadingChar: 
+  leadingCharBeforeDelay: 0
+  startOnEnable: 1
+  clearAtStart: 0
+  startOnCollision: 0
+  collisionExitOptions: 0
 --- !u!4 &1760272074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5440707293445741943, guid: 494f6d43e170e9145bc7865d243ee00b, type: 3}
