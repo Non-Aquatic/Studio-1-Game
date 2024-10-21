@@ -68,6 +68,7 @@ public class UserInterface : MonoBehaviour
                 PauseGame();
             }
         }
+
     }
 
     void PauseGame()

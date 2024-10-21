@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     private Animator animator;
     public int gemCount;
     public int health;
+    public int maxHealth = 10;
+    public HealthBar healthBar;
     private int miningSuccessChance = 70;
     public AudioClip miningSound; //Assigned to mining audio clip in inspector, plays on mine
     public AudioClip gemCollect;
@@ -18,9 +20,10 @@ public class Player : MonoBehaviour
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
     public float audioVolume = .5f; // Audio volume, 0-1f.
 
+
     private void Start()
     {
-        health = 10;
+        health = maxHealth;
         turnManager.UpdateUI();
         currentPosition = new Vector2Int(0, 0);
         targetPosition = transform.position;
@@ -95,6 +98,7 @@ public class Player : MonoBehaviour
     {
         health -= damage;
         PlayAudio(takeDamage);
+        healthBar.SetHealth(health);
     }
     private void AttemptMining(Vector2Int position)
     {
