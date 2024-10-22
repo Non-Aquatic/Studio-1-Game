@@ -31,7 +31,7 @@ public class UserInterface : MonoBehaviour
     {
         playerScript = player.GetComponent<Player>();
 
-        gems.text = "Gems: 0";
+        gems.text = " 0";
         level.text = SceneManager.GetActiveScene().name;
 
         sceneName = SceneManager.GetActiveScene().name;
@@ -54,7 +54,7 @@ public class UserInterface : MonoBehaviour
         {
             winText.gameObject.SetActive(true);
         }
-        gems.text = "Gems: " + playerScript.gemCount.ToString();
+        gems.text = " " + playerScript.gemCount.ToString();
         
         
         if (Input.GetKeyDown(KeyCode.Escape))
