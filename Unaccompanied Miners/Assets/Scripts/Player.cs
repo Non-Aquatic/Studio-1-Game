@@ -104,8 +104,26 @@ public class Player : MonoBehaviour
             int successRoll = Random.Range(0, 100);
             if (successRoll < miningSuccessChance)
             {
-                int gemsMined = Random.Range(1, 5); 
-                AddGems(gemsMined);
+                int gemsAvailable = boardManager.gemCounts[position.y, position.x]; 
+                if (gemsAvailable > 0)
+                {
+                    int gemsMined = Random.Range(1, 5);
+                    AddGems(gemsMined);
+
+                    gemsAvailable -= gemsMined;
+                    boardManager.gemCounts[position.y, position.x] = gemsAvailable;
+                    Debug.Log(boardManager.gemCounts[position.y, position.x]);
+
+                    if (gemsAvailable <= 0)
+                    {
+                        boardManager.gridLayout[position.y, position.x] = 1;
+                        boardManager.ReplaceTile(position);
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Failed ot mine gems");
             }
             turnManager.EndPlayerTurn(); 
         }
