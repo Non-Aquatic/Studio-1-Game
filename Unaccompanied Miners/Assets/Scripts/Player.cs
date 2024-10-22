@@ -112,7 +112,6 @@ public class Player : MonoBehaviour
 
                     gemsAvailable -= gemsMined;
                     boardManager.gemCounts[position.y, position.x] = gemsAvailable;
-                    Debug.Log(boardManager.gemCounts[position.y, position.x]);
 
                     if (gemsAvailable <= 0)
                     {
@@ -123,7 +122,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Debug.Log("Failed ot mine gems");
+                Debug.Log("Failed to mine gems");
             }
             turnManager.EndPlayerTurn(); 
         }
