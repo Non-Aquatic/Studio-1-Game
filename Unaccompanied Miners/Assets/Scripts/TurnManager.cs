@@ -102,6 +102,8 @@ public class TurnManager : MonoBehaviour
         {
             ui.winGame();
             PlayerPrefs.SetInt("GemsCount", gems);
+            PlayerPrefs.SetInt("Quota", quota);
+            PlayerPrefs.Save();
         }
         else if (!didYouWin) 
         {

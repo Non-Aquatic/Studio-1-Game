@@ -97,6 +97,9 @@ public class UserInterface : MonoBehaviour
     void SaveGame()
     {
         //I'm not sure how we want to go about doing this so this is more for show atm.
+        PlayerPrefs.SetInt("GemsCount", playerScript.gemCount);
+        PlayerPrefs.SetInt("Quota", quota);
+        PlayerPrefs.Save();
     }
 
     void ReturnToMenu()
