@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -93,17 +94,20 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        animator.SetBool("damaged", true);
         health -= damage;
         PlayAudio(takeDamage);
+        StartCoroutine(damgeEnder());
     }
     private void AttemptMining(Vector2Int position)
     {
         if (boardManager.IsMiningNode(position))
         {
-            PlayAudio(miningSound);
+            animator.SetBool("IsMining", true);
             int successRoll = Random.Range(0, 100);
             if (successRoll < miningSuccessChance)
             {
+                PlayAudio(miningSound);
                 int gemsAvailable = boardManager.gemCounts[position.y, position.x]; 
                 if (gemsAvailable > 0)
                 {
@@ -124,7 +128,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("Failed to mine gems");
             }
-            turnManager.EndPlayerTurn(); 
+            StartCoroutine(miningEnder());
         }
         else
         {
@@ -151,5 +155,19 @@ public class Player : MonoBehaviour
             
         }
 
+    }
+    private IEnumerator miningEnder()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        animator.SetBool("IsMining", false);
+        yield return new WaitForSeconds(.5f);
+        turnManager.EndPlayerTurn();
+    }
+    private IEnumerator damgeEnder()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        animator.SetBool("damaged", false);
     }
 }
