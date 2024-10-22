@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -96,22 +97,42 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        animator.SetBool("damaged", true);
         health -= damage;
         PlayAudio(takeDamage);
         healthBar.SetHealth(health);
+        StartCoroutine(damgeEnder());
     }
     private void AttemptMining(Vector2Int position)
     {
         if (boardManager.IsMiningNode(position))
         {
+            animator.SetBool("IsMining", true);
             PlayAudio(miningSound);
             int successRoll = Random.Range(0, 100);
             if (successRoll < miningSuccessChance)
             {
-                int gemsMined = Random.Range(1, 5); 
-                AddGems(gemsMined);
+                int gemsAvailable = boardManager.gemCounts[position.y, position.x];
+                if (gemsAvailable > 0)
+                {
+                    int gemsMined = Random.Range(1, 5);
+                    AddGems(gemsMined);
+
+                    gemsAvailable -= gemsMined;
+                    boardManager.gemCounts[position.y, position.x] = gemsAvailable;
+
+                    if (gemsAvailable <= 0)
+                    {
+                        boardManager.gridLayout[position.y, position.x] = 1;
+                        boardManager.ReplaceTile(position);
+                    }
+                }
             }
-            turnManager.EndPlayerTurn(); 
+            else
+            {
+                Debug.Log("Failed to mine gems");
+            }
+            StartCoroutine(miningEnder());
         }
         else
         {
@@ -138,5 +159,19 @@ public class Player : MonoBehaviour
             
         }
 
+    }
+    private IEnumerator miningEnder()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        animator.SetBool("IsMining", false);
+        yield return new WaitForSeconds(.5f);
+        turnManager.EndPlayerTurn();
+    }
+    private IEnumerator damgeEnder()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        animator.SetBool("damaged", false);
     }
 }
