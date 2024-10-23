@@ -71,7 +71,7 @@ MonoBehaviour:
   currentPosition: {x: 0, y: 0}
   attackSound: {fileID: 0}
   footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
-  audioVolume: 0.5
+  audioVolume: 0.15
 --- !u!82 &3300546887202087112
 AudioSource:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.202
   m_Pitch: 0.75
   Loop: 0
   Mute: 0
