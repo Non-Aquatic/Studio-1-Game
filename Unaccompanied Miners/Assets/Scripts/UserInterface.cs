@@ -9,8 +9,10 @@ using Unity.VisualScripting;
 
 public class UserInterface : MonoBehaviour
 {
+    public BoardManager board;
+
     public TMP_Text quotaText;
-    public int quota = 1;
+    int quota = 1;
     public TMP_Text gems;
     public TMP_Text level;
     public TMP_Text winText;
@@ -18,6 +20,7 @@ public class UserInterface : MonoBehaviour
     public GameObject player;
     private Player playerScript;
     private String sceneName;
+    
 
     public GameObject pausePanel;
     public GameObject pauseBackground;
@@ -52,7 +55,7 @@ public class UserInterface : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        if(playerScript.gemCount > quota) //MOVE THIS SECTION TO TURN MANNAGER 
+        if(playerScript.gemCount >= quota) //MOVE THIS SECTION TO TURN MANNAGER 
         {
             winText.gameObject.SetActive(true);
             playerScript.enabled = false;
@@ -117,6 +120,9 @@ public class UserInterface : MonoBehaviour
 
     void SetQuota()
     {
+        quota = board.quota;
+       
+        /*
         if(sceneName == "Level 1")
         {
             quota = 25;
@@ -124,7 +130,7 @@ public class UserInterface : MonoBehaviour
         if(sceneName == "Level 2")
         {
             quota = 35;
-        }
+        }*/
     }
 
     public void winGame()

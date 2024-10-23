@@ -7,6 +7,7 @@ public class TurnManager : MonoBehaviour
 {
     public Player player;
     public UserInterface ui;
+    BoardManager board;
     public List<Enemy> enemies = new List<Enemy>();
     private string currentTurn = "Player's Turn";
     public TextMeshProUGUI turnText;
@@ -17,7 +18,14 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        quota = ui.quota;
+        if (TryGetComponent<BoardManager>(out board)) {
+            quota = board.quota;
+        }
+        else
+        {
+            Debug.LogError($"Cannot find BoardManager in {this.name}");
+        }
+
         gems = player.gemCount;
 
         StartPlayerTurn();
@@ -26,7 +34,7 @@ public class TurnManager : MonoBehaviour
 
     private void Update()
     {
-        quota = ui.quota;
+        //quota = ui.quota;
         gems = player.gemCount;
         CheckWin();
     }

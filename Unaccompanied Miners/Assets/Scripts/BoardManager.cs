@@ -6,6 +6,11 @@ public class BoardManager : MonoBehaviour
     public GameObject traversableTilePrefab;
     public GameObject nonTraversableTilePrefab;
     public GameObject miningTilePrefab;
+    public TurnManager turnManager;
+    public int quota = 0;
+    int gemSpaces = 0;
+    int gemSpacesLeft = 0;
+    int gemsLeft = 0;
 
 
     public int[,] gridLayout = {
@@ -58,6 +63,7 @@ public class BoardManager : MonoBehaviour
                 }
                 else if (gridLayout[y, x] == 2)
                 {
+                    gemSpaces++;
                     tilePrefab = miningTilePrefab; 
                 }
                 else
@@ -72,21 +78,46 @@ public class BoardManager : MonoBehaviour
     }
     private void GenerateGemCounts()
     {
+        gemsLeft = quota;
+        gemSpacesLeft = gemSpaces;
+
         gemCounts = new int[gridLayout.GetLength(0), gridLayout.GetLength(1)];
         for (int y = 0; y < gemCounts.GetLength(0); y++)
         {
             for (int x = 0; x < gemCounts.GetLength(1); x++)
             {
-                if (gridLayout[y, x] == 2) 
+                if (gridLayout[y, x] == 2)
                 {
-                    gemCounts[y, x] = 5; 
+                    if (gemSpacesLeft > 1 && gemsLeft > 0)
+                    {
+                        int temp = Random.Range(gemsLeft/(gemSpaces), (quota/2) % gemsLeft);
+                        Debug.Log($"Assigning {temp} Gems to space");
+                        gemCounts[y, x] = temp;
+                        gemsLeft -= temp;
+                        gemSpacesLeft--;
+
+                    }
+                    else
+                    {
+                        Debug.Log($"Assigning {gemsLeft} Gems to space");
+                        gemCounts[y, x] = gemsLeft;
+                        gemsLeft -= gemsLeft;
+                        gemSpacesLeft--;
+                    }
+
+                    Debug.Log($"Total Gems: {quota} Total Gem Spaces: {gemSpaces} Gems Left to Assign: {gemsLeft} Gem Spaces Left to Fill: {gemSpacesLeft}");
+
                 }
                 else
                 {
-                    gemCounts[y, x] = 0; 
+                    gemCounts[y, x] = 0;
                 }
             }
         }
+
+        //string temp = 
+
+
     }
     public void ReplaceTile(Vector2Int position)
     {

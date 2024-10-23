@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     public void AddGems(int amount)
     {
         gemCount += amount;
-        Debug.Log("Gems collected:"+gemCount);
+        Debug.Log($"Gems Added: {amount} Total Gems collected: {gemCount}");
         PlayAudio(gemCollect, miningSound.length + .25f);
     }
 
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
                 int gemsAvailable = boardManager.gemCounts[position.y, position.x];
                 if (gemsAvailable > 0)
                 {
-                    int gemsMined = Random.Range(1, 5);
+                    int gemsMined = Random.Range(1, gemsAvailable + 1);
                     AddGems(gemsMined);
 
                     gemsAvailable -= gemsMined;
@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
                     {
                         boardManager.gridLayout[position.y, position.x] = 1;
                         boardManager.ReplaceTile(position);
+                        Debug.Log($"Space {position.y},{position.x} Depleated");
                     }
                 }
             }
