@@ -14,12 +14,13 @@ public class Player : MonoBehaviour
     public int health;
     public int maxHealth = 10;
     public HealthBar healthBar;
-    private int miningSuccessChance = 70;
+    private int miningSuccessChance = 80;
     public AudioClip miningSound; //Assigned to mining audio clip in inspector, plays on mine
     public AudioClip gemCollect;
     public AudioClip takeDamage;
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
     public float audioVolume = .5f; // Audio volume, 0-1f.
+    private bool isMoving = false;
 
 
     private void Start()
@@ -64,7 +65,12 @@ public class Player : MonoBehaviour
 
         if (transform.position == targetPosition)
         {
-            animator.SetBool("IsMoving", false); 
+            animator.SetBool("IsMoving", false);
+            if (isMoving == true)
+            {
+                isMoving = false;
+                turnManager.EndPlayerTurn();
+            }
         }
     }
     private void AttemptMove(Vector2Int direction)
@@ -74,7 +80,6 @@ public class Player : MonoBehaviour
         if (boardManager.IsTileTraversable(targetPosition))
         {
             MoveTo(targetPosition, direction);
-            turnManager.EndPlayerTurn(); 
         }
     }
 
@@ -84,7 +89,7 @@ public class Player : MonoBehaviour
         targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
         PlayAudio(footstepSound);
         animator.SetBool("IsMoving", true);
-
+        isMoving = true;
         animator.SetFloat("MoveX", direction.x);
         animator.SetFloat("MoveY", direction.y);
     }
@@ -110,6 +115,7 @@ public class Player : MonoBehaviour
             animator.SetBool("IsMining", true);
             PlayAudio(miningSound);
             int successRoll = Random.Range(0, 100);
+            Debug.Log(successRoll);
             if (successRoll < miningSuccessChance)
             {
                 int gemsAvailable = boardManager.gemCounts[position.y, position.x];
