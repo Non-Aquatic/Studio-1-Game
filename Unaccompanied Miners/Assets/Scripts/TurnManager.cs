@@ -81,7 +81,7 @@ public class TurnManager : MonoBehaviour
                 if (player.health <= 0)
                 {
                     Debug.Log("Player is dead.");
-                    EndGame(false); 
+                    EndGame(false, false); 
                 }
                 else
                 {
@@ -100,15 +100,22 @@ public class TurnManager : MonoBehaviour
     {
         if (gems >= quota)
         {
-            EndGame(true);
+            EndGame(true, false);
         }
     }
     
-    public void EndGame(bool didYouWin)
+    public void EndGame(bool didYouWin, bool didYouEscape)
     {
         if (didYouWin) 
         {
             ui.winGame();
+            PlayerPrefs.SetInt("GemsCount", gems);
+            PlayerPrefs.SetInt("Quota", quota);
+            PlayerPrefs.Save();
+        }
+        if (didYouEscape)
+        {
+            ui.escapeGame();
             PlayerPrefs.SetInt("GemsCount", gems);
             PlayerPrefs.SetInt("Quota", quota);
             PlayerPrefs.Save();

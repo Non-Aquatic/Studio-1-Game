@@ -34,7 +34,8 @@ public class MainMenu : MonoBehaviour
     void LoadGame()
     {
         //Until I get to the Save Game feature, this will just load the first level.  - Mahliq
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+        SceneManager.LoadScene("Camera and Lights", LoadSceneMode.Additive);
         Debug.Log("Until I get to the Save Game feature, this will just load the first level.  - Mahliq");
     }
 

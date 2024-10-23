@@ -148,4 +148,11 @@ public class BoardManager : MonoBehaviour
 
         return gridLayout[position.y, position.x] == 2; 
     }
+    public bool IsSaveNode(Vector2Int position)
+    {
+        if (position.x < 0 || position.x >= gridLayout.GetLength(1) || position.y < 0 || position.y >= gridLayout.GetLength(0))
+            return false;
+
+        return gridLayout[position.y, position.x] == 3;
+    }
 }

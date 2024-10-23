@@ -17,6 +17,7 @@ public class UserInterface : MonoBehaviour
     public TMP_Text level;
     public TMP_Text winText;
     public TMP_Text loseText;
+    public TMP_Text escapeText;
     public GameObject player;
     private Player playerScript;
     private String sceneName;
@@ -46,6 +47,7 @@ public class UserInterface : MonoBehaviour
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
+        escapeText.gameObject.SetActive(false);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
@@ -137,6 +139,14 @@ public class UserInterface : MonoBehaviour
     {
         Debug.Log("You Won");
         winText.gameObject.SetActive(true);
+        //Time.timeScale = 0f;
+        Invoke("ReturnToMainMenu", 10);
+    }
+
+    public void escapeGame()
+    {
+        Debug.Log("You Escaped");
+        escapeText.gameObject.SetActive(true);
         //Time.timeScale = 0f;
         Invoke("ReturnToMainMenu", 10);
     }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEditor;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class Player : MonoBehaviour
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
     public float audioVolume = .5f; // Audio volume, 0-1f.
     private bool isMoving = false;
-
+    private string boardState = "";
 
     private void Start()
     {
@@ -56,6 +58,10 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.M)) 
             {
                 AttemptMining(currentPosition);
+            }
+            else if (Input.GetKeyDown(KeyCode.N))
+            {
+                SaveBoard(currentPosition);
             }
         }
     }
@@ -114,14 +120,14 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("IsMining", true);
             PlayAudio(miningSound);
-            int successRoll = Random.Range(0, 100);
+            int successRoll = UnityEngine.Random.Range(0, 100);
             Debug.Log(successRoll);
             if (successRoll < miningSuccessChance)
             {
                 int gemsAvailable = boardManager.gemCounts[position.y, position.x];
                 if (gemsAvailable > 0)
                 {
-                    int gemsMined = Random.Range(1, gemsAvailable + 1);
+                    int gemsMined = UnityEngine.Random.Range(1, gemsAvailable + 1);
                     AddGems(gemsMined);
 
                     gemsAvailable -= gemsMined;
@@ -145,6 +151,38 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Mine at a node");
         }
+    }
+
+    private void SaveBoard(Vector2Int position)
+    {
+        if (boardManager.IsSaveNode(position))
+        {
+            for(int y = 0; y < boardManager.gridLayout.GetLength(0); y++)
+            {
+                for (int x = 0; x < boardManager.gridLayout.GetLength(1); x++)
+                {
+                    boardState += boardManager.gridLayout[y, x].ToString();
+                    if (x < boardManager.gridLayout.GetLength(1) - 1)
+                    {
+                        boardState += ",";
+                    }
+                }
+                if (y < boardManager.gridLayout.GetLength(0) - 1)
+                {
+                    boardState += ";";
+                }
+            }
+        }
+
+        PlayerPrefs.SetString("boardState", boardState);
+        PlayerPrefs.Save();
+
+        turnManager.EndGame(false, true);
+
+        /*for (int i = 0; i < boardState.Length; i++)
+        {
+            Debug.Log(boardState[i]);
+        }*/
     }
 
     private void PlayAudio(AudioClip audioInput)
