@@ -14,6 +14,7 @@ public class UserInterface : MonoBehaviour
     public TMP_Text gems;
     public TMP_Text level;
     public TMP_Text winText;
+    public TMP_Text loseText;
     public GameObject player;
     private Player playerScript;
     private String sceneName;
@@ -41,6 +42,7 @@ public class UserInterface : MonoBehaviour
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
+        loseText.gameObject.SetActive(false);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
@@ -50,9 +52,10 @@ public class UserInterface : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        if(playerScript.gemCount > quota)
+        if(playerScript.gemCount > quota) //MOVE THIS SECTION TO TURN MANNAGER 
         {
             winText.gameObject.SetActive(true);
+            playerScript.enabled = false;
         }
         gems.text = " " + playerScript.gemCount.ToString();
         
