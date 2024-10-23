@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     private int currentPatrolIndex = 0;
     public AudioClip attackSound; //Assigned to attacking audio clip in inspector, plays on attack
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
-    public float audioVolume = .5f; // Audio volume, 0-1f.
+    public float audioVolume = .3f; // Audio volume, 0-1f.
 
     public void Initialize(Vector2Int startPosition, Vector2Int[] path)
     {

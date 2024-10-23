@@ -79,7 +79,7 @@ public class BoardManager : MonoBehaviour
             {
                 if (gridLayout[y, x] == 2) 
                 {
-                    gemCounts[y, x] = 5; 
+                    gemCounts[y, x] = 10; 
                 }
                 else
                 {
