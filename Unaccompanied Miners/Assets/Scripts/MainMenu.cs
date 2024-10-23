@@ -27,7 +27,8 @@ public class MainMenu : MonoBehaviour
 
     void NewGame()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+        SceneManager.LoadScene("Camera and Lights", LoadSceneMode.Additive);
     }
 
     void LoadGame()
