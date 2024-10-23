@@ -6,16 +6,29 @@ using TMPro;
 public class TurnManager : MonoBehaviour
 {
     public Player player;
+    public UserInterface ui;
     public List<Enemy> enemies = new List<Enemy>();
     private string currentTurn = "Player's Turn";
     public TextMeshProUGUI turnText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI gemText;
+    public int quota = 1;
+    public int gems = -1;
 
     private void Start()
     {
+        quota = ui.quota;
+        gems = player.gemCount;
+
         StartPlayerTurn();
         UpdateUI();
+    }
+
+    private void Update()
+    {
+        quota = ui.quota;
+        gems = player.gemCount;
+        CheckWin();
     }
 
     public void StartPlayerTurn()
@@ -39,13 +52,13 @@ public class TurnManager : MonoBehaviour
     }
     private IEnumerator EnemyTurnCoroutine()
     {
-        yield return new WaitForSeconds(.75f);
+        yield return new WaitForSeconds(.5f);
 
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn();
             CheckCollisions();
-            yield return new WaitForSeconds(0.25f); 
+            yield return new WaitForSeconds(0.1f); 
         }
 
         StartPlayerTurn();
@@ -73,22 +86,28 @@ public class TurnManager : MonoBehaviour
     public void UpdateUI()
     {
         turnText.text = currentTurn;
-        healthText.text = "Health: "+player.health;
-        gemText.text = "Gems: " + player.gemCount;
     }
-    //IDK what to do here for right now
+    
+    void CheckWin()
+    {
+        if (gems >= quota)
+        {
+            EndGame(true);
+        }
+    }
+    
     public void EndGame(bool didYouWin)
     {
         if (didYouWin) 
         {
-            Debug.Log("Yay");
+            ui.winGame();
+            PlayerPrefs.SetInt("GemsCount", gems);
+            PlayerPrefs.SetInt("Quota", quota);
+            PlayerPrefs.Save();
         }
         else if (!didYouWin) 
         {
             Debug.Log("BOOOO");
         }
-
-
-        player.enabled = false;
     }
 }

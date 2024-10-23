@@ -1,13 +1,19 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
     public BoardManager boardManager;
     public TurnManager turnManager; 
     public Vector2Int currentPosition;
+    public float moveSpeed = 5f; 
+    private Vector3 targetPosition; 
+    private Animator animator;
     public int gemCount;
     public int health;
+    public int maxHealth = 10;
+    public HealthBar healthBar;
     private int miningSuccessChance = 70;
     public AudioClip miningSound; //Assigned to mining audio clip in inspector, plays on mine
     public AudioClip gemCollect;
@@ -15,16 +21,19 @@ public class Player : MonoBehaviour
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
     public float audioVolume = .5f; // Audio volume, 0-1f.
 
+
     private void Start()
     {
-        health = 10;
+        health = maxHealth;
         turnManager.UpdateUI();
-        currentPosition = new Vector2Int(0, 0); 
-        MoveTo(currentPosition);
+        currentPosition = new Vector2Int(0, 0);
+        targetPosition = transform.position;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        MovePlayer();
         if (enabled)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -49,23 +58,35 @@ public class Player : MonoBehaviour
             }
         }
     }
+    private void MovePlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
+        if (transform.position == targetPosition)
+        {
+            animator.SetBool("IsMoving", false); 
+        }
+    }
     private void AttemptMove(Vector2Int direction)
     {
         Vector2Int targetPosition = currentPosition + direction;
 
         if (boardManager.IsTileTraversable(targetPosition))
         {
-            MoveTo(targetPosition);
+            MoveTo(targetPosition, direction);
             turnManager.EndPlayerTurn(); 
         }
     }
 
-    private void MoveTo(Vector2Int newPosition)
+    private void MoveTo(Vector2Int newPosition, Vector2Int direction)
     {
         currentPosition = newPosition;
-        transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
+        targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
         PlayAudio(footstepSound);
+        animator.SetBool("IsMoving", true);
+
+        animator.SetFloat("MoveX", direction.x);
+        animator.SetFloat("MoveY", direction.y);
     }
     public void AddGems(int amount)
     {
@@ -76,21 +97,42 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        animator.SetBool("damaged", true);
         health -= damage;
         PlayAudio(takeDamage);
+        healthBar.SetHealth(health);
+        StartCoroutine(damgeEnder());
     }
     private void AttemptMining(Vector2Int position)
     {
         if (boardManager.IsMiningNode(position))
         {
+            animator.SetBool("IsMining", true);
             PlayAudio(miningSound);
             int successRoll = Random.Range(0, 100);
             if (successRoll < miningSuccessChance)
             {
-                int gemsMined = Random.Range(1, 5); 
-                AddGems(gemsMined);
+                int gemsAvailable = boardManager.gemCounts[position.y, position.x];
+                if (gemsAvailable > 0)
+                {
+                    int gemsMined = Random.Range(1, 5);
+                    AddGems(gemsMined);
+
+                    gemsAvailable -= gemsMined;
+                    boardManager.gemCounts[position.y, position.x] = gemsAvailable;
+
+                    if (gemsAvailable <= 0)
+                    {
+                        boardManager.gridLayout[position.y, position.x] = 1;
+                        boardManager.ReplaceTile(position);
+                    }
+                }
             }
-            turnManager.EndPlayerTurn(); 
+            else
+            {
+                Debug.Log("Failed to mine gems");
+            }
+            StartCoroutine(miningEnder());
         }
         else
         {
@@ -117,5 +159,19 @@ public class Player : MonoBehaviour
             
         }
 
+    }
+    private IEnumerator miningEnder()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        animator.SetBool("IsMining", false);
+        yield return new WaitForSeconds(.5f);
+        turnManager.EndPlayerTurn();
+    }
+    private IEnumerator damgeEnder()
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        animator.SetBool("damaged", false);
     }
 }
