@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
 
     private void UpdateEnemyPosition()
     {
-        transform.position = new Vector3(currentPosition.x, 0.5f, currentPosition.y);
+        transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
     }
 
     private void PlayAudio(AudioClip audioInput)
