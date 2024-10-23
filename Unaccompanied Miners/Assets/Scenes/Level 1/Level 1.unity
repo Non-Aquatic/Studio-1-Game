@@ -4054,6 +4054,7 @@ MonoBehaviour:
   traversableTilePrefab: {fileID: 284429705733571586, guid: 762a68bb40a884a4cad8e370e95f9502, type: 3}
   nonTraversableTilePrefab: {fileID: 3149782224078247990, guid: d5a635caeaf717348a4f0223f0453fdf, type: 3}
   miningTilePrefab: {fileID: 2389813880786386940, guid: b78d1391a77b2cd42b4e6b788802f266, type: 3}
+  saveTilePrefab: {fileID: 6923171451855684081, guid: a555857676105024ab10f20686a03dc9, type: 3}
   turnManager: {fileID: 0}
   quota: 25
 --- !u!4 &206796492

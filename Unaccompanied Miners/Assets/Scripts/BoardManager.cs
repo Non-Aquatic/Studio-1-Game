@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BoardManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class BoardManager : MonoBehaviour
     public GameObject traversableTilePrefab;
     public GameObject nonTraversableTilePrefab;
     public GameObject miningTilePrefab;
+    public GameObject saveTilePrefab;
     public TurnManager turnManager;
     public int quota = 0;
     int gemSpaces = 0;
@@ -36,7 +38,7 @@ public class BoardManager : MonoBehaviour
         { 1, 0, 0, 0, 0, 0, 1 },
         { 1, 0, 0, 0, 0, 0, 1 },
         { 1, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 3, 0, 0, 1 },
         { 1, 1, 1, 2, 1, 1, 1 }
     };
 
@@ -65,6 +67,10 @@ public class BoardManager : MonoBehaviour
                 {
                     gemSpaces++;
                     tilePrefab = miningTilePrefab; 
+                }
+                else if (gridLayout[y, x] == 3)
+                {
+                    tilePrefab = saveTilePrefab;
                 }
                 else
                 {
@@ -133,7 +139,7 @@ public class BoardManager : MonoBehaviour
     {
         if (position.x < 0 || position.x >= gridLayout.GetLength(1) || position.y < 0 || position.y >= gridLayout.GetLength(0))
             return false;
-        return gridLayout[position.y, position.x] == 1 || gridLayout[position.y, position.x] == 2;
+        return gridLayout[position.y, position.x] == 1 || gridLayout[position.y, position.x] == 2 || gridLayout[position.y, position.x] == 3;
     }
     public bool IsMiningNode(Vector2Int position)
     {
