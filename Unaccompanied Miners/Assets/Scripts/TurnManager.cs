@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn();
-            CheckCollisions();
+            CheckCollisions(enemy.currentPosition);
             yield return new WaitForSeconds(0.1f); 
         }
 
@@ -90,7 +90,22 @@ public class TurnManager : MonoBehaviour
             }
         }
     }
-
+    private void CheckCollisions(Vector2Int enemyPosition)
+    {
+        if (enemyPosition == player.currentPosition)
+        {
+            player.TakeDamage(1);
+            if (player.health <= 0)
+            {
+                Debug.Log("Player is dead.");
+                EndGame(false);
+            }
+            else
+            {
+                UpdateUI();
+            }
+        }
+    }
     public void UpdateUI()
     {
         turnText.text = currentTurn;
