@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         MovePlayer();
-        if (enabled)
+        if (!isMoving && enabled)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
