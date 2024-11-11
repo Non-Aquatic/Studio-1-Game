@@ -98,7 +98,7 @@ public class TurnManager : MonoBehaviour
             if (player.health <= 0)
             {
                 Debug.Log("Player is dead.");
-                EndGame(false);
+                EndGame(false, false);
             }
             else
             {
