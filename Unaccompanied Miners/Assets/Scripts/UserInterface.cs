@@ -99,6 +99,7 @@ public class UserInterface : MonoBehaviour
 
     void RestartLevel()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(level.text);
     }
 
