@@ -112,6 +112,8 @@ public class UserInterface : MonoBehaviour
 
     void ReturnToMenu()
     {
+        Time.timeScale = 1f;
+        isPaused = false;
         SceneManager.LoadScene("Main Menu");
     }
 
