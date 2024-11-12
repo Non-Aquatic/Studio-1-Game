@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
     public Button newGameButton;
     public Button loadGameButton;
     public Button exitButton;
+    public GameObject OptionsPanel;
+    bool optionsPanelOpen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,12 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
         SceneManager.LoadScene("Camera and Lights", LoadSceneMode.Additive);
         Debug.Log("Until I get to the Save Game feature, this will just load the first level.  - Mahliq");
+    }
+
+    public void ToggleOptions()
+    {
+        optionsPanelOpen = !optionsPanelOpen;
+        OptionsPanel.SetActive(optionsPanelOpen);
     }
 
     void ExitGame()
