@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections;
 using UnityEditor;
 using System;
+using System.IO;
 
 public class Player : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     public float audioVolume = .5f; // Audio volume, 0-1f.
     private bool isMoving = false;
     private string boardState = "";
+    string filePath;
 
     private void Start()
     {
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour
         currentPosition = new Vector2Int(0, 0);
         targetPosition = transform.position;
         animator = GetComponent<Animator>();
+
+        filePath = Application.persistentDataPath + "/saveData.txt";
     }
 
     private void Update()
@@ -155,6 +159,8 @@ public class Player : MonoBehaviour
 
     private void SaveBoard(Vector2Int position)
     {
+        Player player = GetComponent<Player>();
+        player.enabled = false;
         if (boardManager.IsSaveNode(position))
         {
             for(int y = 0; y < boardManager.gridLayout.GetLength(0); y++)
@@ -164,18 +170,20 @@ public class Player : MonoBehaviour
                     boardState += boardManager.gridLayout[y, x].ToString();
                     if (x < boardManager.gridLayout.GetLength(1) - 1)
                     {
-                        boardState += ",";
+                        boardState += " ";
                     }
                 }
-                if (y < boardManager.gridLayout.GetLength(0) - 1)
+                if (y <= boardManager.gridLayout.GetLength(0) - 1)
                 {
-                    boardState += ";";
+                    boardState += "\n";
                 }
             }
         }
 
         PlayerPrefs.SetString("boardState", boardState);
         PlayerPrefs.Save();
+
+        File.AppendAllText(filePath, boardState + "\n");
 
         turnManager.EndGame(false, true);
 

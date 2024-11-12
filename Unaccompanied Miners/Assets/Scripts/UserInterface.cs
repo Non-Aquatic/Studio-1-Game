@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.IO;
 using Unity.VisualScripting;
 
 public class UserInterface : MonoBehaviour
@@ -31,6 +32,8 @@ public class UserInterface : MonoBehaviour
     public Button exitGameButton;
     private bool isPaused = false;
 
+    string filePath;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +55,8 @@ public class UserInterface : MonoBehaviour
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
         exitGameButton.onClick.AddListener(ExitGame);
+
+        filePath = Application.persistentDataPath + "/saveData.txt";
     }
 
     // Update is called once per frame
@@ -109,6 +114,13 @@ public class UserInterface : MonoBehaviour
         PlayerPrefs.SetInt("GemsCount", playerScript.gemCount);
         PlayerPrefs.SetInt("Quota", quota);
         PlayerPrefs.Save();
+
+        string emptyString = "";
+        File.WriteAllText(filePath, emptyString);
+        File.AppendAllText(filePath, level.text + "\n");
+        File.AppendAllText(filePath, playerScript.gemCount.ToString() + "\n");
+        File.AppendAllText(filePath, quota.ToString() + "\n");
+        File.AppendAllText(filePath, playerScript.currentPosition.ToString() + "\n");
     }
 
     void ReturnToMenu()
