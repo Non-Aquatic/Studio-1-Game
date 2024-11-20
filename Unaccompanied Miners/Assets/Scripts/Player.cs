@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEditor;
 using System;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -24,18 +25,39 @@ public class Player : MonoBehaviour
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
     public float audioVolume = .5f; // Audio volume, 0-1f.
     private bool isMoving = false;
-    private string boardState = "";
+    public string boardState = "";
     string filePath;
 
     private void Start()
     {
+        filePath = Application.persistentDataPath + "/saveData.txt";
+
         health = maxHealth;
         turnManager.UpdateUI();
-        currentPosition = new Vector2Int(0, 0);
-        targetPosition = transform.position;
-        animator = GetComponent<Animator>();
 
-        filePath = Application.persistentDataPath + "/saveData.txt";
+        string line2 = ReadLine(filePath, 2);
+        if(line2 != null)
+        {
+            gemCount = int.Parse(line2);
+        }
+
+        string line4 = ReadLine(filePath, 4);
+        //Debug.Log(line4);
+        if (line4 == null)
+        {
+            currentPosition = new Vector2Int(0, 0);
+            targetPosition = transform.position;
+        }
+        if (line4 != null)
+        {
+            string removeParentheses = line4.Replace("(","").Replace(")","").Trim();
+            string[] parts = removeParentheses.Split(',');
+            int x = int.Parse(parts[0].Trim());
+            int y = int.Parse(parts[1].Trim());
+            currentPosition = new Vector2Int(x, y);
+            targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
+        }
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -173,7 +195,7 @@ public class Player : MonoBehaviour
                         boardState += " ";
                     }
                 }
-                if (y <= boardManager.gridLayout.GetLength(0) - 1)
+                if (y < boardManager.gridLayout.GetLength(0) - 1)
                 {
                     boardState += "\n";
                 }
@@ -183,6 +205,12 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetString("boardState", boardState);
         PlayerPrefs.Save();
 
+        string emptyString = "";
+        File.WriteAllText(filePath, emptyString);
+        File.AppendAllText(filePath, SceneManager.GetActiveScene().name + "\n");
+        File.AppendAllText(filePath, gemCount.ToString() + "\n");
+        File.AppendAllText(filePath, turnManager.quota.ToString() + "\n");
+        File.AppendAllText(filePath, currentPosition.ToString() + "\n");
         File.AppendAllText(filePath, boardState + "\n");
 
         turnManager.EndGame(false, true);
@@ -226,5 +254,30 @@ public class Player : MonoBehaviour
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
         animator.SetBool("damaged", false);
+    }
+
+    string ReadLine(string filePath, int index)
+    {
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        using (StreamReader reader = new StreamReader(filePath))
+        {
+            string line;
+            int currentLine = 1;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (currentLine == index)
+                {
+                    return line;
+                }
+                currentLine++;
+            }
+        }
+
+        return null;
     }
 }

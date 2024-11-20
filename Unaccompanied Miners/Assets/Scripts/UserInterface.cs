@@ -31,12 +31,16 @@ public class UserInterface : MonoBehaviour
     public Button mainMenuButton;
     public Button exitGameButton;
     private bool isPaused = false;
+    //public GameObject ui;
 
     string filePath;
 
     // Start is called before the first frame update
     void Start()
     {
+        //ui.SetActive(false);
+        //Invoke("LoadUI", 5);
+
         playerScript = player.GetComponent<Player>();
 
         gems.text = " 0";
@@ -121,6 +125,7 @@ public class UserInterface : MonoBehaviour
         File.AppendAllText(filePath, playerScript.gemCount.ToString() + "\n");
         File.AppendAllText(filePath, quota.ToString() + "\n");
         File.AppendAllText(filePath, playerScript.currentPosition.ToString() + "\n");
+        File.AppendAllText(filePath, playerScript.boardState + "\n");
     }
 
     void ReturnToMenu()
@@ -169,5 +174,11 @@ public class UserInterface : MonoBehaviour
     void ReturnToMainMenu()
     {
         SceneManager.LoadScene("Main Menu");
+    }
+
+    void LoadUI()
+    {
+        //ui.SetActive(true);
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelSceneName));
     }
 }

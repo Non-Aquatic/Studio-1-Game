@@ -14,12 +14,13 @@ public class MainMenu : MonoBehaviour
     bool optionsPanelOpen = false;
 
     string filePath;
+    string firstLine = string.Empty;
 
     // Start is called before the first frame update
     void Start()
     {
         newGameButton.onClick.AddListener(NewGame);
-        loadGameButton.onClick.AddListener(LoadGame);
+        loadGameButton.onClick.AddListener(WaitForMovement);
         exitButton.onClick.AddListener(ExitGame);
 
         filePath = Application.persistentDataPath + "/saveData.txt";
@@ -28,6 +29,20 @@ public class MainMenu : MonoBehaviour
             using(FileStream fs = File.Create(filePath))
             {
 
+            }
+        }
+
+        
+        using (StreamReader sr = new StreamReader(filePath))
+        {
+            firstLine = sr.ReadLine();
+            if (string.IsNullOrWhiteSpace(firstLine))
+            {
+                loadGameButton.interactable = false;
+            }
+            else
+            {
+                loadGameButton.interactable = true;
             }
         }
     }
@@ -45,11 +60,21 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Level 1");
     }
 
-    void LoadGame()
+    void WaitForMovement()
     {
         //Until I get to the Save Game feature, this will just load the first level.  - Mahliq
-        SceneManager.LoadScene("Level 1");
+        if (firstLine == "Level 1" || firstLine == "Level 2")
+        {
+            //SceneManager.LoadScene(firstLine, LoadSceneMode.Additive);
+            Invoke("LoadGame", 5);
+        }
         Debug.Log("Until I get to the Save Game feature, this will just load the first level.  - Mahliq");
+    }
+
+    void LoadGame()
+    {
+        //SceneManager.UnloadSceneAsync("Main Menu");
+        SceneManager.LoadScene(firstLine);
     }
 
     public void ToggleOptions()

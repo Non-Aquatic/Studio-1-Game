@@ -8623,6 +8623,7 @@ MonoBehaviour:
   takeDamage: {fileID: 8300000, guid: 8715f7d572ead284c9aff663f00fb9a7, type: 3}
   footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
   audioVolume: 0.5
+  boardState: 
 --- !u!136 &691044648
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15092,7 +15093,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3261384055763012357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
   m_PrefabInstance: {fileID: 1650102770}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1650102771}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c11b71bed6a9b84892b5a18cf9a3c80, type: 3}
@@ -19024,6 +19025,10 @@ PrefabInstance:
       value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3261384055763012357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1650102771}
+    - target: {fileID: 3261384055763012357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: board
       value: 
       objectReference: {fileID: 206796491}
@@ -19385,6 +19390,11 @@ PrefabInstance:
       addedObject: {fileID: 2054461211}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+--- !u!1 &1650102771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6110018846199302218, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+  m_PrefabInstance: {fileID: 1650102770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1655639386
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,7 +15,9 @@ public class BoardManager : MonoBehaviour
     int gemSpaces = 0;
     int gemSpacesLeft = 0;
     int gemsLeft = 0;
+    int gemsSaved = 0;
 
+    string filePath;
 
     public int[,] gridLayout = {
         { 1, 2, 1, 1, 1, 0, 1 },
@@ -31,6 +35,7 @@ public class BoardManager : MonoBehaviour
         { 1, 0, 1, 0, 1, 1, 1 },
         { 1, 1, 1, 0, 1, 0, 1 },
         { 1, 0, 1, 0, 1, 0, 1 },
+        { 1, 0, 1, 0, 1, 0, 1 },
         { 1, 0, 2, 0, 1, 0, 1 },
         { 1, 0, 1, 1, 1, 1, 1 },
         { 1, 0, 1, 0, 0, 0, 1 },
@@ -46,6 +51,86 @@ public class BoardManager : MonoBehaviour
 
     private void Start()
     {
+        filePath = Application.persistentDataPath + "/saveData.txt";
+
+        FileInfo fileInfo = new FileInfo(filePath);
+        if (fileInfo.Length == 0)
+        {
+            int[,] gridLayout = {
+                { 1, 2, 1, 1, 1, 0, 1 },
+                { 1, 3, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 3, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 2, 0, 1, 0, 1 },
+                { 1, 0, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 1, 2, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 1, 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 3, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 }
+            };
+        }
+        else
+        {
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                int startLine = 5;
+                string line;
+                int currentLine = 1;
+                int row = 0;
+
+                while((line = reader.ReadLine()) != null)
+                {
+                    string[] numbers = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (currentLine >= startLine)
+                    {
+                        for (int col = 0; col < numbers.Length && col < gridLayout.GetLength(1); col++)
+                        {
+                            if (int.TryParse(numbers[col], out int value))
+                            {
+                                gridLayout[row, col] = value;
+                            }
+                        }
+
+                        row++;
+                        if (row >= gridLayout.GetLength(0))
+                            break;
+                    }
+
+                    currentLine++;
+                }
+            }
+
+        }
+
+        string line2 = ReadLine(filePath, 2);
+        if (line2 != null)
+        {
+            gemsSaved = int.Parse(line2);
+        }
+
+        string line3 = ReadLine(filePath, 3);
+        if (line3 != null)
+        {
+            quota = int.Parse(line3);
+        }
+
+
         GenerateBoard();
         GenerateGemCounts();
     }
@@ -84,7 +169,15 @@ public class BoardManager : MonoBehaviour
     }
     private void GenerateGemCounts()
     {
-        gemsLeft = quota;
+        if (gemsSaved == 0)
+        {
+            gemsLeft = quota;
+        }
+        if (gemsSaved > 0)
+        {
+            gemsLeft = quota - gemsSaved;
+        }
+
         gemSpacesLeft = gemSpaces;
 
         gemCounts = new int[gridLayout.GetLength(0), gridLayout.GetLength(1)];
@@ -96,7 +189,7 @@ public class BoardManager : MonoBehaviour
                 {
                     if (gemSpacesLeft > 1 && gemsLeft > 0)
                     {
-                        int temp = Random.Range(gemsLeft/(gemSpaces), (quota/2) % gemsLeft);
+                        int temp = UnityEngine.Random.Range(gemsLeft/(gemSpaces), (quota/2) % gemsLeft);
                         Debug.Log($"Assigning {temp} Gems to space");
                         gemCounts[y, x] = temp;
                         gemsLeft -= temp;
@@ -154,5 +247,30 @@ public class BoardManager : MonoBehaviour
             return false;
 
         return gridLayout[position.y, position.x] == 3;
+    }
+
+    string ReadLine(string filePath, int index)
+    {
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        using (StreamReader reader = new StreamReader(filePath))
+        {
+            string line;
+            int currentLine = 1;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (currentLine == index)
+                {
+                    return line;
+                }
+                currentLine++;
+            }
+        }
+
+        return null;
     }
 }
