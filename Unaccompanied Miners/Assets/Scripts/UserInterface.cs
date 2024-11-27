@@ -33,6 +33,10 @@ public class UserInterface : MonoBehaviour
     private bool isPaused = false;
     //public GameObject ui;
 
+    public GameObject quitConfirmPanel;
+    public Button resumeButton;
+    public Button quitButton;
+
     string filePath;
 
     // Start is called before the first frame update
@@ -55,10 +59,13 @@ public class UserInterface : MonoBehaviour
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
         escapeText.gameObject.SetActive(false);
+        quitConfirmPanel.SetActive(false);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
-        exitGameButton.onClick.AddListener(ExitGame);
+        exitGameButton.onClick.AddListener(EnableQuitConfirm);
+        quitButton.onClick.AddListener(ExitGame);
+        resumeButton.onClick.AddListener(EnableMenu);
 
         filePath = Application.persistentDataPath + "/saveData.txt";
     }
@@ -180,5 +187,17 @@ public class UserInterface : MonoBehaviour
     {
         //ui.SetActive(true);
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelSceneName));
+    }
+
+    void EnableMenu()
+    {
+        pausePanel.SetActive(true);
+        quitConfirmPanel.SetActive(false);
+    }
+
+    void EnableQuitConfirm()
+    {
+        pausePanel.SetActive(false);
+        quitConfirmPanel.SetActive(true);
     }
 }
