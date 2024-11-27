@@ -14,18 +14,22 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f; 
     private Vector3 targetPosition; 
     private Animator animator;
+
     public int gemCount;
     public int health;
     public int maxHealth = 10;
     public HealthBar healthBar;
     private int miningSuccessChance = 80;
+
     public AudioClip miningSound; //Assigned to mining audio clip in inspector, plays on mine
     public AudioClip gemCollect;
     public AudioClip takeDamage;
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
+
     public float audioVolume = .5f; // Audio volume, 0-1f.
     private bool isMoving = false;
     public string boardState = "";
+
     string filePath;
 
     private void Start()
@@ -56,6 +60,7 @@ public class Player : MonoBehaviour
             int y = int.Parse(parts[1].Trim());
             currentPosition = new Vector2Int(x, y);
             targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
+            transform.position = targetPosition;
         }
         animator = GetComponent<Animator>();
     }

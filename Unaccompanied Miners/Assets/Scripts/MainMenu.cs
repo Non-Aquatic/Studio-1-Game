@@ -62,13 +62,12 @@ public class MainMenu : MonoBehaviour
 
     void WaitForMovement()
     {
-        //Until I get to the Save Game feature, this will just load the first level.  - Mahliq
         if (firstLine == "Level 1" || firstLine == "Level 2")
         {
             //SceneManager.LoadScene(firstLine, LoadSceneMode.Additive);
-            Invoke("LoadGame", 5);
+            Invoke("LoadGame", 1);
         }
-        Debug.Log("Until I get to the Save Game feature, this will just load the first level.  - Mahliq");
+        //Debug.Log("Until I get to the Save Game feature, this will just load the first level.  - Mahliq");
     }
 
     void LoadGame()
