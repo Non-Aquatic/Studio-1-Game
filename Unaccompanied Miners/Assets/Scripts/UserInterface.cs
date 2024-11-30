@@ -22,7 +22,10 @@ public class UserInterface : MonoBehaviour
     public GameObject player;
     private Player playerScript;
     private String sceneName;
-    
+
+    public GameObject tutShade;
+    public GameObject tutPanel;
+    public Button closeTutButton;
 
     public GameObject pausePanel;
     public GameObject pauseBackground;
@@ -54,12 +57,19 @@ public class UserInterface : MonoBehaviour
         SetQuota();
         quotaText.text = "Quota: " + quota.ToString();
 
+        if(SceneManager.GetActiveScene().name == "Level 1")
+        {
+            tutPanel.SetActive(true);
+            tutShade.SetActive(true);
+        }
+
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
         escapeText.gameObject.SetActive(false);
         quitConfirmPanel.SetActive(false);
+        closeTutButton.onClick.AddListener(CloseTutorial);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
@@ -199,5 +209,11 @@ public class UserInterface : MonoBehaviour
     {
         pausePanel.SetActive(false);
         quitConfirmPanel.SetActive(true);
+    }
+
+    void CloseTutorial()
+    {
+        tutPanel.SetActive(false);
+        tutShade.SetActive(false);
     }
 }
