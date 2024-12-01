@@ -22,7 +22,10 @@ public class UserInterface : MonoBehaviour
     public GameObject player;
     private Player playerScript;
     private String sceneName;
-    
+
+    public GameObject tutShade;
+    public GameObject tutPanel;
+    public Button closeTutButton;
 
     public GameObject pausePanel;
     public GameObject pauseBackground;
@@ -32,6 +35,10 @@ public class UserInterface : MonoBehaviour
     public Button exitGameButton;
     private bool isPaused = false;
     //public GameObject ui;
+
+    public GameObject quitConfirmPanel;
+    public Button resumeButton;
+    public Button quitButton;
 
     string filePath;
 
@@ -50,15 +57,25 @@ public class UserInterface : MonoBehaviour
         SetQuota();
         quotaText.text = "Quota: " + quota.ToString();
 
+        if(SceneManager.GetActiveScene().name == "Level 1")
+        {
+            tutPanel.SetActive(true);
+            tutShade.SetActive(true);
+        }
+
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
         loseText.gameObject.SetActive(false);
         escapeText.gameObject.SetActive(false);
+        quitConfirmPanel.SetActive(false);
+        closeTutButton.onClick.AddListener(CloseTutorial);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
-        exitGameButton.onClick.AddListener(ExitGame);
+        exitGameButton.onClick.AddListener(EnableQuitConfirm);
+        quitButton.onClick.AddListener(ExitGame);
+        resumeButton.onClick.AddListener(EnableMenu);
 
         filePath = Application.persistentDataPath + "/saveData.txt";
     }
@@ -180,5 +197,23 @@ public class UserInterface : MonoBehaviour
     {
         //ui.SetActive(true);
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelSceneName));
+    }
+
+    void EnableMenu()
+    {
+        pausePanel.SetActive(true);
+        quitConfirmPanel.SetActive(false);
+    }
+
+    void EnableQuitConfirm()
+    {
+        pausePanel.SetActive(false);
+        quitConfirmPanel.SetActive(true);
+    }
+
+    void CloseTutorial()
+    {
+        tutPanel.SetActive(false);
+        tutShade.SetActive(false);
     }
 }
