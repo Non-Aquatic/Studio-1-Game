@@ -12,6 +12,7 @@ public class AudioLoader : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
 
+
     float masterVolume;
     float musicVolume;
     float sfxVolume;
@@ -89,6 +90,11 @@ public class AudioLoader : MonoBehaviour
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
     }
 
+
+    public void PlayClick()
+    {
+        this.transform.GetComponent<AudioSource>().Play();
+    }
     public void OnDestroy()
     {
         SavePrefs();
