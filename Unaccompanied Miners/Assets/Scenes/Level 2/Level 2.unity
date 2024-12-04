@@ -4512,7 +4512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5053867710956691376, guid: 07b034239f313de41ad2273d5d230958, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5053867710956716944, guid: 07b034239f313de41ad2273d5d230958, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13174,7 +13174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1168053852}
   playerHealth: {fileID: 2131680890}
-  healthBarColor: {fileID: 0}
+  healthBarColor: {fileID: 984764209}
 --- !u!1001 &1943652801
 PrefabInstance:
   m_ObjectHideFlags: 0

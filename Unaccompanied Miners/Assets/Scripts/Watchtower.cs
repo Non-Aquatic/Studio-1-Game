@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class Watchtower : MonoBehaviour
@@ -18,6 +17,8 @@ public class Watchtower : MonoBehaviour
     public GameObject Spotlight3;
 
     public int currentSpot;
+
+    private bool[] hasPlayerTakenDamage = new bool[4] { false, false, false, false };
 
     public void Start()
     {
@@ -102,27 +103,31 @@ public class Watchtower : MonoBehaviour
         switch (currentSpot)
         {
             case 0:
-                if (playerPosition.x == 1 && playerPosition.y == 3 && currentSpot == 0)
+                if (!hasPlayerTakenDamage[0] && playerPosition.x == 1 && playerPosition.y == 3)
                 {
                     player.TakeDamage(10);
+                    hasPlayerTakenDamage[0] = true;
                 }
                 break;
             case 1:
-                if (playerPosition.x == 0 && playerPosition.y == 5 && currentSpot == 1)
+                if (!hasPlayerTakenDamage[1] && playerPosition.x == 0 && playerPosition.y == 5)
                 {
                     player.TakeDamage(10);
+                    hasPlayerTakenDamage[1] = true;
                 }
                 break;
             case 2:
-                if (playerPosition.x == 2 && playerPosition.y == 6 && currentSpot == 2)
+                if (!hasPlayerTakenDamage[2] && playerPosition.x == 2 && playerPosition.y == 6)
                 {
                     player.TakeDamage(10);
+                    hasPlayerTakenDamage[2] = true;
                 }
                 break;
             case 3:
-                if (playerPosition.x == 3 && playerPosition.y == 4 && currentSpot == 3)
+                if (!hasPlayerTakenDamage[3] && playerPosition.x == 3 && playerPosition.y == 4)
                 {
                     player.TakeDamage(10);
+                    hasPlayerTakenDamage[3] = true;
                 }
                 break;
         }

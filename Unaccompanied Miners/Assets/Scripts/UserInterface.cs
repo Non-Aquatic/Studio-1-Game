@@ -161,7 +161,7 @@ public class UserInterface : MonoBehaviour
     {
         quota = board.quota;
        
-        /*
+        
         if(sceneName == "Level 1")
         {
             quota = 25;
@@ -169,7 +169,7 @@ public class UserInterface : MonoBehaviour
         if(sceneName == "Level 2")
         {
             quota = 35;
-        }*/
+        }
     }
 
     public void winGame()
