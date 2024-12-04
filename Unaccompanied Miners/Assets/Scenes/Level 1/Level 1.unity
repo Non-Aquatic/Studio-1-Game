@@ -9314,6 +9314,7 @@ MonoBehaviour:
   turnManager: {fileID: 206796493}
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
+  watchtower: {fileID: 0}
   gemCount: 0
   health: 0
   maxHealth: 10

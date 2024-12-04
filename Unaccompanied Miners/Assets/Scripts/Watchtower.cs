@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class Watchtower : MonoBehaviour
@@ -88,12 +89,42 @@ public class Watchtower : MonoBehaviour
         currentSpot = 3;
     }
 
-    /*public void DamagePlayer()
+    private void Update()
+    {
+        SpotlightDamagePlayer();
+    }
+
+    void SpotlightDamagePlayer()
     {
         Player player = PlayerPosition.GetComponent<Player>();
         Vector2Int playerPosition = player.currentPosition;
 
-        if (playerPosition.x == 1 && playerPosition.y == 3 && currentSpot == 0) {
-            player.takeDamage
-    }*/
+        switch (currentSpot)
+        {
+            case 0:
+                if (playerPosition.x == 1 && playerPosition.y == 3 && currentSpot == 0)
+                {
+                    player.TakeDamage(10);
+                }
+                break;
+            case 1:
+                if (playerPosition.x == 0 && playerPosition.y == 5 && currentSpot == 1)
+                {
+                    player.TakeDamage(10);
+                }
+                break;
+            case 2:
+                if (playerPosition.x == 2 && playerPosition.y == 6 && currentSpot == 2)
+                {
+                    player.TakeDamage(10);
+                }
+                break;
+            case 3:
+                if (playerPosition.x == 3 && playerPosition.y == 4 && currentSpot == 3)
+                {
+                    player.TakeDamage(10);
+                }
+                break;
+        }
+    }
 }

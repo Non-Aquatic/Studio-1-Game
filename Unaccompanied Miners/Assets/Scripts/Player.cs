@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f; 
     private Vector3 targetPosition; 
     private Animator animator;
+    public Watchtower watchtower;
 
     public int gemCount;
     public int health;
@@ -106,7 +107,12 @@ public class Player : MonoBehaviour
             if (isMoving == true)
             {
                 isMoving = false;
+                if (watchtower != null && watchtower.gameObject.activeSelf)
+                {
+                    watchtower.SwapPosition();
+                }
                 turnManager.EndPlayerTurn();
+                
             }
         }
     }

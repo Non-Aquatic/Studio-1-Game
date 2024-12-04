@@ -4471,6 +4471,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1109547385}
     - target: {fileID: 3915016953503405892, guid: 07b034239f313de41ad2273d5d230958, type: 3}
+      propertyPath: Collider0
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3915016953503405892, guid: 07b034239f313de41ad2273d5d230958, type: 3}
+      propertyPath: Collider1
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3915016953503405892, guid: 07b034239f313de41ad2273d5d230958, type: 3}
+      propertyPath: Collider2
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3915016953503405892, guid: 07b034239f313de41ad2273d5d230958, type: 3}
+      propertyPath: Collider3
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3915016953503405892, guid: 07b034239f313de41ad2273d5d230958, type: 3}
       propertyPath: Spotlight0
       value: 
       objectReference: {fileID: 1046310389}
@@ -4493,6 +4509,10 @@ PrefabInstance:
     - target: {fileID: 5053867710956691376, guid: 07b034239f313de41ad2273d5d230958, type: 3}
       propertyPath: m_Name
       value: Watchtower 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5053867710956691376, guid: 07b034239f313de41ad2273d5d230958, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5053867710956716944, guid: 07b034239f313de41ad2273d5d230958, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5138,6 +5158,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7405846476849834440, guid: c6308cb7062fac34e8e50600086b12a1, type: 3}
   m_PrefabInstance: {fileID: 922852204}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &808130665 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3915016953503405892, guid: 07b034239f313de41ad2273d5d230958, type: 3}
+  m_PrefabInstance: {fileID: 673364416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82a4fac6f8df16c42905cff140b8df83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &813704717
 GameObject:
   m_ObjectHideFlags: 0
@@ -15045,6 +15076,7 @@ MonoBehaviour:
   turnManager: {fileID: 2100091460}
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
+  watchtower: {fileID: 808130665}
   gemCount: 0
   health: 0
   maxHealth: 10
