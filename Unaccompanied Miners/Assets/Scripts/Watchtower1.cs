@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Watchtower : MonoBehaviour
+public class Watchtower1 : MonoBehaviour
 {
     public GameObject Goblin0;
     public GameObject Goblin1;
@@ -21,7 +21,6 @@ public class Watchtower : MonoBehaviour
 
     public void Start()
     {
-
         Goblin3.SetActive(false);
         Spotlight3.SetActive(false);
         Goblin0.SetActive(false);

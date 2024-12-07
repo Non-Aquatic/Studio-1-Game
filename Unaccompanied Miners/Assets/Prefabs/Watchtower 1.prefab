@@ -584,14 +584,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPosition: {fileID: 0}
-  Goblin0: {fileID: 0}
-  Goblin1: {fileID: 0}
-  Goblin2: {fileID: 0}
-  Goblin3: {fileID: 0}
-  Spotlight0: {fileID: 0}
-  Spotlight1: {fileID: 0}
-  Spotlight2: {fileID: 0}
-  Spotlight3: {fileID: 0}
+  Goblin0: {fileID: 2962136247936328093}
+  Goblin1: {fileID: 7836302398217076323}
+  Goblin2: {fileID: 2227754379582611435}
+  Goblin3: {fileID: 5862973420168096890}
+  Spotlight0: {fileID: 4059888922296263510}
+  Spotlight1: {fileID: 363044366054476200}
+  Spotlight2: {fileID: 112635872530582422}
+  Spotlight3: {fileID: 6399141332800192702}
   currentSpot: 0
 --- !u!1 &5862973420168096890
 GameObject:

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class BoardManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class BoardManager : MonoBehaviour
     public GameObject miningTilePrefab;
     public GameObject saveTilePrefab;
     public TurnManager turnManager;
+    private String sceneName;
     public int quota = 0;
     int gemSpaces = 0;
     int gemSpacesLeft = 0;
@@ -52,11 +54,16 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         filePath = Application.persistentDataPath + "/saveData.txt";
+        
+        sceneName = SceneManager.GetActiveScene().name;
 
         FileInfo fileInfo = new FileInfo(filePath);
+        
         if (fileInfo.Length == 0)
         {
-            int[,] gridLayout = {
+            if (sceneName == "Level 1")
+            {
+                gridLayout = new int[,]{
                 { 1, 2, 1, 1, 1, 0, 1 },
                 { 1, 3, 0, 1, 0, 0, 1 },
                 { 1, 0, 0, 1, 0, 0, 1 },
@@ -82,10 +89,70 @@ public class BoardManager : MonoBehaviour
                 { 1, 1, 1, 0, 0, 0, 1 },
                 { 1, 0, 0, 3, 0, 0, 1 },
                 { 1, 1, 1, 2, 1, 1, 1 }
-            };
+                };
+
+            }
+            else
+            {
+                gridLayout = new int[,]{
+                { 1, 1, 1, 1, 2, 1, 3 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 3, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 2, 0, 1, 0, 1 },
+                { 1, 0, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 1, 2, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 1, 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 3, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 }
+                };
+            }
+            
         }
         else
         {
+            gridLayout = new int[,]{
+                { 1, 1, 1, 1, 2, 1, 3 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 3, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 2, 0, 1, 0, 1 },
+                { 1, 0, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 1, 2, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 1, 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 3, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 }
+                };
             using (StreamReader reader = new StreamReader(filePath))
             {
                 int startLine = 5;
