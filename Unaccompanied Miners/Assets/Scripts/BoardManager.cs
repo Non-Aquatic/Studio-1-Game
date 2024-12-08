@@ -18,6 +18,7 @@ public class BoardManager : MonoBehaviour
     int gemSpacesLeft = 0;
     int gemsLeft = 0;
     int gemsSaved = 0;
+    string savedLevel = "";
 
     string filePath;
 
@@ -58,7 +59,13 @@ public class BoardManager : MonoBehaviour
         sceneName = SceneManager.GetActiveScene().name;
 
         FileInfo fileInfo = new FileInfo(filePath);
-        
+
+        string line1 = ReadLine(filePath, 1);
+        if (line1 != null)
+        {
+            savedLevel = line1;
+        }
+
         if (fileInfo.Length == 0)
         {
             if (sceneName == "Level 1")
@@ -126,7 +133,7 @@ public class BoardManager : MonoBehaviour
         }
         else
         {
-            gridLayout = new int[,]{
+            /*gridLayout = new int[,]{
                 { 1, 1, 1, 1, 2, 1, 3 },
                 { 0, 0, 0, 0, 0, 0, 1 },
                 { 0, 0, 0, 0, 0, 0, 1 },
@@ -152,7 +159,7 @@ public class BoardManager : MonoBehaviour
                 { 1, 1, 1, 0, 0, 0, 1 },
                 { 1, 0, 0, 3, 0, 0, 1 },
                 { 1, 1, 1, 2, 1, 1, 1 }
-                };
+                };*/
             using (StreamReader reader = new StreamReader(filePath))
             {
                 int startLine = 5;
@@ -195,6 +202,14 @@ public class BoardManager : MonoBehaviour
         if (line3 != null)
         {
             quota = int.Parse(line3);
+        }
+        else if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            quota = 25;
+        }
+        else
+        {
+            quota = 35;
         }
 
 

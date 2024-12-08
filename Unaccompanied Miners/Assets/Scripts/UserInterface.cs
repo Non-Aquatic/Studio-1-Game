@@ -14,10 +14,11 @@ public class UserInterface : MonoBehaviour
 
     public TMP_Text quotaText;
     int quota = 1;
+    int playerHealth = 0;
     public TMP_Text gems;
     public TMP_Text level;
     public TMP_Text winText;
-    public TMP_Text loseText;
+    //public TMP_Text loseText;
     public TMP_Text escapeText;
     public GameObject player;
     private Player playerScript;
@@ -40,6 +41,11 @@ public class UserInterface : MonoBehaviour
     public Button resumeButton;
     public Button quitButton;
 
+    public GameObject youLosePanel;
+    public Button retryButton;
+    public Button menuButton;
+    bool hasDied = false;
+
     string filePath;
 
     // Start is called before the first frame update
@@ -49,6 +55,7 @@ public class UserInterface : MonoBehaviour
         //Invoke("LoadUI", 5);
 
         playerScript = player.GetComponent<Player>();
+        hasDied = false;
 
         gems.text = " 0";
         level.text = SceneManager.GetActiveScene().name;
@@ -66,9 +73,10 @@ public class UserInterface : MonoBehaviour
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
-        loseText.gameObject.SetActive(false);
+        //loseText.gameObject.SetActive(false);
         escapeText.gameObject.SetActive(false);
         quitConfirmPanel.SetActive(false);
+        youLosePanel.SetActive(false);
         closeTutButton.onClick.AddListener(CloseTutorial);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
@@ -76,6 +84,8 @@ public class UserInterface : MonoBehaviour
         exitGameButton.onClick.AddListener(EnableQuitConfirm);
         quitButton.onClick.AddListener(ExitGame);
         resumeButton.onClick.AddListener(EnableMenu);
+        retryButton.onClick.AddListener(RestartLevel);
+        menuButton.onClick.AddListener(ReturnToMenu);
 
         filePath = Application.persistentDataPath + "/saveData.txt";
     }
@@ -83,13 +93,13 @@ public class UserInterface : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        if(playerScript.gemCount >= quota) //MOVE THIS SECTION TO TURN MANNAGER 
-        {
-            winText.gameObject.SetActive(true);
-            playerScript.enabled = false;
-        }
         gems.text = " " + playerScript.gemCount.ToString();
         
+        playerHealth = playerScript.health;
+        if(playerScript.health <= 0)
+        {
+            //PlayerDied();
+        }
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -125,6 +135,11 @@ public class UserInterface : MonoBehaviour
 
     void RestartLevel()
     {
+        if (hasDied)
+        {
+            string emptyString = "";
+            File.WriteAllText(filePath, emptyString);
+        }
         Time.timeScale = 1f;
         SceneManager.LoadScene(level.text);
     }
@@ -138,11 +153,7 @@ public class UserInterface : MonoBehaviour
 
         string emptyString = "";
         File.WriteAllText(filePath, emptyString);
-        File.AppendAllText(filePath, level.text + "\n");
-        File.AppendAllText(filePath, playerScript.gemCount.ToString() + "\n");
-        File.AppendAllText(filePath, quota.ToString() + "\n");
-        File.AppendAllText(filePath, playerScript.currentPosition.ToString() + "\n");
-        File.AppendAllText(filePath, playerScript.boardState + "\n");
+        playerScript.SaveBoard(playerScript.currentPosition);
     }
 
     void ReturnToMenu()
@@ -176,8 +187,18 @@ public class UserInterface : MonoBehaviour
     {
         Debug.Log("You Won");
         winText.gameObject.SetActive(true);
+        playerScript.enabled = false;
         //Time.timeScale = 0f;
-        Invoke("ReturnToMainMenu", 10);
+        if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            string emptyString = "";
+            File.WriteAllText(filePath, emptyString);
+            Invoke("LoadLevel2", 10);
+        }
+        else
+        {
+            Invoke("ReturnToMainMenu", 10);
+        }
     }
 
     public void escapeGame()
@@ -186,6 +207,11 @@ public class UserInterface : MonoBehaviour
         escapeText.gameObject.SetActive(true);
         //Time.timeScale = 0f;
         Invoke("ReturnToMainMenu", 10);
+    }
+
+    void LoadLevel2()
+    {
+        SceneManager.LoadScene("Level 2");
     }
 
     void ReturnToMainMenu()
@@ -215,5 +241,13 @@ public class UserInterface : MonoBehaviour
     {
         tutPanel.SetActive(false);
         tutShade.SetActive(false);
+    }
+
+    void PlayerDied()
+    {
+        youLosePanel.SetActive(true);
+        pauseBackground.SetActive(true);
+        playerScript.enabled = false;
+        hasDied = true;
     }
 }

@@ -5,6 +5,7 @@ using UnityEditor;
 using System;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System.Transactions;
 
 public class Player : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour
     //public Watchtower watchtower;
 
     public int gemCount;
-    public int health;
+    public int health = 1;
     public int maxHealth = 10;
     public HealthBar healthBar;
     private int miningSuccessChance = 80;
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
             transform.position = targetPosition;
         }
         animator = GetComponent<Animator>();
+        SaveBoard(currentPosition);
     }
 
     private void Update()
@@ -94,6 +96,7 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.N))
             {
                 SaveBoard(currentPosition);
+                Escape();
             }
         }
     }
@@ -190,11 +193,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void SaveBoard(Vector2Int position)
+    public void SaveBoard(Vector2Int position)
     {
-        Player player = GetComponent<Player>();
-        player.enabled = false;
-        if (boardManager.IsSaveNode(position))
+        boardState = string.Empty;
+        //if (boardManager.IsSaveNode(position))
         {
             for(int y = 0; y < boardManager.gridLayout.GetLength(0); y++)
             {
@@ -217,14 +219,14 @@ public class Player : MonoBehaviour
         PlayerPrefs.Save();
 
         string emptyString = "";
-        File.WriteAllText(filePath, emptyString);
+        File.WriteAllText(filePath, string.Empty);
         File.AppendAllText(filePath, SceneManager.GetActiveScene().name + "\n");
         File.AppendAllText(filePath, gemCount.ToString() + "\n");
         File.AppendAllText(filePath, turnManager.quota.ToString() + "\n");
         File.AppendAllText(filePath, currentPosition.ToString() + "\n");
         File.AppendAllText(filePath, boardState + "\n");
 
-        turnManager.EndGame(false, true);
+        
 
         /*for (int i = 0; i < boardState.Length; i++)
         {
@@ -290,5 +292,12 @@ public class Player : MonoBehaviour
         }
 
         return null;
+    }
+
+    void Escape()
+    {
+        Player player = GetComponent<Player>();
+        player.enabled = false;
+        turnManager.EndGame(false, true);
     }
 }
