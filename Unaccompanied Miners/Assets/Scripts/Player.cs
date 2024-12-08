@@ -152,6 +152,12 @@ public class Player : MonoBehaviour
         health -= damage;
         PlayAudio(takeDamage);
         healthBar.SetHealth(health);
+        if (health <= 0)
+        {
+            Debug.Log("Player is dead.");
+            turnManager.EndGame(false, false);
+        }
+
         StartCoroutine(damgeEnder());
     }
     private void AttemptMining(Vector2Int position)

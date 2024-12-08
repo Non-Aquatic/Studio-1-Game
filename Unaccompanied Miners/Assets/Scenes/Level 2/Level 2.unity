@@ -7125,7 +7125,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.0001
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -15308,8 +15308,8 @@ AudioSource:
   m_GameObject: {fileID: 2100091457}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c2396110c83c3be4c904c21755880305, type: 3}
+  OutputAudioMixerGroup: {fileID: -4581340903813751968, guid: 0953ffe6b066cc243a363c287e2cbe41, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 7e036384e53f49b42b883449f5877fba, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 1
@@ -15521,6 +15521,7 @@ MonoBehaviour:
   gemText: {fileID: 556782460}
   quota: 1
   gems: -1
+  deathMusic: {fileID: 8300000, guid: 57f8100d96f6aa541a1773f3024a7f62, type: 3}
 --- !u!114 &2100091461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15979,7 +15980,7 @@ MonoBehaviour:
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
   gemCount: 0
-  health: 0
+  health: 1
   maxHealth: 10
   healthBar: {fileID: 1920267245}
   miningSound: {fileID: 8300000, guid: adfccabb222e35a4fbc8a0a90942013e, type: 3}

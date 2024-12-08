@@ -16,6 +16,7 @@ public class TurnManager : MonoBehaviour
     public TextMeshProUGUI gemText;
     public int quota = 1;
     public int gems = -1;
+    public AudioClip deathMusic;
 
     private void Start()
     {
@@ -79,15 +80,9 @@ public class TurnManager : MonoBehaviour
             {
                 player.TakeDamage(1);
                 enemy.PerformAttack();
-                if (player.health <= 0)
-                {
-                    Debug.Log("Player is dead.");
-                    EndGame(false, false); 
-                }
-                else
-                {
-                    UpdateUI(); 
-                }
+                
+                UpdateUI(); 
+       
             }
         }
     }
@@ -140,6 +135,9 @@ public class TurnManager : MonoBehaviour
         }
         else if (!didYouWin) 
         {
+            AudioSource music = this.GetComponent<AudioSource>();
+            music.clip = deathMusic;
+            music.Play();
             Debug.Log("BOOOO");
         }
     }

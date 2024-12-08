@@ -54,6 +54,7 @@ public class BoardManager : MonoBehaviour
 
     private void Start()
     {
+
         filePath = Application.persistentDataPath + "/saveData.txt";
         
         sceneName = SceneManager.GetActiveScene().name;
@@ -253,11 +254,11 @@ public class BoardManager : MonoBehaviour
     {
         if (gemsSaved == 0)
         {
-            gemsLeft = quota;
+            gemsLeft = quota + 10;
         }
         if (gemsSaved > 0)
         {
-            gemsLeft = quota - gemsSaved;
+            gemsLeft = (quota +10)- gemsSaved;
         }
 
         gemSpacesLeft = gemSpaces;

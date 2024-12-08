@@ -54,7 +54,6 @@ public class AudioLoader : MonoBehaviour
         UpdateMusic(musicVolume);
         UpdateSFX(sfxVolume);
 
-
     }
 
     public void UpdateMaster(float newVolume)

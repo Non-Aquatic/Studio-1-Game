@@ -98,7 +98,7 @@ public class UserInterface : MonoBehaviour
         playerHealth = playerScript.health;
         if(playerScript.health <= 0)
         {
-            //PlayerDied();
+            PlayerDied();
         }
         
         if (Input.GetKeyDown(KeyCode.Escape))
