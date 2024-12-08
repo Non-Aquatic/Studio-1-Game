@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,12 +12,17 @@ public class Enemy : MonoBehaviour
     public float audioVolume = .3f; // Audio volume, 0-1f.
     public GameObject arrowLocation;
     public GameObject arrowPrefab;
-
+    private Animator animator;
+    private Vector3 targetPosition;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     public void Initialize(Vector2Int startPosition, Vector2Int[] path)
     {
-        currentPosition = startPosition; 
+        currentPosition = startPosition;
         patrolPath = path;
-        UpdateEnemyPosition();
+        MoveTowardsTarget();
         PointToNextMove();
     }
 
@@ -25,7 +31,7 @@ public class Enemy : MonoBehaviour
         if (patrolPath != null && patrolPath.Length > 0)
         {
             Vector2Int targetPosition = patrolPath[currentPatrolIndex];
-            MoveTo(targetPosition);
+            MoveEnemy(targetPosition);
             PlayAudio(footstepSound, footstepSound.length + .25f);
 
             currentPatrolIndex++;
@@ -35,7 +41,7 @@ public class Enemy : MonoBehaviour
                 currentPatrolIndex = 0;
             }
         }
-        PointToNextMove();
+
     }
 
     private void MoveTo(Vector2Int newPosition)
@@ -48,12 +54,33 @@ public class Enemy : MonoBehaviour
     {
         transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
     }
+    
+    private void MoveEnemy(Vector2Int newPosition)
+    {
+        Vector2Int direction = newPosition - currentPosition;
+        currentPosition = newPosition;
+        animator.SetBool("IsMoving", true);
+        animator.SetInteger("MoveX", direction.x); 
+        animator.SetInteger("MoveY", direction.y); 
+        StartCoroutine(MoveTowardsTarget());
+    }
+
+    private IEnumerator MoveTowardsTarget()
+    {
+        while (transform.position != new Vector3(currentPosition.x,1f,currentPosition.y))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentPosition.x, 1f, currentPosition.y), 5f * Time.deltaTime);
+            yield return null; 
+        }
+        animator.SetBool("IsMoving", false); 
+        PointToNextMove();
+    }
 
     private void PlayAudio(AudioClip audioInput)
     {
-        if(this.TryGetComponent(out AudioSource temp))
+        if (this.TryGetComponent(out AudioSource temp))
         {
-            temp.PlayOneShot(audioInput,audioVolume);
+            temp.PlayOneShot(audioInput, audioVolume);
         }
 
     }
@@ -84,5 +111,16 @@ public class Enemy : MonoBehaviour
 
         }
 
+    }
+    public void PerformAttack()
+    {
+        animator.SetBool("IsAttacking", true);
+        StartCoroutine(StopAttackAnimation());
+    }
+
+    private IEnumerator StopAttackAnimation()
+    {
+        yield return new WaitForSeconds(.25f);
+        animator.SetBool("IsAttacking", false);
     }
 }

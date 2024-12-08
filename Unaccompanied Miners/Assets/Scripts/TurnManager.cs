@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
@@ -68,7 +69,6 @@ public class TurnManager : MonoBehaviour
             CheckCollisions(enemy.currentPosition);
             yield return new WaitForSeconds(0.1f); 
         }
-
         StartPlayerTurn();
     }
     private void CheckCollisions()
@@ -77,7 +77,8 @@ public class TurnManager : MonoBehaviour
         {
             if (enemy.currentPosition == player.currentPosition) 
             {
-                player.TakeDamage(1); 
+                player.TakeDamage(1);
+                enemy.PerformAttack();
                 if (player.health <= 0)
                 {
                     Debug.Log("Player is dead.");
@@ -95,6 +96,8 @@ public class TurnManager : MonoBehaviour
         if (enemyPosition == player.currentPosition)
         {
             player.TakeDamage(1);
+            var enemy = enemies.FirstOrDefault(enemy => enemy.currentPosition == enemyPosition);
+            enemy.PerformAttack();
             if (player.health <= 0)
             {
                 Debug.Log("Player is dead.");
