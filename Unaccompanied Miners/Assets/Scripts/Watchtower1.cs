@@ -122,28 +122,28 @@ public class Watchtower1 : MonoBehaviour
         switch (currentSpot)
         {
             case 0:
-                if (!hasPlayerTakenDamage[0] && playerPosition.x == 1 && playerPosition.y == 3)
+                if (!hasPlayerTakenDamage[0] && playerPosition.x == 4 && playerPosition.y == 3)
                 {
                     player.TakeDamage(10);
                     hasPlayerTakenDamage[0] = true;
                 }
                 break;
             case 1:
-                if (!hasPlayerTakenDamage[1] && playerPosition.x == 0 && playerPosition.y == 5)
+                if (!hasPlayerTakenDamage[1] && playerPosition.x == 3 && playerPosition.y == 8)
                 {
                     player.TakeDamage(10);
                     hasPlayerTakenDamage[1] = true;
                 }
                 break;
             case 2:
-                if (!hasPlayerTakenDamage[2] && playerPosition.x == 2 && playerPosition.y == 6)
+                if (!hasPlayerTakenDamage[2] && playerPosition.x == 5 && playerPosition.y == 6)
                 {
                     player.TakeDamage(10);
                     hasPlayerTakenDamage[2] = true;
                 }
                 break;
             case 3:
-                if (!hasPlayerTakenDamage[3] && playerPosition.x == 3 && playerPosition.y == 4)
+                if (!hasPlayerTakenDamage[3] && playerPosition.x == 6 && playerPosition.y == 4)
                 {
                     player.TakeDamage(10);
                     hasPlayerTakenDamage[3] = true;
