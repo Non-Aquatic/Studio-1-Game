@@ -22,6 +22,7 @@ public class MainMenu : MonoBehaviour
         newGameButton.onClick.AddListener(NewGame);
         loadGameButton.onClick.AddListener(WaitForMovement);
         exitButton.onClick.AddListener(ExitGame);
+        Screen.SetResolution(1920, 1080, true);
 
         filePath = Application.persistentDataPath + "/saveData.txt";
         if (!File.Exists(filePath))

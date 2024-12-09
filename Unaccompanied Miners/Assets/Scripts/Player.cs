@@ -198,24 +198,23 @@ public class Player : MonoBehaviour
     public void SaveBoard(Vector2Int position)
     {
         boardState = string.Empty;
-        //if (boardManager.IsSaveNode(position))
-        {
-            for(int y = 0; y < boardManager.gridLayout.GetLength(0); y++)
-            {
-                for (int x = 0; x < boardManager.gridLayout.GetLength(1); x++)
-                {
-                    boardState += boardManager.gridLayout[y, x].ToString();
-                    if (x < boardManager.gridLayout.GetLength(1) - 1)
-                    {
-                        boardState += " ";
-                    }
-                }
-                if (y < boardManager.gridLayout.GetLength(0) - 1)
-                {
-                    boardState += "\n";
-                }
-            }
-        }
+        
+         for(int y = 0; y < boardManager.gridLayout.GetLength(0); y++)
+         {
+             for (int x = 0; x < boardManager.gridLayout.GetLength(1); x++)
+             {
+                 boardState += boardManager.gridLayout[y, x].ToString();
+                 if (x < boardManager.gridLayout.GetLength(1) - 1)
+                 {
+                     boardState += " ";
+                 }
+             }
+             if (y < boardManager.gridLayout.GetLength(0) - 1)
+             {
+                 boardState += "\n";
+             }
+         }
+        
 
         PlayerPrefs.SetString("boardState", boardState);
         PlayerPrefs.Save();
@@ -227,13 +226,6 @@ public class Player : MonoBehaviour
         File.AppendAllText(filePath, turnManager.quota.ToString() + "\n");
         File.AppendAllText(filePath, currentPosition.ToString() + "\n");
         File.AppendAllText(filePath, boardState + "\n");
-
-        
-
-        /*for (int i = 0; i < boardState.Length; i++)
-        {
-            Debug.Log(boardState[i]);
-        }*/
     }
 
     private void PlayAudio(AudioClip audioInput)
