@@ -5120,7 +5120,7 @@ MonoBehaviour:
   miningTilePrefab: {fileID: 2389813880786386940, guid: b78d1391a77b2cd42b4e6b788802f266, type: 3}
   saveTilePrefab: {fileID: 6923171451855684081, guid: a555857676105024ab10f20686a03dc9, type: 3}
   turnManager: {fileID: 0}
-  quota: 30
+  quota: 25
 --- !u!4 &206796492
 Transform:
   m_ObjectHideFlags: 0

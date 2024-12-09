@@ -110,10 +110,6 @@ public class Player : MonoBehaviour
             if (isMoving == true)
             {
                 isMoving = false;
-                /*if (watchtower != null && watchtower.gameObject.activeSelf)
-                {
-                    watchtower.SwapPosition();
-                }*/
                 turnManager.EndPlayerTurn();
                 
             }

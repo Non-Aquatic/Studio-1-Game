@@ -56,6 +56,7 @@ public class TurnManager : MonoBehaviour
         UpdateUI(); 
         StartCoroutine(EnemyTurnCoroutine());
     }
+
     public void AddEnemy(Enemy enemy)
     {
         enemies.Add(enemy); 

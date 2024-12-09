@@ -120,6 +120,11 @@ public class Watchtower : MonoBehaviour
             previousPlayerPosition = playerPosition;
         }
 
+        if (player.turnManager.IsInvoking())
+        {
+            SwapPosition();
+        }
+
         switch (currentSpot)
         {
             case 0:
