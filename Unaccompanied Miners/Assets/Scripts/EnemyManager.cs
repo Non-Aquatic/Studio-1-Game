@@ -1,22 +1,23 @@
 using UnityEngine;
 
+//Manages the simple goblin enemies
 public class EnemyManager : MonoBehaviour
 {
     [System.Serializable]
-    public class PatrolPath
+    public class PatrolPath //The patrol path for each simple enemy
     {
         public Vector2Int[] path;
     }
-    public TurnManager turnManager;
-    public GameObject enemyPrefab; 
-    public Vector2Int[] spawnPositions; 
-    public PatrolPath[] patrolPaths;
+    public TurnManager turnManager; //Reference to turn manager
+    public GameObject enemyPrefab; //Prefab for enemy
+    public Vector2Int[] spawnPositions; //Spawn positions for all enemies
+    public PatrolPath[] patrolPaths; //Array that holds all patrol paths for all enemies
 
     private void Start()
     {
         SpawnEnemies();
     }
-
+    //Spawns all enemies with their paths and spawn positions and adds them to the turn manager
     private void SpawnEnemies()
     {
         for (int i = 0; i < spawnPositions.Length; i++)
@@ -27,6 +28,4 @@ public class EnemyManager : MonoBehaviour
             turnManager.AddEnemy(enemy);
         }
     }
-
-
 }

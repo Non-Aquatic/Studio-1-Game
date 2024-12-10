@@ -10,24 +10,26 @@ using Unity.VisualScripting;
 
 public class UserInterface : MonoBehaviour
 {
-    public BoardManager board;
+    public BoardManager board; //Reference to board manager
 
-    public TMP_Text quotaText;
-    int quota = 1;
-    int playerHealth = 0;
-    public TMP_Text gems;
-    public TMP_Text level;
-    public TMP_Text winText;
+    public TMP_Text quotaText; //Text to display the quota 
+    int quota = 1; //Initial quota value
+    int playerHealth = 0; //Player health
+    public TMP_Text gems; //Text to show the number of gems the player has collected
+    public TMP_Text level; //Text to show the current level's name
+    public TMP_Text winText; //Text to show when the player wins
     //public TMP_Text loseText;
-    public TMP_Text escapeText;
-    public GameObject player;
-    private Player playerScript;
-    private String sceneName;
+    public TMP_Text escapeText; //Text to show when the player escapes
+    public GameObject player; //Reference to the player GameObject
+    private Player playerScript; //Reference to the Player script
+    private String sceneName; //Current scene name
 
+    //UI elements for the tutorial
     public GameObject tutShade;
     public GameObject tutPanel;
     public Button closeTutButton;
 
+    //UI elements for the pause menu
     public GameObject pausePanel;
     public GameObject pauseBackground;
     public Button restartButton;
@@ -37,16 +39,18 @@ public class UserInterface : MonoBehaviour
     private bool isPaused = false;
     //public GameObject ui;
 
+    //UI elements for the quit menu
     public GameObject quitConfirmPanel;
     public Button resumeButton;
     public Button quitButton;
 
+    //UI elements for the lose menu
     public GameObject youLosePanel;
     public Button retryButton;
     public Button menuButton;
-    bool hasDied = false;
+    bool hasDied = false; //Bool to check if the player has died
 
-    string filePath;
+    string filePath; //Path to the save file
 
     // Start is called before the first frame update
     void Start()
@@ -54,22 +58,26 @@ public class UserInterface : MonoBehaviour
         //ui.SetActive(false);
         //Invoke("LoadUI", 5);
 
+        //Sets it so player has not died
         playerScript = player.GetComponent<Player>();
         hasDied = false;
 
+        //Initializes gems text to 0 and sets the level name
         gems.text = " 0";
         level.text = SceneManager.GetActiveScene().name;
 
         sceneName = SceneManager.GetActiveScene().name;
+        //Sets correct quota for level
         SetQuota();
         quotaText.text = "Quota: " + quota.ToString();
 
+        //Shows tutorial if it is level 1
         if(SceneManager.GetActiveScene().name == "Level 1")
         {
             tutPanel.SetActive(true);
             tutShade.SetActive(true);
         }
-
+        //Sets several UI elements inactive
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
@@ -77,6 +85,7 @@ public class UserInterface : MonoBehaviour
         escapeText.gameObject.SetActive(false);
         quitConfirmPanel.SetActive(false);
         youLosePanel.SetActive(false);
+        // Add listeners for all the UI buttons
         closeTutButton.onClick.AddListener(CloseTutorial);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
@@ -87,20 +96,23 @@ public class UserInterface : MonoBehaviour
         retryButton.onClick.AddListener(RestartLevel);
         menuButton.onClick.AddListener(ReturnToMenu);
 
+        //Sets up path to the save file
         filePath = Application.persistentDataPath + "/saveData.txt";
     }
 
     // Update is called once per frame
     void Update()
-    { 
+    {
+        //Updates gems text 
         gems.text = " " + playerScript.gemCount.ToString();
-        
+        //Tracks health and triggers game over if health reaches 0
         playerHealth = playerScript.health;
         if(playerScript.health <= 0)
         {
             PlayerDied();
         }
         
+        //Handles both pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -112,62 +124,77 @@ public class UserInterface : MonoBehaviour
                 PauseGame();
             }
         }
-
     }
-
+    //Pauses the game
     void PauseGame()
     {
+        //Sets pause menu to active
         pausePanel.SetActive(true);
         pauseBackground.SetActive(true);
+        //Stops game movement
         Time.timeScale = 0f;
+        //Disables player input
         playerScript.enabled = false;
+        //Sets pause bool to true
         isPaused = true;
     }
-
+    //Unpauses the game
     void ResumeGame()
     {
+        //Sets pause menu to inactive
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
+        //Resumes game movement
         Time.timeScale = 1f;
+        //Enables player input
         playerScript.enabled = true;
+        //Sets pause bool to false
         isPaused = false;
     }
-
+    //Restarts the level
     void RestartLevel()
     {
+        //If player has died, clears save file
         if (hasDied)
         {
             string emptyString = "";
             File.WriteAllText(filePath, emptyString);
         }
-        Time.timeScale = 1f;
+        //Makes sure game movment is running as normal
+        Time.timeScale = 1f; 
+        //Reloads current scene
         SceneManager.LoadScene(level.text);
     }
-
+    //Saves the game
     void SaveGame()
     {
-        //I'm not sure how we want to go about doing this so this is more for show atm.
+        //Saves the gem count and quota to PlayerPrefs
         PlayerPrefs.SetInt("GemsCount", playerScript.gemCount);
         PlayerPrefs.SetInt("Quota", quota);
         PlayerPrefs.Save();
 
+        //Clears old save file
         string emptyString = "";
         File.WriteAllText(filePath, emptyString);
+        //Fills in new save file
         playerScript.SaveBoard(playerScript.currentPosition);
     }
-
+    //Returns to main menu
     void ReturnToMenu()
     {
+        //Makes sure game movment is running as normal
         Time.timeScale = 1f;
+        //Sets pause bool to false
         isPaused = false;
+        //Loads main menu
         SceneManager.LoadScene("Main Menu");
     }
-
+    //Exits game
     void ExitGame()
     {
         Application.Quit();
     }
-
+    //Sets quota based on board manager
     void SetQuota()
     {
         quota = board.quota;
@@ -182,72 +209,75 @@ public class UserInterface : MonoBehaviour
             quota = 35;
         }*/
     }
-
+    //Hnadles winning the game
     public void winGame()
     {
         Debug.Log("You Won");
+        //Shows win text
         winText.gameObject.SetActive(true);
+        //Disables player input
         playerScript.enabled = false;
-        //Time.timeScale = 0f;
+        //Time.timeScale = 0f;\
+        //If level 1, saves and loads level 2 after 10 seconds
         if (SceneManager.GetActiveScene().name == "Level 1")
         {
             string emptyString = "";
             File.WriteAllText(filePath, emptyString);
             Invoke("LoadLevel2", 10);
         }
+        //If level 2, goes back to main menu after 10 seconds
         else
         {
             Invoke("ReturnToMainMenu", 10);
         }
     }
-
+    //Handles escaping the game
     public void escapeGame()
     {
         Debug.Log("You Escaped");
+        //Shows escape text
         escapeText.gameObject.SetActive(true);
         //Time.timeScale = 0f;
+        //Loads main menu after 10 seconds
         Invoke("ReturnToMainMenu", 10);
     }
-
+    //Loads level 2
     void LoadLevel2()
     {
         SceneManager.LoadScene("Level 2");
     }
-
+    //Loads main menu
     void ReturnToMainMenu()
     {
         SceneManager.LoadScene("Main Menu");
     }
-
-    void LoadUI()
-    {
-        //ui.SetActive(true);
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelSceneName));
-    }
-
+    //Enables pause menu
     void EnableMenu()
     {
         pausePanel.SetActive(true);
         quitConfirmPanel.SetActive(false);
     }
-
+    //Enables quit confirmation screen
     void EnableQuitConfirm()
     {
         pausePanel.SetActive(false);
         quitConfirmPanel.SetActive(true);
     }
-
+    //Closes the tutorial
     void CloseTutorial()
     {
         tutPanel.SetActive(false);
         tutShade.SetActive(false);
     }
-
+    //Handles player death
     void PlayerDied()
     {
+        //Shows you lose screen
         youLosePanel.SetActive(true);
         pauseBackground.SetActive(true);
+        //Disables player input
         playerScript.enabled = false;
+        //Sets death bool to true
         hasDied = true;
     }
 }
