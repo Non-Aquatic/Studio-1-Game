@@ -34,17 +34,12 @@ public class Enemy : MonoBehaviour
         if (patrolPath != null && patrolPath.Length > 0)
         {
             //Sets to next patrol point and makes footsteps
-            Vector2Int targetPosition = patrolPath[currentPatrolIndex];
+            Vector2Int targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
             MoveEnemy(targetPosition);
             PlayAudio(footstepSound, footstepSound.length + .25f);
 
             currentPatrolIndex++;
 
-            //If the enemy has travelled all patrol points, reset
-            if (currentPatrolIndex >= patrolPath.Length)
-            {
-                currentPatrolIndex = 0;
-            }
         }
 
     }
