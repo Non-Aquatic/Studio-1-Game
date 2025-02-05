@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public TurnManager turnManager; //Reference to turn manager
     public Vector2Int currentPosition; //Current position of player
     public float moveSpeed = 5f; //Speed of player
-    private Vector3 targetPosition; //Next position of player
+    public Vector3 targetPosition; //Next position of player
     private Animator animator; //Animator for the player
     //public Watchtower watchtower;
 
@@ -31,22 +31,24 @@ public class Player : MonoBehaviour
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
 
     public float audioVolume = .5f; // Audio volume, 0-1f.
-    private bool isMoving = false; //Bool for whether player is moving
+    public bool isMoving = false; //Bool for whether player is moving
     public string boardState = ""; //Board state
 
     string filePath; //Path to the save file
+    private SaveLoadScript saveLoadScript;
 
     private void Start()
     {
         //Sets up path to the save file
         filePath = Application.persistentDataPath + "/saveData.txt";
+        saveLoadScript = GetComponent<SaveLoadScript>();
 
         //Initializes health to maximum
         health = maxHealth;
         turnManager.UpdateUI();
 
         //Reads saved gem count from file if avaliable
-        string line2 = ReadLine(filePath, 2);
+        /*string line2 = ReadLine(filePath, 2);
         if(line2 != null)
         {
             gemCount = int.Parse(line2);
@@ -70,11 +72,11 @@ public class Player : MonoBehaviour
             currentPosition = new Vector2Int(x, y);
             targetPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
             transform.position = targetPosition;
-        }
+        }*/
         // Gets animator component
         animator = GetComponent<Animator>();
         //Saves initial board state
-        SaveBoard(currentPosition);
+        //SaveBoard(currentPosition);
     }
 
     private void Update()
@@ -106,7 +108,7 @@ public class Player : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.N))
             {
-                SaveBoard(currentPosition);
+                saveLoadScript.SaveBoard(currentPosition);
                 Escape();
             }
         }
@@ -230,8 +232,9 @@ public class Player : MonoBehaviour
             Debug.Log("Mine at a node");
         }
     }
+
     //Saves the current board to a file and playerPrefs
-    public void SaveBoard(Vector2Int position)
+    /*public void SaveBoard(Vector2Int position)
     {
         boardState = string.Empty;
         //Gets the entire board in the form of a string
@@ -263,7 +266,8 @@ public class Player : MonoBehaviour
         File.AppendAllText(filePath, turnManager.quota.ToString() + "\n");
         File.AppendAllText(filePath, currentPosition.ToString() + "\n");
         File.AppendAllText(filePath, boardState + "\n");
-    }
+    }*/
+
     //Plays the given audio
     private void PlayAudio(AudioClip audioInput)
     {
@@ -332,7 +336,7 @@ public class Player : MonoBehaviour
         return null;
     }
     //Handles the player escaping the mines
-    void Escape()
+    public void Escape()
     {
         Player player = GetComponent<Player>();
         //Disables all controls

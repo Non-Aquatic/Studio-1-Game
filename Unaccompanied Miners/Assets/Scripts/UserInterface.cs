@@ -51,6 +51,7 @@ public class UserInterface : MonoBehaviour
     bool hasDied = false; //Bool to check if the player has died
 
     string filePath; //Path to the save file
+    private SaveLoadScript saveScript;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +61,7 @@ public class UserInterface : MonoBehaviour
 
         //Sets it so player has not died
         playerScript = player.GetComponent<Player>();
+        saveScript = player.GetComponent<SaveLoadScript>();
         hasDied = false;
 
         //Initializes gems text to 0 and sets the level name
@@ -177,7 +179,7 @@ public class UserInterface : MonoBehaviour
         string emptyString = "";
         File.WriteAllText(filePath, emptyString);
         //Fills in new save file
-        playerScript.SaveBoard(playerScript.currentPosition);
+        saveScript.SaveBoard(playerScript.currentPosition);
     }
     //Returns to main menu
     void ReturnToMenu()

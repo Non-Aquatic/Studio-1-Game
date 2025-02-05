@@ -8285,6 +8285,7 @@ GameObject:
   - component: {fileID: 691044652}
   - component: {fileID: 691044653}
   - component: {fileID: 691044654}
+  - component: {fileID: 691044655}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -8308,6 +8309,7 @@ MonoBehaviour:
   turnManager: {fileID: 206796493}
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
+  targetPosition: {x: 0, y: 0, z: 0}
   gemCount: 0
   health: 0
   maxHealth: 10
@@ -8317,6 +8319,7 @@ MonoBehaviour:
   takeDamage: {fileID: 8300000, guid: 8715f7d572ead284c9aff663f00fb9a7, type: 3}
   footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
   audioVolume: 0.5
+  isMoving: 0
   boardState: 
 --- !u!136 &691044648
 CapsuleCollider:
@@ -8526,6 +8529,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &691044655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691044646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2283d74c587a45b48a03447acdfc2d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  boardState: 
 --- !u!1001 &698379294
 PrefabInstance:
   m_ObjectHideFlags: 0
