@@ -16,45 +16,48 @@ public class BoardManager : MonoBehaviour
     public GameObject saveTilePrefab;
 
     public TurnManager turnManager; //Reference to turn manager
-    private String sceneName; //Current scene name
+    public String sceneName; //Current scene name
     public int quota = 0;  //Number of gems needed to complete level
     int gemSpaces = 0;  //Number of spaces that contain gems
     int gemSpacesLeft = 0; //Number of remaining tiles that should contains gems  but don't
     int gemsLeft = 0; //Number of gems left to assign to tiles
-    int gemsSaved = 0; //Number of gems saved
-    string savedLevel = ""; //Name of saved level
+    public int gemsSaved = 0; //Number of gems saved
+    //string savedLevel = ""; //Name of saved level
 
     string filePathPlayer; //Path to the save file
     string filePathBoard;
 
     //2D array for the grid layout of the game
-    public int[,] gridLayout = {
-        { 1, 2, 1, 1, 1, 0, 1 },
-        { 1, 3, 0, 1, 0, 0, 1 },
-        { 1, 0, 0, 1, 0, 0, 1 },
-        { 1, 1, 1, 2, 1, 1, 1 },
-        { 1, 0, 0, 1, 0, 0, 1 },
-        { 1, 0, 0, 1, 0, 0, 1 },
-        { 1, 1, 1, 1, 1, 1, 1 },
-        { 1, 0, 0, 0, 0, 0, 1 },
-        { 1, 1, 1, 1, 0, 0, 1 },
-        { 1, 0, 0, 1, 1, 1, 1 },
-        { 1, 1, 1, 1, 3, 0, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 1, 0, 1, 1, 1 },
-        { 1, 1, 1, 0, 1, 0, 1 },
-        { 1, 0, 1, 0, 1, 0, 1 },
-        { 1, 0, 1, 0, 1, 0, 1 },
-        { 1, 0, 2, 0, 1, 0, 1 },
-        { 1, 0, 1, 1, 1, 1, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 1, 1, 2, 1, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 1, 1, 0, 0, 0, 1 },
-        { 1, 0, 0, 3, 0, 0, 1 },
-        { 1, 1, 1, 2, 1, 1, 1 }
-    };
+    //public int[,] gridLayout = {
+    //    { 1, 2, 1, 1, 1, 0, 1 },
+    //    { 1, 3, 0, 1, 0, 0, 1 },
+    //    { 1, 0, 0, 1, 0, 0, 1 },
+    //    { 1, 1, 1, 2, 1, 1, 1 },
+    //    { 1, 0, 0, 1, 0, 0, 1 },
+    //    { 1, 0, 0, 1, 0, 0, 1 },
+    //    { 1, 1, 1, 1, 1, 1, 1 },
+    //    { 1, 0, 0, 0, 0, 0, 1 },
+    //    { 1, 1, 1, 1, 0, 0, 1 },
+    //    { 1, 0, 0, 1, 1, 1, 1 },
+    //    { 1, 1, 1, 1, 3, 0, 1 },
+    //    { 1, 0, 1, 0, 0, 0, 1 },
+    //    { 1, 0, 1, 0, 1, 1, 1 },
+    //    { 1, 1, 1, 0, 1, 0, 1 },
+    //    { 1, 0, 1, 0, 1, 0, 1 },
+    //    { 1, 0, 1, 0, 1, 0, 1 },
+    //    { 1, 0, 2, 0, 1, 0, 1 },
+    //    { 1, 0, 1, 1, 1, 1, 1 },
+    //    { 1, 0, 1, 0, 0, 0, 1 },
+    //    { 1, 0, 1, 0, 0, 0, 1 },
+    //    { 1, 0, 1, 1, 2, 1, 1 },
+    //    { 1, 0, 1, 0, 0, 0, 1 },
+    //    { 1, 1, 1, 0, 0, 0, 1 },
+    //    { 1, 0, 0, 3, 0, 0, 1 },
+    //    { 1, 1, 1, 2, 1, 1, 1 }
+    //};
+
+    public int[,] gridLayout;
+
 
     //2D array for number of gems on each tile
     public int[,] gemCounts;
@@ -65,146 +68,151 @@ public class BoardManager : MonoBehaviour
         filePathPlayer = Application.persistentDataPath + "/PlayerData.txt";
         filePathBoard = Application.persistentDataPath + "/LevelData.txt";
 
-        sceneName = SceneManager.GetActiveScene().name;
-        FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
-        FileInfo fileInfoBoard = new FileInfo(filePathBoard);
-        //Reads the saved level data from file if avaliable
-        string line1 = ReadLine(filePathPlayer, 1);
-        if (line1 != null)
-        {
-            savedLevel = line1;
-        }
-        //If the file is empty
-        if (fileInfoBoard.Length == 0)
-        {
-            //Default grid layout for level one
-            if (sceneName == "Level 1")
-            {
-                gridLayout = new int[,]{
-                { 1, 2, 1, 1, 1, 0, 1 },
-                { 1, 3, 0, 1, 0, 0, 1 },
-                { 1, 0, 0, 1, 0, 0, 1 },
-                { 1, 1, 1, 2, 1, 1, 1 },
-                { 1, 0, 0, 1, 0, 0, 1 },
-                { 1, 0, 0, 1, 0, 0, 1 },
-                { 1, 1, 1, 1, 1, 1, 1 },
-                { 1, 0, 0, 0, 0, 0, 1 },
-                { 1, 1, 1, 1, 0, 0, 1 },
-                { 1, 0, 0, 1, 1, 1, 1 },
-                { 1, 1, 1, 1, 3, 0, 1 },
-                { 1, 0, 1, 0, 0, 0, 1 },
-                { 1, 0, 1, 0, 1, 1, 1 },
-                { 1, 1, 1, 0, 1, 0, 1 },
-                { 1, 0, 1, 0, 1, 0, 1 },
-                { 1, 0, 1, 0, 1, 0, 1 },
-                { 1, 0, 2, 0, 1, 0, 1 },
-                { 1, 0, 1, 1, 1, 1, 1 },
-                { 1, 0, 1, 0, 0, 0, 1 },
-                { 1, 0, 1, 0, 0, 0, 1 },
-                { 1, 0, 1, 1, 2, 1, 1 },
-                { 1, 0, 1, 0, 0, 0, 1 },
-                { 1, 1, 1, 0, 0, 0, 1 },
-                { 1, 0, 0, 3, 0, 0, 1 },
-                { 1, 1, 1, 2, 1, 1, 1 }
-                };
+        /*//sceneName = SceneManager.GetActiveScene().name;
+        //FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
+        //FileInfo fileInfoBoard = new FileInfo(filePathBoard);
+        ////Reads the saved level data from file if avaliable
+        //string line1 = ReadLine(filePathPlayer, 1);
+        //if (line1 != null)
+        //{
+        //    savedLevel = line1;
+        //}
+        ////If the file is empty
+        //if (fileInfoBoard.Length == 0)
+        //{
+        //    //Default grid layout for level one
+        //    if (sceneName == "Level 1")
+        //    {
+        //        gridLayout = new int[,]{
+        //        { 1, 2, 1, 1, 1, 0, 1 },
+        //        { 1, 3, 0, 1, 0, 0, 1 },
+        //        { 1, 0, 0, 1, 0, 0, 1 },
+        //        { 1, 1, 1, 2, 1, 1, 1 },
+        //        { 1, 0, 0, 1, 0, 0, 1 },
+        //        { 1, 0, 0, 1, 0, 0, 1 },
+        //        { 1, 1, 1, 1, 1, 1, 1 },
+        //        { 1, 0, 0, 0, 0, 0, 1 },
+        //        { 1, 1, 1, 1, 0, 0, 1 },
+        //        { 1, 0, 0, 1, 1, 1, 1 },
+        //        { 1, 1, 1, 1, 3, 0, 1 },
+        //        { 1, 0, 1, 0, 0, 0, 1 },
+        //        { 1, 0, 1, 0, 1, 1, 1 },
+        //        { 1, 1, 1, 0, 1, 0, 1 },
+        //        { 1, 0, 1, 0, 1, 0, 1 },
+        //        { 1, 0, 1, 0, 1, 0, 1 },
+        //        { 1, 0, 2, 0, 1, 0, 1 },
+        //        { 1, 0, 1, 1, 1, 1, 1 },
+        //        { 1, 0, 1, 0, 0, 0, 1 },
+        //        { 1, 0, 1, 0, 0, 0, 1 },
+        //        { 1, 0, 1, 1, 2, 1, 1 },
+        //        { 1, 0, 1, 0, 0, 0, 1 },
+        //        { 1, 1, 1, 0, 0, 0, 1 },
+        //        { 1, 0, 0, 3, 0, 0, 1 },
+        //        { 1, 1, 1, 2, 1, 1, 1 }
+        //        };
 
-            }
-            //Default grid layout for level two
-            else if (sceneName == "Level 2")
-            {
-                gridLayout = new int[,]{
-                { 1, 1, 1, 1, 2, 1, 3 },
-                { 0, 0, 0, 0, 0, 0, 1 },
-                { 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 2, 1, 1, 1, 1, 1 },
-                { 1, 0, 0, 1, 0, 0, 1 },
-                { 1, 0, 0, 2, 0, 0, 1 },
-                { 1, 1, 1, 1, 1, 2, 1 },
-                { 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 1, 1, 1, 0, 0, 1 },
-                { 1, 0, 0, 1, 0, 0, 1 },
-                { 1, 1, 1, 1, 2, 0, 1 },
-                { 1, 0, 1, 0, 1, 0, 2 },
-                { 1, 0, 1, 0, 1, 0, 1 },
-                { 1, 1, 1, 1, 1, 1, 1 },
-                { 1, 0, 1, 0, 1, 0, 1 },
-                { 1, 0, 1, 2, 1, 1, 1 },
-                { 1, 0, 2, 0, 1, 0, 2 },
-                { 2, 0, 1, 1, 1, 0, 1 },
-                { 1, 1, 1, 1, 1, 1, 1 },
-                { 0, 0, 1, 0, 0, 0, 1 },
-                { 0, 0, 1, 1, 2, 1, 1 },
-                { 0, 0, 1, 0, 1, 0, 1 },
-                { 1, 1, 1, 0, 1, 0, 1 },
-                { 1, 0, 0, 0, 1, 0, 1 },
-                { 2, 1, 1, 1, 1, 1, 1 }
-                };
-            }
+        //    }
+        //    //Default grid layout for level two
+        //    else if (sceneName == "Level 2")
+        //    {
+        //        gridLayout = new int[,]{
+        //        { 1, 1, 1, 1, 2, 1, 3 },
+        //        { 0, 0, 0, 0, 0, 0, 1 },
+        //        { 0, 0, 0, 0, 0, 0, 1 },
+        //        { 1, 2, 1, 1, 1, 1, 1 },
+        //        { 1, 0, 0, 1, 0, 0, 1 },
+        //        { 1, 0, 0, 2, 0, 0, 1 },
+        //        { 1, 1, 1, 1, 1, 2, 1 },
+        //        { 0, 0, 0, 0, 0, 0, 1 },
+        //        { 1, 1, 1, 1, 0, 0, 1 },
+        //        { 1, 0, 0, 1, 0, 0, 1 },
+        //        { 1, 1, 1, 1, 2, 0, 1 },
+        //        { 1, 0, 1, 0, 1, 0, 2 },
+        //        { 1, 0, 1, 0, 1, 0, 1 },
+        //        { 1, 1, 1, 1, 1, 1, 1 },
+        //        { 1, 0, 1, 0, 1, 0, 1 },
+        //        { 1, 0, 1, 2, 1, 1, 1 },
+        //        { 1, 0, 2, 0, 1, 0, 2 },
+        //        { 2, 0, 1, 1, 1, 0, 1 },
+        //        { 1, 1, 1, 1, 1, 1, 1 },
+        //        { 0, 0, 1, 0, 0, 0, 1 },
+        //        { 0, 0, 1, 1, 2, 1, 1 },
+        //        { 0, 0, 1, 0, 1, 0, 1 },
+        //        { 1, 1, 1, 0, 1, 0, 1 },
+        //        { 1, 0, 0, 0, 1, 0, 1 },
+        //        { 2, 1, 1, 1, 1, 1, 1 }
+        //        };
+        //    }
             
-        }
-        else
-        {
-            //If a save file exists, read the grid layout from the file
-            using (StreamReader reader = new StreamReader(filePathBoard))
-            {
-                int startLine = 2;
-                string line;
-                int currentLine = 1;
-                int row = 0;
+        //}
+        //else
+        //{
+        //    //If a save file exists, read the grid layout from the file
+        //    using (StreamReader reader = new StreamReader(filePathBoard))
+        //    {
+        //        int startLine = 2;
+        //        string line;
+        //        int currentLine = 1;
+        //        int row = 0;
 
-                while((line = reader.ReadLine()) != null)
-                {
-                    string[] numbers = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        //        while((line = reader.ReadLine()) != null)
+        //        {
+        //            string[] numbers = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (currentLine >= startLine)
-                    {
-                        for (int col = 0; col < numbers.Length && col < gridLayout.GetLength(1); col++)
-                        {
-                            if (int.TryParse(numbers[col], out int value))
-                            {
-                                gridLayout[row, col] = value;
-                            }
-                        }
+        //            if (currentLine >= startLine)
+        //            {
+        //                for (int col = 0; col < numbers.Length && col < gridLayout.GetLength(1); col++)
+        //                {
+        //                    if (int.TryParse(numbers[col], out int value))
+        //                    {
+        //                        gridLayout[row, col] = value;
+        //                    }
+        //                }
 
-                        row++;
-                        if (row >= gridLayout.GetLength(0))
-                            break;
-                    }
+        //                row++;
+        //                if (row >= gridLayout.GetLength(0))
+        //                    break;
+        //            }
 
-                    currentLine++;
-                }
-            }
+        //            currentLine++;
+        //        }
+        //    }
 
-        }
-        //Gems acquired loaded from save
-        string line2 = ReadLine(filePathPlayer, 2);
-        if (line2 != null)
-        {
-            gemsSaved = int.Parse(line2);
-        }
-        //Level quota loaded from save
-        string line3 = ReadLine(filePathPlayer, 3);
-        if (line3 != null)
-        {
-            quota = int.Parse(line3);
-        }
-        //If not saved, use default from level
-        else if (SceneManager.GetActiveScene().name == "Level 1")
-        {
-            quota = 25;
-        }
-        else
-        {
-            quota = 35;
-        }
+        //}
+        ////Gems acquired loaded from save
+        //string line2 = ReadLine(filePathPlayer, 2);
+        //if (line2 != null)
+        //{
+        //    gemsSaved = int.Parse(line2);
+        //}
+        ////Level quota loaded from save
+        //string line3 = ReadLine(filePathPlayer, 3);
+        //if (line3 != null)
+        //{
+        //    quota = int.Parse(line3);
+        //}
+        ////If not saved, use default from level
+        //else if (SceneManager.GetActiveScene().name == "Level 1")
+        //{
+        //    quota = 25;
+        //}
+        //else
+        //{
+        //    quota = 35;
+        //}
 
         //Generates the board and gem counts
-        GenerateBoard();
-        GenerateGemCounts();
+        //GenerateBoard();
+        //GenerateGemCounts();*/
+    }
+
+    public void SetGrid(int[,] newGrid)
+    {
+        gridLayout = newGrid;
     }
     
     //Generates the board based on gridLayout
-    private void GenerateBoard()
+    public void GenerateBoard()
     {
         int rows = gridLayout.GetLength(0);
         int columns = gridLayout.GetLength(1);
@@ -240,7 +248,7 @@ public class BoardManager : MonoBehaviour
         }
     }
     //Generates the gem nodes with a random amount of gems per node
-    private void GenerateGemCounts()
+    public void GenerateGemCounts()
     {
         //If no gems are saved, make the amount of gems possible quota + 10
         if (gemsSaved == 0)

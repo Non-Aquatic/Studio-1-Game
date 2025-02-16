@@ -4836,7 +4836,9 @@ MonoBehaviour:
   miningTilePrefab: {fileID: 2389813880786386940, guid: b78d1391a77b2cd42b4e6b788802f266, type: 3}
   saveTilePrefab: {fileID: 6923171451855684081, guid: a555857676105024ab10f20686a03dc9, type: 3}
   turnManager: {fileID: 0}
+  sceneName: 
   quota: 25
+  gemsSaved: 0
 --- !u!4 &206796492
 Transform:
   m_ObjectHideFlags: 0
@@ -8543,6 +8545,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   boardState: 
+  boardManager: {fileID: 206796491}
+  quota: 0
 --- !u!1001 &698379294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22771,8 +22775,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 206796492}
   - {fileID: 691044651}
+  - {fileID: 206796492}
   - {fileID: 533789317}
   - {fileID: 991840410}
   - {fileID: 1650102770}

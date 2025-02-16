@@ -14,6 +14,43 @@ public class SaveLoadScript : MonoBehaviour
     string filePathPlayer; //Path to the Player save file
     string filePathBoard; //Path to the level save file
 
+    public BoardManager boardManager;
+    private String sceneName; //Current scene name
+    public int quota = 0;
+    int gemsSaved = 0;
+    string savedLevel = ""; //Name of saved level
+
+    //2D array for the grid layout of the game
+    public int[,] gridLayout = {
+        { 1, 2, 1, 1, 1, 0, 1 },
+        { 1, 3, 0, 1, 0, 0, 1 },
+        { 1, 0, 0, 1, 0, 0, 1 },
+        { 1, 1, 1, 2, 1, 1, 1 },
+        { 1, 0, 0, 1, 0, 0, 1 },
+        { 1, 0, 0, 1, 0, 0, 1 },
+        { 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 0, 0, 0, 0, 0, 1 },
+        { 1, 1, 1, 1, 0, 0, 1 },
+        { 1, 0, 0, 1, 1, 1, 1 },
+        { 1, 1, 1, 1, 3, 0, 1 },
+        { 1, 0, 1, 0, 0, 0, 1 },
+        { 1, 0, 1, 0, 1, 1, 1 },
+        { 1, 1, 1, 0, 1, 0, 1 },
+        { 1, 0, 1, 0, 1, 0, 1 },
+        { 1, 0, 1, 0, 1, 0, 1 },
+        { 1, 0, 2, 0, 1, 0, 1 },
+        { 1, 0, 1, 1, 1, 1, 1 },
+        { 1, 0, 1, 0, 0, 0, 1 },
+        { 1, 0, 1, 0, 0, 0, 1 },
+        { 1, 0, 1, 1, 2, 1, 1 },
+        { 1, 0, 1, 0, 0, 0, 1 },
+        { 1, 1, 1, 0, 0, 0, 1 },
+        { 1, 0, 0, 3, 0, 0, 1 },
+        { 1, 1, 1, 2, 1, 1, 1 }
+    };
+
+    //public int[,] gridLayout;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +63,7 @@ public class SaveLoadScript : MonoBehaviour
         if (line2 != null)
         {
             player.gemCount = int.Parse(line2);
+            gemsSaved = int.Parse(line2);
         }
 
         //Reads saved player position from file if avaliable
@@ -47,6 +85,46 @@ public class SaveLoadScript : MonoBehaviour
             player.targetPosition = new Vector3(player.currentPosition.x, 1f, player.currentPosition.y);
             transform.position = player.targetPosition;
         }
+
+
+
+        sceneName = SceneManager.GetActiveScene().name;
+        FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
+        FileInfo fileInfoBoard = new FileInfo(filePathBoard);
+        //Reads the saved level data from file if avaliable
+        string line1 = ReadLine(filePathPlayer, 1);
+        if (line1 != null)
+        {
+            savedLevel = line1;
+        }
+        //If the file is empty
+        ReadBoard(fileInfoBoard);
+
+        //Level quota loaded from save
+        string line3 = ReadLine(filePathPlayer, 3);
+        if (line3 != null)
+        {
+            quota = int.Parse(line3);
+        }
+
+        //If not saved, use default from level
+        else if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            quota = 25;
+        }
+        else
+        {
+            quota = 35;
+        }
+
+        boardManager.sceneName = sceneName;
+        boardManager.quota = quota;
+        boardManager.gemsSaved = gemsSaved;
+
+        boardManager.SetGrid(gridLayout);
+
+        boardManager.GenerateBoard();
+        boardManager.GenerateGemCounts();
 
         SaveBoard(player.currentPosition);
     }
@@ -82,7 +160,110 @@ public class SaveLoadScript : MonoBehaviour
         }
         return null;
     }
+    void ReadBoard(FileInfo levelData)
+    {
+        if (levelData.Length == 0)
+        {
+            //Default grid layout for level one
+            if (sceneName == "Level 1")
+            {
+                gridLayout = new int[,]{
+                { 1, 2, 1, 1, 1, 0, 1 },
+                { 1, 3, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 1, 1, 1 },
+                { 1, 1, 1, 1, 3, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 1, 1, 1 },
+                { 1, 1, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 2, 0, 1, 0, 1 },
+                { 1, 0, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 0, 1, 1, 2, 1, 1 },
+                { 1, 0, 1, 0, 0, 0, 1 },
+                { 1, 1, 1, 0, 0, 0, 1 },
+                { 1, 0, 0, 3, 0, 0, 1 },
+                { 1, 1, 1, 2, 1, 1, 1 }
+                };
 
+            }
+            //Default grid layout for level two
+            else if (sceneName == "Level 2")
+            {
+                gridLayout = new int[,]{
+                { 1, 1, 1, 1, 2, 1, 3 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 2, 1, 1, 1, 1, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 2, 0, 0, 1 },
+                { 1, 1, 1, 1, 1, 2, 1 },
+                { 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 1, 1, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 1, 2, 0, 1 },
+                { 1, 0, 1, 0, 1, 0, 2 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1 },
+                { 1, 0, 1, 0, 1, 0, 1 },
+                { 1, 0, 1, 2, 1, 1, 1 },
+                { 1, 0, 2, 0, 1, 0, 2 },
+                { 2, 0, 1, 1, 1, 0, 1 },
+                { 1, 1, 1, 1, 1, 1, 1 },
+                { 0, 0, 1, 0, 0, 0, 1 },
+                { 0, 0, 1, 1, 2, 1, 1 },
+                { 0, 0, 1, 0, 1, 0, 1 },
+                { 1, 1, 1, 0, 1, 0, 1 },
+                { 1, 0, 0, 0, 1, 0, 1 },
+                { 2, 1, 1, 1, 1, 1, 1 }
+                };
+            }
+
+        }
+        else
+        {
+            //If a save file exists, read the grid layout from the file
+            using (StreamReader reader = new StreamReader(filePathBoard))
+            {
+                int startLine = 2;
+                string line;
+                int currentLine = 1;
+                int row = 0;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] numbers = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (currentLine >= startLine)
+                    {
+                        for (int col = 0; col < numbers.Length && col < gridLayout.GetLength(1); col++)
+                        {
+                            if (int.TryParse(numbers[col], out int value))
+                            {
+                                gridLayout[row, col] = value;
+                            }
+                        }
+
+                        row++;
+                        if (row >= gridLayout.GetLength(0))
+                            break;
+                    }
+
+                    currentLine++;
+                }
+            }
+
+        }
+    }
     public void SaveBoard(Vector2Int position)
     {
         boardState = string.Empty;
@@ -118,4 +299,27 @@ public class SaveLoadScript : MonoBehaviour
         File.AppendAllText(filePathBoard, player.currentPosition.ToString() + "\n");
         File.AppendAllText(filePathBoard, boardState + "\n");
     }
+
+    /*public void NewGame()
+    {
+        //Checks to see if the save file exists, and if not creates it
+        filePathPlayer = Application.persistentDataPath + "/PlayerData.txt";
+        filePathBoard = Application.persistentDataPath + "/LevelData.txt";
+
+        if (!File.Exists(filePathPlayer))
+        {
+            using (FileStream fs = File.Create(filePathPlayer))
+            {
+
+            }
+        }
+
+        if (!File.Exists(filePathBoard))
+        {
+            using (FileStream fs = File.Create(filePathBoard))
+            {
+
+            }
+        }
+    }*/
 }
