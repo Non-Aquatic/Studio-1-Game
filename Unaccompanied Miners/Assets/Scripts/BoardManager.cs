@@ -24,7 +24,8 @@ public class BoardManager : MonoBehaviour
     int gemsSaved = 0; //Number of gems saved
     string savedLevel = ""; //Name of saved level
 
-    string filePath; //Path to the save file
+    string filePathPlayer; //Path to the save file
+    string filePathBoard;
 
     //2D array for the grid layout of the game
     public int[,] gridLayout = {
@@ -61,17 +62,20 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         //Gets the save file and gets data from it at the start
-        filePath = Application.persistentDataPath + "/saveData.txt";
+        filePathPlayer = Application.persistentDataPath + "/PlayerData.txt";
+        filePathBoard = Application.persistentDataPath + "/LevelData.txt";
+
         sceneName = SceneManager.GetActiveScene().name;
-        FileInfo fileInfo = new FileInfo(filePath);
+        FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
+        FileInfo fileInfoBoard = new FileInfo(filePathBoard);
         //Reads the saved level data from file if avaliable
-        string line1 = ReadLine(filePath, 1);
+        string line1 = ReadLine(filePathPlayer, 1);
         if (line1 != null)
         {
             savedLevel = line1;
         }
         //If the file is empty
-        if (fileInfo.Length == 0)
+        if (fileInfoBoard.Length == 0)
         {
             //Default grid layout for level one
             if (sceneName == "Level 1")
@@ -141,9 +145,9 @@ public class BoardManager : MonoBehaviour
         else
         {
             //If a save file exists, read the grid layout from the file
-            using (StreamReader reader = new StreamReader(filePath))
+            using (StreamReader reader = new StreamReader(filePathBoard))
             {
-                int startLine = 5;
+                int startLine = 2;
                 string line;
                 int currentLine = 1;
                 int row = 0;
@@ -173,13 +177,13 @@ public class BoardManager : MonoBehaviour
 
         }
         //Gems acquired loaded from save
-        string line2 = ReadLine(filePath, 2);
+        string line2 = ReadLine(filePathPlayer, 2);
         if (line2 != null)
         {
             gemsSaved = int.Parse(line2);
         }
         //Level quota loaded from save
-        string line3 = ReadLine(filePath, 3);
+        string line3 = ReadLine(filePathPlayer, 3);
         if (line3 != null)
         {
             quota = int.Parse(line3);

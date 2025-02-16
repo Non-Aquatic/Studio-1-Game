@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Rendering;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class MainMenu : MonoBehaviour
     public GameObject OptionsPanel; //Panel for options/settings
     bool optionsPanelOpen = false; //Bool to check whether setting are open
 
-    string filePath; //Path to the save file
+    string filePathPlayer; //Path to the save file
+    string filePathBoard;
     string firstLine = string.Empty; //First line from save file
 
     void Start()
@@ -28,17 +30,27 @@ public class MainMenu : MonoBehaviour
         Screen.SetResolution(1920, 1080, true);
 
         //Checks to see if the save file exists, and if not creates it
-        filePath = Application.persistentDataPath + "/saveData.txt";
-        if (!File.Exists(filePath))
+        filePathPlayer = Application.persistentDataPath + "/PlayerData.txt";
+        filePathBoard = Application.persistentDataPath + "/LevelData.txt";
+
+        if (!File.Exists(filePathPlayer))
         {
-            using(FileStream fs = File.Create(filePath))
+            using(FileStream fs = File.Create(filePathPlayer))
+            {
+
+            }
+        }
+
+        if (!File.Exists(filePathBoard))
+        {
+            using (FileStream fs = File.Create(filePathBoard))
             {
 
             }
         }
 
         // Read the first line from the save file to see whether you can load the game
-        using (StreamReader sr = new StreamReader(filePath))
+        using (StreamReader sr = new StreamReader(filePathPlayer))
         {
             firstLine = sr.ReadLine();
             // If the save file is empty, disable the Load Game button
@@ -59,7 +71,8 @@ public class MainMenu : MonoBehaviour
     {
         //Clears save file and loads first level
         string emptyString = "";
-        File.WriteAllText(filePath, emptyString);
+        File.WriteAllText(filePathPlayer, emptyString);
+        File.WriteAllText(filePathBoard, emptyString);
         SceneManager.LoadScene("Level 1");
     }
     // Waits for movement before loading the game
