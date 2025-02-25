@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
     public GameObject OptionsPanel; //Panel for options/settings
     bool optionsPanelOpen = false; //Bool to check whether setting are open
 
+    string folderPath;
     string filePathPlayer; //Path to the save file
     string filePathBoard;
     string firstLine = string.Empty; //First line from save file
@@ -30,8 +31,9 @@ public class MainMenu : MonoBehaviour
         Screen.SetResolution(1920, 1080, true);
 
         //Checks to see if the save file exists, and if not creates it
-        filePathPlayer = Application.persistentDataPath + "/PlayerData.txt";
-        filePathBoard = Application.persistentDataPath + "/LevelData.txt";
+        folderPath = Path.Combine(Application.dataPath, "GameData");
+        filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
+        filePathBoard = Path.Combine(folderPath, "LevelData.txt");
 
         if (!File.Exists(filePathPlayer))
         {
@@ -71,10 +73,14 @@ public class MainMenu : MonoBehaviour
     {
         //Clears save file and loads first level
         string emptyString = "";
+        string currentScene = "Level 1";
         File.WriteAllText(filePathPlayer, emptyString);
         File.WriteAllText(filePathBoard, emptyString);
+        PlayerPrefs.SetString(currentScene, currentScene);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("Level 1");
     }
+
     // Waits for movement before loading the game
     void WaitForMovement()
     {
@@ -82,18 +88,17 @@ public class MainMenu : MonoBehaviour
         if (firstLine == "Level 1" || firstLine == "Level 2")
         {
             //Loads specified level after 1 second
-            //SceneManager.LoadScene(firstLine, LoadSceneMode.Additive);
             Invoke("LoadGame", 1);
         }
-        //Debug.Log("Until I get to the Save Game feature, this will just load the first level.  - Mahliq");
     }
+
     //Loads a saved game
     void LoadGame()
     {
         //Looks at first line and loads corresponding level
-        //SceneManager.UnloadSceneAsync("Main Menu");
         SceneManager.LoadScene(firstLine);
     }
+
     //Changes visibility of options menu
     public void ToggleOptions()
     {
