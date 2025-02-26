@@ -73,19 +73,19 @@ public class MainMenu : MonoBehaviour
     {
         //Clears save file and loads first level
         string emptyString = "";
-        string currentScene = "Level 1";
+        string currentScene = "Tutorial 1";
         File.WriteAllText(filePathPlayer, emptyString);
         File.WriteAllText(filePathBoard, emptyString);
         PlayerPrefs.SetString(currentScene, currentScene);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Tutorial 1");
     }
 
     // Waits for movement before loading the game
     void WaitForMovement()
     {
        //Makes sure it is a valid level
-        if (firstLine == "Level 1" || firstLine == "Level 2")
+        if (firstLine == "Level 1" || firstLine == "Level 2" || firstLine == "Tutorial 1")
         {
             //Loads specified level after 1 second
             Invoke("LoadGame", 1);

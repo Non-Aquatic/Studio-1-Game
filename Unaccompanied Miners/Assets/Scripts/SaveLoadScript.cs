@@ -26,31 +26,31 @@ public class SaveLoadScript : MonoBehaviour
 
     //2D array for the grid layout of the game
     public int[,] gridLayout = {
-        { 1, 2, 1, 1, 1, 0, 1 },
-        { 1, 3, 0, 1, 0, 0, 1 },
-        { 1, 0, 0, 1, 0, 0, 1 },
-        { 1, 1, 1, 2, 1, 1, 1 },
-        { 1, 0, 0, 1, 0, 0, 1 },
-        { 1, 0, 0, 1, 0, 0, 1 },
-        { 1, 1, 1, 1, 1, 1, 1 },
-        { 1, 0, 0, 0, 0, 0, 1 },
-        { 1, 1, 1, 1, 0, 0, 1 },
-        { 1, 0, 0, 1, 1, 1, 1 },
-        { 1, 1, 1, 1, 3, 0, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 1, 0, 1, 1, 1 },
-        { 1, 1, 1, 0, 1, 0, 1 },
-        { 1, 0, 1, 0, 1, 0, 1 },
-        { 1, 0, 1, 0, 1, 0, 1 },
-        { 1, 0, 2, 0, 1, 0, 1 },
-        { 1, 0, 1, 1, 1, 1, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 0, 1, 1, 2, 1, 1 },
-        { 1, 0, 1, 0, 0, 0, 1 },
-        { 1, 1, 1, 0, 0, 0, 1 },
-        { 1, 0, 0, 3, 0, 0, 1 },
-        { 1, 1, 1, 2, 1, 1, 1 }
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 0, 0, 0 }
     };
 
     //public int[,] gridLayout;
@@ -167,8 +167,17 @@ public class SaveLoadScript : MonoBehaviour
         //If position is not saved, start at (0, 0)
         if (line1Level == null)
         {
-            player.currentPosition = new Vector2Int(0, 0);
-            player.targetPosition = transform.position;
+            if (sceneName == "Tutorial 1")
+            {
+                player.currentPosition = new Vector2Int(3, 0);
+                player.targetPosition = new Vector3(player.currentPosition.x, 1f, player.currentPosition.y);
+                transform.position = player.targetPosition;
+            }
+            else
+            {
+                player.currentPosition = new Vector2Int(0, 0);
+                player.targetPosition = transform.position;
+            }
         }
         //If position is saved, places player at that position
         if (line1Level != null)
@@ -314,13 +323,19 @@ public class SaveLoadScript : MonoBehaviour
                 };
             }*/
             //string loadingScene = PlayerPrefs.GetString(currentScene);
-            if(sceneName == "Level 1")
+            switch (sceneName)
             {
-                lvlPath = Path.Combine(folderPath, "Level-1.txt");
-            }
-            if (sceneName == "Level 2")
-            {
-                lvlPath = Path.Combine(folderPath, "Level-2.txt");
+                case "Tutorial 1":
+                    lvlPath = Path.Combine(folderPath, "Tutorial-1.txt");
+                    break;
+                case "Level 1":
+                    lvlPath = Path.Combine(folderPath, "Level-1.txt");
+                    break;
+                case "Level 2":
+                    lvlPath = Path.Combine(folderPath, "Level-2.txt");
+                    break;
+                default: 
+                    break;
             }
 
             using (StreamReader reader = new StreamReader(lvlPath))
