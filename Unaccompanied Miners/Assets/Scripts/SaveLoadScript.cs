@@ -153,6 +153,18 @@ public class SaveLoadScript : MonoBehaviour
 
     void ReadFile()
     {
+
+        sceneName = SceneManager.GetActiveScene().name;
+        FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
+        FileInfo fileInfoBoard = new FileInfo(filePathBoard);
+        //Reads the saved level data from file if avaliable
+        string line1 = ReadLine(filePathPlayer, 1);
+        if (line1 != null)
+        {
+            savedLevel = line1;
+        }
+        ReadBoard(fileInfoBoard);
+
         //Reads saved gem count from file if avaliable
         string line2 = ReadLine(filePathPlayer, 2);
         if (line2 != null)
@@ -165,11 +177,11 @@ public class SaveLoadScript : MonoBehaviour
         string line1Level = ReadLine(filePathBoard, 1);
 
         //If position is not saved, start at (0, 0)
-        if (line1Level == null)
+        if (line1Level == null || savedLevel != sceneName)
         {
             if (sceneName == "Tutorial 1")
             {
-                player.currentPosition = new Vector2Int(3, 0);
+                player.currentPosition = new Vector2Int(3, 7);
                 player.targetPosition = new Vector3(player.currentPosition.x, 1f, player.currentPosition.y);
                 transform.position = player.targetPosition;
             }
@@ -186,21 +198,32 @@ public class SaveLoadScript : MonoBehaviour
             string[] parts = removeParentheses.Split(',');
             int x = int.Parse(parts[0].Trim());
             int y = int.Parse(parts[1].Trim());
+
+            if (gridLayout[y, x] == 0)
+            {
+                switch (sceneName)
+                {
+                    case "Tutorial 1":
+                        x = 3;
+                        y = 7;
+                        break;
+                    case "Level 1":
+                        x = 0; 
+                        y = 0;
+                        break;
+                    case "Level 2":
+                        x = 0;
+                        y = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             player.currentPosition = new Vector2Int(x, y);
             player.targetPosition = new Vector3(player.currentPosition.x, 1f, player.currentPosition.y);
             transform.position = player.targetPosition;
         }
-
-        sceneName = SceneManager.GetActiveScene().name;
-        FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
-        FileInfo fileInfoBoard = new FileInfo(filePathBoard);
-        //Reads the saved level data from file if avaliable
-        string line1 = ReadLine(filePathPlayer, 1);
-        if (line1 != null)
-        {
-            savedLevel = line1;
-        }
-        ReadBoard(fileInfoBoard);
 
         //Level quota loaded from save
         string line3 = ReadLine(filePathPlayer, 3);
@@ -210,9 +233,13 @@ public class SaveLoadScript : MonoBehaviour
         }
 
         //If not saved, use default from level
-        else if (SceneManager.GetActiveScene().name == "Level 1")
+        else if (sceneName == "Level 1")
         {
             quota = 25;
+        }
+        else if (sceneName == "Tutorial 1")
+        {
+            quota = 10;
         }
         else
         {
@@ -257,7 +284,7 @@ public class SaveLoadScript : MonoBehaviour
     }
     void ReadBoard(FileInfo levelData)
     {
-        if (levelData.Length == 0)
+        if (levelData.Length == 0 || savedLevel != sceneName)
         {
             /*//Default grid layout for level one
             if (savedLevel == "Level 1")

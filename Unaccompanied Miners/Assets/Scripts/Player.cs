@@ -34,13 +34,17 @@ public class Player : MonoBehaviour
     public bool isMoving = false; //Bool for whether player is moving
     public string boardState = ""; //Board state
 
-    string filePath; //Path to the save file
+    string folderPath; //Path to the save file
+    string filePathPlayer;
+    string filePathBoard;
     private SaveLoadScript saveLoadScript;
 
     private void Start()
     {
         //Sets up path to the save file
-        filePath = Application.persistentDataPath + "/saveData.txt";
+        folderPath = Path.Combine(Application.dataPath, "GameData");
+        filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
+        filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         saveLoadScript = GetComponent<SaveLoadScript>();
 
         //Initializes health to maximum

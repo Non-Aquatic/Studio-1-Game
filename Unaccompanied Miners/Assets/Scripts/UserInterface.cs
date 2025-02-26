@@ -50,7 +50,9 @@ public class UserInterface : MonoBehaviour
     public Button menuButton;
     bool hasDied = false; //Bool to check if the player has died
 
-    string filePath; //Path to the save file
+    string folderPath; //Path to the save file
+    string filePathPlayer;
+    string filePathBoard;
     private SaveLoadScript saveScript;
 
     // Start is called before the first frame update
@@ -99,7 +101,9 @@ public class UserInterface : MonoBehaviour
         menuButton.onClick.AddListener(ReturnToMenu);
 
         //Sets up path to the save file
-        filePath = Application.persistentDataPath + "/saveData.txt";
+        folderPath = Path.Combine(Application.dataPath, "GameData");
+        filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
+        filePathBoard = Path.Combine(folderPath, "LevelData.txt");
     }
 
     // Update is called once per frame
@@ -160,7 +164,8 @@ public class UserInterface : MonoBehaviour
         if (hasDied)
         {
             string emptyString = "";
-            File.WriteAllText(filePath, emptyString);
+            File.WriteAllText(filePathPlayer, emptyString);
+            File.WriteAllText(filePathBoard, emptyString);
         }
         //Makes sure game movment is running as normal
         Time.timeScale = 1f; 
@@ -177,7 +182,8 @@ public class UserInterface : MonoBehaviour
 
         //Clears old save file
         string emptyString = "";
-        File.WriteAllText(filePath, emptyString);
+        File.WriteAllText(filePathPlayer, emptyString);
+        File.WriteAllText(filePathBoard, emptyString);
         //Fills in new save file
         saveScript.SaveBoard(playerScript.currentPosition);
     }
@@ -219,12 +225,21 @@ public class UserInterface : MonoBehaviour
         winText.gameObject.SetActive(true);
         //Disables player input
         playerScript.enabled = false;
-        //Time.timeScale = 0f;\
-        //If level 1, saves and loads level 2 after 10 seconds
-        if (SceneManager.GetActiveScene().name == "Level 1")
+        Debug.Log(sceneName);
+        //If Tutorial 1, saves and loads level 1 after 10 seconds
+        if (sceneName == "Tutorial 1")
         {
             string emptyString = "";
-            File.WriteAllText(filePath, emptyString);
+            File.WriteAllText(filePathPlayer, emptyString);
+            File.WriteAllText(filePathBoard, emptyString);
+            Invoke("LoadLevel1", 10);
+        }
+        //If level 1, saves and loads level 2 after 10 seconds
+        if (sceneName == "Level 1")
+        {
+            string emptyString = "";
+            File.WriteAllText(filePathPlayer, emptyString);
+            File.WriteAllText(filePathBoard, emptyString);
             Invoke("LoadLevel2", 10);
         }
         //If level 2, goes back to main menu after 10 seconds
@@ -243,6 +258,13 @@ public class UserInterface : MonoBehaviour
         //Loads main menu after 10 seconds
         Invoke("ReturnToMainMenu", 10);
     }
+
+    //Loads level 1
+    void LoadLevel1()
+    {
+        SceneManager.LoadScene("Level 1");
+    }
+
     //Loads level 2
     void LoadLevel2()
     {

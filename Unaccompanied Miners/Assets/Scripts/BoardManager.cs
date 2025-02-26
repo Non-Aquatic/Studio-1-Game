@@ -24,6 +24,7 @@ public class BoardManager : MonoBehaviour
     public int gemsSaved = 0; //Number of gems saved
     //string savedLevel = ""; //Name of saved level
 
+    string folderPath;
     string filePathPlayer; //Path to the save file
     string filePathBoard;
 
@@ -65,8 +66,9 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         //Gets the save file and gets data from it at the start
-        filePathPlayer = Application.persistentDataPath + "/PlayerData.txt";
-        filePathBoard = Application.persistentDataPath + "/LevelData.txt";
+        folderPath = Path.Combine(Application.dataPath, "GameData");
+        filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
+        filePathBoard = Path.Combine(folderPath, "LevelData.txt");
 
         /*//sceneName = SceneManager.GetActiveScene().name;
         //FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
