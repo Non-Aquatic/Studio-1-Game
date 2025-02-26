@@ -1,31 +1,97 @@
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.SceneManagement;
 
-//Manages the simple goblin enemies
 public class EnemyManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class PatrolPath //The patrol path for each simple enemy
-    {
-        public Vector2Int[] path;
-    }
-    public TurnManager turnManager; //Reference to turn manager
-    public GameObject enemyPrefab; //Prefab for enemy
-    public Vector2Int[] spawnPositions; //Spawn positions for all enemies
-    public PatrolPath[] patrolPaths; //Array that holds all patrol paths for all enemies
+    public TurnManager turnManager;
+    public GameObject enemyPrefab; 
+    private List<Vector2Int> spawnPositions;
+    private List<Vector2Int[]> patrolPaths;
+    public string level;
+    public string file;
 
     private void Start()
     {
+        string sceneName = SceneManager.GetActiveScene().name;  
+        if (sceneName == "Level 1")
+        {
+            file = "Assets/Paths/Level1.txt";
+        }
+        else if (sceneName == "Level 2")
+        {
+            file = "Assets/Paths/Level2.txt";
+        }
+        else
+        {
+            Debug.Log("What");
+        }
+        spawnPositions = new List<Vector2Int>();  
+        patrolPaths = new List<Vector2Int[]>();
+        LoadPath(file); 
         SpawnEnemies();
     }
-    //Spawns all enemies with their paths and spawn positions and adds them to the turn manager
+
     private void SpawnEnemies()
     {
-        for (int i = 0; i < spawnPositions.Length; i++)
+        for (int i = 0; i < spawnPositions.Count; i++)
         {
             GameObject enemyInstance = Instantiate(enemyPrefab, new Vector3(spawnPositions[i].x, 1f, spawnPositions[i].y), Quaternion.Euler(0, -45, 0));
             Enemy enemy = enemyInstance.GetComponent<Enemy>();
-            enemy.Initialize(spawnPositions[i], patrolPaths[i].path);
+            enemy.Initialize(spawnPositions[i], patrolPaths[i]);
             turnManager.AddEnemy(enemy);
         }
     }
+    private void LoadPath(string filePath)
+    {
+        if (!File.Exists(filePath)) 
+        {
+            Debug.Log("File broken please fix");
+        }
+        string[] lines = File.ReadAllLines(filePath);
+        List<Vector2Int> currentPath = new List<Vector2Int>();
+        Vector2Int currentSpawnPosition = new Vector2Int();
+
+        foreach (string line in lines)
+        {
+            if (line.StartsWith("Enemy"))  
+            {
+                if (currentPath.Count > 0)
+                {
+                    spawnPositions.Add(currentSpawnPosition);
+                    patrolPaths.Add(currentPath.ToArray());
+                    currentPath.Clear();
+                }
+            }
+            else if (line.StartsWith("S:"))  
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length == 2)
+                {
+                    string[] coordinates = parts[1].Split(',');  
+                    if (coordinates.Length == 2)
+                    {
+                        int x = int.Parse(coordinates[0]);
+                        int y = int.Parse(coordinates[1]);
+                        currentSpawnPosition = new Vector2Int(x, y); 
+                    }
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(line)) 
+            {
+                string[] coordinates = line.Split(',');
+                if (coordinates.Length == 2)
+                {
+                    int x = int.Parse(coordinates[0]);
+                    int y = int.Parse(coordinates[1]);
+                    currentPath.Add(new Vector2Int(x, y));
+                }
+            }
+        }
+        spawnPositions.Add(currentSpawnPosition);
+        patrolPaths.Add(currentPath.ToArray());
+    }
 }
+
