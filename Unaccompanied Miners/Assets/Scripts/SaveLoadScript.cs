@@ -182,13 +182,13 @@ public class SaveLoadScript : MonoBehaviour
             if (sceneName == "Tutorial 1")
             {
                 player.currentPosition = new Vector2Int(3, 7);
-                player.targetPosition = new Vector3(player.currentPosition.x, 1f, player.currentPosition.y);
-                transform.position = player.targetPosition;
+                player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
+                transform.position = player.GetTargetPosition();
             }
             else
             {
                 player.currentPosition = new Vector2Int(0, 0);
-                player.targetPosition = transform.position;
+                player.SetTargetPosition(transform.position);
             }
         }
         //If position is saved, places player at that position
@@ -221,8 +221,8 @@ public class SaveLoadScript : MonoBehaviour
             }
 
             player.currentPosition = new Vector2Int(x, y);
-            player.targetPosition = new Vector3(player.currentPosition.x, 1f, player.currentPosition.y);
-            transform.position = player.targetPosition;
+            player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
+            transform.position = player.GetTargetPosition();
         }
 
         //Level quota loaded from save

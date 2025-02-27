@@ -13,24 +13,35 @@ public class EnemyManager : MonoBehaviour
     public string level;
     public string file;
 
+    string folderPath;
+    string filePathPaths = "";
+
     private void Start()
     {
+        folderPath = Path.Combine(Application.dataPath, "Paths");
+        
+
         string sceneName = SceneManager.GetActiveScene().name;  
         if (sceneName == "Level 1")
         {
-            file = "Assets/Paths/Level1.txt";
+            filePathPaths = Path.Combine(folderPath, "Level1.txt");
         }
         else if (sceneName == "Level 2")
         {
-            file = "Assets/Paths/Level2.txt";
+            filePathPaths = Path.Combine(folderPath, "Level2.txt");
         }
         else
         {
             Debug.Log("What");
+            //This does not account for the Tutorial levels so I had to make a few changes -Mahliq
         }
         spawnPositions = new List<Vector2Int>();  
         patrolPaths = new List<Vector2Int[]>();
-        LoadPath(file); 
+
+        if (filePathPaths.Length != 0)
+        {
+            LoadPath(filePathPaths);
+        }
         SpawnEnemies();
     }
 
