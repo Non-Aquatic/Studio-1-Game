@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
     }
     private void MovePlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime*2.5f);
 
         if (transform.position == targetPosition)
         {
@@ -186,7 +186,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("Mine at a node");
+            StartCoroutine(stillEnder());
         }
     }
 
@@ -266,7 +266,11 @@ public class Player : MonoBehaviour
 
         animator.SetBool("damaged", false);
     }
-
+    private IEnumerator stillEnder()
+    {
+        yield return new WaitForSeconds(.5f);
+        turnManager.EndPlayerTurn();
+    }
     string ReadLine(string filePath, int index)
     {
         if (!File.Exists(filePath))
