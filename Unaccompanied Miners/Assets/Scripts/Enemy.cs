@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
         //Moves towards until it reaches new position
         while (transform.position != new Vector3(currentPosition.x,1f,currentPosition.y))
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentPosition.x, 1f, currentPosition.y), 5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(currentPosition.x, 1f, currentPosition.y), 15f * Time.deltaTime);
             yield return null; 
         }
         //Once reached, sets animator to not move
