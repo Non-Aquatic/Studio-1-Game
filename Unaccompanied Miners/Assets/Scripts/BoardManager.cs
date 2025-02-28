@@ -70,6 +70,7 @@ public class BoardManager : MonoBehaviour
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
 
+        #region Old Loader Code
         /*//sceneName = SceneManager.GetActiveScene().name;
         //FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
         //FileInfo fileInfoBoard = new FileInfo(filePathBoard);
@@ -206,6 +207,7 @@ public class BoardManager : MonoBehaviour
         //Generates the board and gem counts
         //GenerateBoard();
         //GenerateGemCounts();*/
+        #endregion
     }
 
     public void SetGrid(int[,] newGrid)
@@ -252,15 +254,15 @@ public class BoardManager : MonoBehaviour
     //Generates the gem nodes with a random amount of gems per node
     public void GenerateGemCounts()
     {
-        //If no gems are saved, make the amount of gems possible quota + 10
+        //If no gems are saved, make the amount of gems possible quota + 5
         if (gemsSaved == 0)
         {
-            gemsLeft = quota + 10;
+            gemsLeft = quota + 5;
         }
-        //If we have some gems saved, make the amount of gems possible quota + 10 - however many we have
+        //If we have some gems saved, make the amount of gems possible quota + 5 - however many we have
         if (gemsSaved > 0)
         {
-            gemsLeft = (quota +10)- gemsSaved;
+            gemsLeft = (quota +5)- gemsSaved;
         }
 
         gemSpacesLeft = gemSpaces;
