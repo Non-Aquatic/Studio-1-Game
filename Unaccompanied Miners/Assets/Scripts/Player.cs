@@ -33,10 +33,11 @@ public class Player : MonoBehaviour
     public float audioVolume = .5f; // Audio volume, 0-1f.
     private bool isMoving = false; //Bool for whether player is moving
     public string boardState = ""; //Board state
+    private float boundrySensitivity = .0001f;
 
     string folderPath; // Path to the GameData folder
     string filePathPlayer; //Path to the Player save file
-    string filePathBoard; //Path to the level save file
+    string filePathBoard; //Path to the level save filed
     private SaveLoadScript saveLoadScript;
 
     private void Start()
@@ -120,8 +121,8 @@ public class Player : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime * 2.5f);
 
-        //Once it has reached target position
-        if (transform.position == targetPosition)
+        //Once it has reached target position +- boundrySensitivity
+        if(Vector3.Distance(transform.position, targetPosition) <= boundrySensitivity)
         {
             //Moving animation set to false and player's turn ends
             animator.SetBool("IsMoving", false);
