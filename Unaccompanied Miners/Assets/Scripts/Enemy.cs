@@ -8,17 +8,25 @@ public class Enemy : MonoBehaviour
     public Vector2Int currentPosition; //Current position of enemy
     private Vector2Int[] patrolPath; //Patrol path of each enemy
     private int currentPatrolIndex = 0; //Index of the patrol path
-    public AudioClip attackSound; //Assigned to attacking audio clip in inspector, plays on attack
-    public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
-    public float audioVolume = .3f; // Audio volume, 0-1f.
     public GameObject arrowLocation; //Spawn location for next move arrow
     public GameObject arrowPrefab; //Prefab for the next move arrow
     private Animator animator; //Animator for the enemy
+
+    public AudioClip attackSound; //Assigned to attacking audio clip in inspector, plays on attack
+    public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
+    private float audioVolume = .3f; // Audio volume, 0-1f.
+    private float pitchAdjustment;
+    private float pitchUpper = .9f;
+    private float pitchLower = .7f;
+    private float clipDelay = 0f;
+
+
 
     //Gets animator component for the enemy for animations
     private void Start()
     {
         animator = GetComponent<Animator>();
+        pitchAdjustment = Random.Range(pitchLower, pitchUpper);
     }
     //Initializes the start position and arrow for the enemy
     public void Initialize(Vector2Int startPosition, Vector2Int[] path)
@@ -36,7 +44,7 @@ public class Enemy : MonoBehaviour
             //Sets to next patrol point and makes footsteps
             Vector2Int targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
             MoveEnemy(targetPosition);
-            PlayAudio(footstepSound, footstepSound.length + .25f);
+            PlayAudioDelayed(footstepSound, clipDelay);
 
             currentPatrolIndex++;
 
@@ -85,19 +93,21 @@ public class Enemy : MonoBehaviour
             arrowLocation.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
-    //Plays audio at specific volume
-    private void PlayAudio(AudioClip audioInput, float delay)
+
+    //Plays audio with a specific delay
+    public void PlayAudioDelayed(AudioClip audioInput, float delay)
     {
         if (this.TryGetComponent(out AudioSource temp))
         {
             temp.loop = false;
             temp.clip = audioInput;
             temp.volume = audioVolume;
-            temp.PlayDelayed(.25f);
+            temp.pitch = pitchAdjustment;
+            temp.PlayDelayed(delay);
 
         }
-
     }
+
     //Sets animator to play attack animation
     public void PerformAttack()
     {

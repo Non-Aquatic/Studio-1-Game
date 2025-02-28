@@ -65,6 +65,11 @@ public class AudioLoader : MonoBehaviour
     {
         masterVolume = newVolume;
         float temp = Mathf.Log10(masterVolume) * 20;
+        if(newVolume == 0)
+        {
+            temp = -80;
+        }
+
         audioMixer.SetFloat("MasterVolume", temp);
         //masterAudioGroup.audioMixer.SetFloat("Volume", temp);
 
@@ -76,16 +81,30 @@ public class AudioLoader : MonoBehaviour
     {
         musicVolume = newVolume;
         float temp = Mathf.Log10(musicVolume) * 20;
+        if (newVolume == 0)
+        {
+            temp = -80;
+        }
 
         audioMixer.SetFloat("MusicVolume", temp);
         //musicAudioGroup.audioMixer.SetFloat("volume", temp);
+
+
+        Debug.Log($"Music Volume changed to {musicVolume}, lerped to {temp}");
     }
     //Updates the sfx volume
     public void UpdateSFX(float newVolume)
     {
         sfxVolume = newVolume;
         float temp = Mathf.Log10(sfxVolume) * 20;
+        if (newVolume == 0)
+        {
+            temp = -80;
+        }
         audioMixer.SetFloat("SFXVolume",temp);
+
+
+        Debug.Log($"SFX Volume changed to {sfxVolume}, lerped to {temp}");
     }
     //Saves current volume levels to playerPrefs
     public void SavePrefs()

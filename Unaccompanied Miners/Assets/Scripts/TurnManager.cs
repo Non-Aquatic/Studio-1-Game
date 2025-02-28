@@ -68,6 +68,7 @@ public class TurnManager : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn();
+
             CheckCollisions(enemy.currentPosition);
             yield return new WaitForSeconds(0.1f); 
         }

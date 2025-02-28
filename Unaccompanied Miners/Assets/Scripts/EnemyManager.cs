@@ -16,6 +16,9 @@ public class EnemyManager : MonoBehaviour
     string folderPath;
     string filePathPaths = "";
 
+    [SerializeField] private int audioPlayersModulo = 3;
+
+
     private void Start()
     {
         folderPath = Path.Combine(Application.dataPath, "Paths");
@@ -42,16 +45,32 @@ public class EnemyManager : MonoBehaviour
         {
             LoadPath(filePathPaths);
         }
+
         SpawnEnemies();
     }
 
     private void SpawnEnemies()
     {
+        int audioIndex = 0;
         for (int i = 0; i < spawnPositions.Count; i++)
         {
             GameObject enemyInstance = Instantiate(enemyPrefab, new Vector3(spawnPositions[i].x, 1f, spawnPositions[i].y), Quaternion.Euler(0, -45, 0));
             Enemy enemy = enemyInstance.GetComponent<Enemy>();
             enemy.Initialize(spawnPositions[i], patrolPaths[i]);
+
+            if((i % audioPlayersModulo == 0))
+            {
+                audioIndex++;
+            }
+            else
+            {
+                if (enemy.TryGetComponent(out AudioSource temp))
+                {
+                    temp.enabled = false;
+
+                }
+            }
+
             turnManager.AddEnemy(enemy);
         }
     }

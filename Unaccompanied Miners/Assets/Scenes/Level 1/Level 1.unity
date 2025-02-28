@@ -4889,98 +4889,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnManager: {fileID: 206796493}
   enemyPrefab: {fileID: 8676704902230241825, guid: 38be24e4fba1bc74880a6f5be04d52ee, type: 3}
-  spawnPositions:
-  - {x: 6, y: 5}
-  - {x: 0, y: 6}
-  - {x: 3, y: 3}
-  - {x: 3, y: 9}
-  - {x: 2, y: 13}
-  - {x: 4, y: 16}
-  - {x: 0, y: 22}
-  patrolPaths:
-  - path:
-    - {x: 6, y: 4}
-    - {x: 6, y: 3}
-    - {x: 6, y: 2}
-    - {x: 6, y: 3}
-    - {x: 6, y: 4}
-    - {x: 6, y: 5}
-  - path:
-    - {x: 0, y: 5}
-    - {x: 0, y: 4}
-    - {x: 0, y: 5}
-    - {x: 0, y: 6}
-  - path:
-    - {x: 3, y: 2}
-    - {x: 3, y: 1}
-    - {x: 3, y: 2}
-    - {x: 3, y: 3}
-    - {x: 3, y: 4}
-    - {x: 3, y: 5}
-    - {x: 3, y: 4}
-    - {x: 3, y: 3}
-    - {x: 2, y: 3}
-    - {x: 3, y: 3}
-    - {x: 4, y: 3}
-    - {x: 3, y: 3}
-  - path:
-    - {x: 4, y: 9}
-    - {x: 5, y: 9}
-    - {x: 6, y: 9}
-    - {x: 5, y: 9}
-    - {x: 4, y: 9}
-    - {x: 3, y: 9}
-    - {x: 3, y: 10}
-    - {x: 2, y: 10}
-    - {x: 1, y: 10}
-    - {x: 0, y: 10}
-    - {x: 1, y: 10}
-    - {x: 2, y: 10}
-    - {x: 3, y: 10}
-    - {x: 3, y: 9}
-  - path:
-    - {x: 1, y: 13}
-    - {x: 0, y: 13}
-    - {x: 1, y: 13}
-    - {x: 2, y: 13}
-    - {x: 2, y: 14}
-    - {x: 2, y: 15}
-    - {x: 2, y: 16}
-    - {x: 2, y: 17}
-    - {x: 2, y: 16}
-    - {x: 2, y: 15}
-    - {x: 2, y: 14}
-    - {x: 2, y: 13}
-  - path:
-    - {x: 5, y: 16}
-    - {x: 6, y: 16}
-    - {x: 6, y: 15}
-    - {x: 6, y: 14}
-    - {x: 6, y: 13}
-    - {x: 6, y: 12}
-    - {x: 5, y: 12}
-    - {x: 4, y: 12}
-    - {x: 4, y: 13}
-    - {x: 4, y: 14}
-    - {x: 4, y: 15}
-    - {x: 4, y: 16}
-  - path:
-    - {x: 1, y: 22}
-    - {x: 2, y: 22}
-    - {x: 2, y: 21}
-    - {x: 2, y: 20}
-    - {x: 3, y: 20}
-    - {x: 4, y: 20}
-    - {x: 5, y: 20}
-    - {x: 6, y: 20}
-    - {x: 5, y: 20}
-    - {x: 4, y: 20}
-    - {x: 3, y: 20}
-    - {x: 2, y: 20}
-    - {x: 2, y: 21}
-    - {x: 2, y: 22}
-    - {x: 1, y: 22}
-    - {x: 0, y: 22}
+  level: 
+  file: 
+  audioPlayersModulo: 3
 --- !u!82 &206796495
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8311,7 +8222,7 @@ MonoBehaviour:
   turnManager: {fileID: 206796493}
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
-  targetPosition: {x: 0, y: 0, z: 0}
+  watchtower: {fileID: 0}
   gemCount: 0
   health: 0
   maxHealth: 10
@@ -8321,7 +8232,6 @@ MonoBehaviour:
   takeDamage: {fileID: 8300000, guid: 8715f7d572ead284c9aff663f00fb9a7, type: 3}
   footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
   audioVolume: 0.5
-  isMoving: 0
   boardState: 
 --- !u!136 &691044648
 CapsuleCollider:
