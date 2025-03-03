@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
         if (patrolPath != null && patrolPath.Length > 0)
         {
             //Sets to next patrol point and makes footsteps
+            //Debug.Log($"{this.name}: Going to position {currentPatrolIndex % patrolPath.Length}");
             Vector2Int targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
             MoveEnemy(targetPosition);
             PlayAudioDelayed(footstepSound, clipDelay);
@@ -65,6 +66,12 @@ public class Enemy : MonoBehaviour
     //Moves enemy to new location smoothly
     private IEnumerator MoveTowardsTarget()
     {
+        //Deletes old arrow
+        if (arrowLocation != null)
+        {
+            Destroy(arrowLocation);
+        }
+
         //Moves towards until it reaches new position
         while (transform.position != new Vector3(currentPosition.x,1f,currentPosition.y))
         {
@@ -81,12 +88,8 @@ public class Enemy : MonoBehaviour
     {
         if (patrolPath != null && patrolPath.Length > 0)
         {
-            Vector2Int targetPosition = patrolPath[currentPatrolIndex];
-            //Deletes old arrow
-            if (arrowLocation != null)
-            {
-                Destroy(arrowLocation);
-            }
+            Vector2Int targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
+            
             //Spawns new one in the direction of the next patrol point
             arrowLocation = Instantiate(arrowPrefab, transform.position + Vector3.up, Quaternion.identity);
             Vector3 direction = new Vector3(targetPosition.x - currentPosition.x, 0f, targetPosition.y - currentPosition.y).normalized;
