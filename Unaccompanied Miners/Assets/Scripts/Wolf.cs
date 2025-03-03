@@ -4,36 +4,41 @@ using System.Collections.Generic;
 
 public class Wolf : MonoBehaviour
 {
-    public float moveSpeed = 2f;
+    public float moveSpeed = 10f;
     public GameObject scentTrailPrefab; 
-    public Transform player; 
+    public Player player; 
     public Vector2Int currentPosition;
     public BoardManager boardManager;
 
 
-    private Vector3 targetPosition;
+    private Vector2Int targetPosition;
     private List<Vector3> pathToMove = new List<Vector3>(); 
-    private int restTurns = 0; 
+    private int restTurns = 0;
+    private Vector2Int nextPosition;
     private enum WolfState { Stall, Move, Rest }
     private WolfState currentState = WolfState.Stall;
 
     private void Start()
     {
-        targetPosition = player.position;
+        player = FindObjectOfType<Player>(); 
+        boardManager = FindObjectOfType<BoardManager>();
+        targetPosition = player.currentPosition;
     }
 
     public void Initialize(Vector2Int startPosition)
     {
         currentPosition = startPosition;
+        nextPosition = startPosition;
         transform.position = new Vector3(currentPosition.x, 1f, currentPosition.y);
     }
     public void UpdateTargetPosition()
     {
-        targetPosition = player.position;
+        targetPosition = player.currentPosition;
     }
 
     public void PerformTurn()
     {
+        Debug.Log(currentState);
         switch (currentState)
         {
             case WolfState.Stall:
@@ -54,20 +59,19 @@ public class Wolf : MonoBehaviour
         {
             Vector3 currentMove = Vector3.zero;
             float close = float.MaxValue;
-
             List<Vector2Int> directions = new List<Vector2Int>()
                 {
-                    new Vector2Int(currentPosition.x + 1, currentPosition.y),
-                    new Vector2Int(currentPosition.x - 1, currentPosition.y),
-                    new Vector2Int(currentPosition.x, currentPosition.y + 1),
-                    new Vector2Int(currentPosition.x, currentPosition.y - 1),
+                    new Vector2Int(nextPosition.x + 1, nextPosition.y),
+                    new Vector2Int(nextPosition.x - 1, nextPosition.y),
+                    new Vector2Int(nextPosition.x, nextPosition.y + 1),
+                    new Vector2Int(nextPosition.x, nextPosition.y - 1),
                 };
 
             foreach (var potentialMove in directions)
             {
-                if (boardManager.IsTileTraversable(potentialMove))
+                if (boardManager.IsTileTraversable(potentialMove) && !pathToMove.Contains(new Vector3(potentialMove.x, 1f, potentialMove.y)))
                 {
-                    float distanceToPlayer = Vector2.Distance(new Vector2(potentialMove.x, potentialMove.y), new Vector2(targetPosition.x, targetPosition.z));
+                    float distanceToPlayer = Vector2.Distance(new Vector2(potentialMove.x, potentialMove.y), targetPosition);
 
                     if (distanceToPlayer < close)
                     {
@@ -80,7 +84,7 @@ public class Wolf : MonoBehaviour
             if (currentMove != Vector3.zero)
             {
                 pathToMove.Add(currentMove);
-                currentPosition = new Vector2Int(Mathf.FloorToInt(currentMove.x), Mathf.FloorToInt(currentMove.z));
+                nextPosition = new Vector2Int((int)currentMove.x,(int)(currentMove.z));
             }
         }
     
@@ -103,16 +107,40 @@ public class Wolf : MonoBehaviour
 
     private void Move()
     {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
         if (pathToMove.Count > 0)
         {
-            for (int i = 0; i < pathToMove.Count; i++)
+            StartCoroutine(MoveThroughPath());
+        }
+    }
+
+    private IEnumerator MoveThroughPath()
+    {
+        foreach (var moves in pathToMove)
+        {
+            bool notAttacked = true;
+            while (transform.position != moves)
             {
-                transform.position = Vector3.MoveTowards(transform.position, pathToMove[i], moveSpeed * Time.deltaTime);
-            }
-            pathToMove.Clear();
+                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime);
+                currentPosition = new Vector2Int((int)moves.x, (int)moves.z);
+                if (currentPosition == player.currentPosition && notAttacked)
+                {
+                    PerformAttack();
+                    notAttacked = false;
+                }
+                yield return null; 
+            } 
+        }
+        pathToMove.Clear();
+        if(currentState == WolfState.Move || currentState == WolfState.Stall)
+        {
             currentState = WolfState.Stall;
         }
     }
+
 
     private void Rest()
     {
@@ -127,11 +155,8 @@ public class Wolf : MonoBehaviour
     }
     public void PerformAttack()
     {
-        if (transform.position == player.position)
-        {
-            player.GetComponent<Player>().TakeDamage(2); 
-            restTurns = 4; 
-            currentState = WolfState.Rest; 
-        }
+        player.GetComponent<Player>().TakeDamage(2);
+        restTurns = 4;
+        currentState = WolfState.Rest;
     }
 }

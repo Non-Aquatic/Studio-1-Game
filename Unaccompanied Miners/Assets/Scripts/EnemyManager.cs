@@ -147,8 +147,11 @@ public class EnemyManager : MonoBehaviour
                 }
             }
         }
-        spawnPositions.Add(currentSpawnPosition);
-        patrolPaths.Add(currentPath.ToArray());
+        if (currentPath.Count > 0)
+        {
+            spawnPositions.Add(currentSpawnPosition);
+            patrolPaths.Add(currentPath.ToArray());
+        }
     }
 }
 

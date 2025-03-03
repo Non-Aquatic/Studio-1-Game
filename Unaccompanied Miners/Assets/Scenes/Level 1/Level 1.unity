@@ -4869,6 +4869,7 @@ MonoBehaviour:
   player: {fileID: 691044647}
   ui: {fileID: 1177427370}
   enemies: []
+  wolves: []
   turnText: {fileID: 1379875068}
   healthText: {fileID: 1783753079}
   gemText: {fileID: 1162903480}
@@ -4889,6 +4890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnManager: {fileID: 206796493}
   enemyPrefab: {fileID: 8676704902230241825, guid: 38be24e4fba1bc74880a6f5be04d52ee, type: 3}
+  wolfPrefab: {fileID: 1929053639654477192, guid: bf1445c79c63db24b892e6d6459dc4ec, type: 3}
   level: 
   file: 
   audioPlayersModulo: 3

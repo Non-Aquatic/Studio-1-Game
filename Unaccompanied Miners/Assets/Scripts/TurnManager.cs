@@ -81,6 +81,7 @@ public class TurnManager : MonoBehaviour
         {
             wolf.PerformTurn();
 
+            CheckWolfCollisions(wolf.currentPosition);
             yield return new WaitForSeconds(0.1f);
         }
         StartPlayerTurn();
@@ -96,6 +97,24 @@ public class TurnManager : MonoBehaviour
                 
                 UpdateUI(); 
        
+            }
+        }
+    }
+    private void CheckWolfCollisions(Vector2Int wolfPosition)
+    {
+        if (wolfPosition == player.currentPosition)
+        {
+            player.TakeDamage(1);
+            var wolf = enemies.FirstOrDefault(wolves => wolves.currentPosition == wolfPosition);
+            //wolf.PerformAttack();
+            if (player.health <= 0)
+            {
+                Debug.Log("Player is dead.");
+                EndGame(false, false);
+            }
+            else
+            {
+                UpdateUI();
             }
         }
     }
