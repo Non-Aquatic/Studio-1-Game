@@ -209,7 +209,7 @@ public class SaveLoadScript : MonoBehaviour
                         break;
                     case "Level 1":
                         x = 0; 
-                        y = 0;
+                        y = 1;
                         break;
                     case "Level 2":
                         x = 0;
