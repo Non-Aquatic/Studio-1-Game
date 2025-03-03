@@ -118,10 +118,11 @@ public class Player : MonoBehaviour
     }
     private void MovePlayer()
     {
+        Debug.Log(moveSpeed * Time.fixedDeltaTime / 2);
         transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime * 2.5f);
 
         //Once it has reached target position
-        if (transform.position == targetPosition)
+        if (Vector3.Distance(transform.position, targetPosition)<.00001)
         {
             //Moving animation set to false and player's turn ends
             animator.SetBool("IsMoving", false);
@@ -133,7 +134,6 @@ public class Player : MonoBehaviour
                     watchtower.SwapPosition();
                 }
                 turnManager.EndPlayerTurn();
-
             }
         }
     }

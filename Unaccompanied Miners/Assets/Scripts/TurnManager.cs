@@ -10,6 +10,7 @@ public class TurnManager : MonoBehaviour
     public UserInterface ui;
     BoardManager board;
     public List<Enemy> enemies = new List<Enemy>();
+    public List<Wolf> wolves = new List<Wolf>();
     private string currentTurn = "Player's Turn";
     public TextMeshProUGUI turnText;
     public TextMeshProUGUI healthText;
@@ -61,6 +62,10 @@ public class TurnManager : MonoBehaviour
     {
         enemies.Add(enemy); 
     }
+    public void AddWolf(Wolf wolf)
+    {
+        wolves.Add(wolf);
+    }
     private IEnumerator EnemyTurnCoroutine()
     {
         yield return new WaitForSeconds(.5f);
@@ -71,6 +76,12 @@ public class TurnManager : MonoBehaviour
 
             CheckCollisions(enemy.currentPosition);
             yield return new WaitForSeconds(0.1f); 
+        }
+        foreach (var wolf in wolves)
+        {
+            wolf.PerformTurn();
+
+            yield return new WaitForSeconds(0.1f);
         }
         StartPlayerTurn();
     }

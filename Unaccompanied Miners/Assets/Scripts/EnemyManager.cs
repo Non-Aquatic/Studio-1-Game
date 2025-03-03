@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 public class EnemyManager : MonoBehaviour
 {
     public TurnManager turnManager;
-    public GameObject enemyPrefab; 
+    public GameObject enemyPrefab;
+    public GameObject wolfPrefab;
     private List<Vector2Int> spawnPositions;
     private List<Vector2Int[]> patrolPaths;
+    private List<Vector2Int> wolfSpawnPositions;
     public string level;
     public string file;
 
@@ -40,12 +42,13 @@ public class EnemyManager : MonoBehaviour
         }
         spawnPositions = new List<Vector2Int>();  
         patrolPaths = new List<Vector2Int[]>();
+        wolfSpawnPositions = new List<Vector2Int>();
 
         if (filePathPaths.Length != 0)
         {
             LoadPath(filePathPaths);
         }
-
+        SpawnWolves();
         SpawnEnemies();
     }
 
@@ -74,6 +77,16 @@ public class EnemyManager : MonoBehaviour
             turnManager.AddEnemy(enemy);
         }
     }
+    private void SpawnWolves()
+    {
+        foreach (var position in wolfSpawnPositions)
+        {
+            GameObject wolfInstance = Instantiate(wolfPrefab, new Vector3(position.x, 1f, position.y), Quaternion.Euler(0, 0, 0));
+            Wolf wolf = wolfInstance.GetComponent<Wolf>();
+            wolf.Initialize(position);
+            turnManager.AddWolf(wolf);
+        }
+    }
     private void LoadPath(string filePath)
     {
         if (!File.Exists(filePath)) 
@@ -86,7 +99,7 @@ public class EnemyManager : MonoBehaviour
 
         foreach (string line in lines)
         {
-            if (line.StartsWith("Enemy"))  
+            if (line.StartsWith("Enemy"))
             {
                 if (currentPath.Count > 0)
                 {
@@ -95,17 +108,31 @@ public class EnemyManager : MonoBehaviour
                     currentPath.Clear();
                 }
             }
-            else if (line.StartsWith("S:"))  
+            else if (line.StartsWith("S:"))
             {
                 string[] parts = line.Split(':');
                 if (parts.Length == 2)
                 {
-                    string[] coordinates = parts[1].Split(',');  
+                    string[] coordinates = parts[1].Split(',');
                     if (coordinates.Length == 2)
                     {
                         int x = int.Parse(coordinates[0]);
                         int y = int.Parse(coordinates[1]);
-                        currentSpawnPosition = new Vector2Int(x, y); 
+                        currentSpawnPosition = new Vector2Int(x, y);
+                    }
+                }
+            }
+            else if (line.StartsWith("Wolf"))  
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length == 2)
+                {
+                    string[] coordinates = parts[1].Trim().Split(','); 
+                    if (coordinates.Length == 2)
+                    {
+                        int x = int.Parse(coordinates[0]);
+                        int y = int.Parse(coordinates[1]);
+                        wolfSpawnPositions.Add(new Vector2Int(x, y));
                     }
                 }
             }
