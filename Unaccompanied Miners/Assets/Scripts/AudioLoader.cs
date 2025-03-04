@@ -118,9 +118,12 @@ public class AudioLoader : MonoBehaviour
     {
         this.transform.GetComponent<AudioSource>().Play();
     }
+
+
+    //Don't use this, it breaks the audio upon loading a second level (the values are reset to 0 and not loaded properly)
     //When object is destroyed, saves all the current volume levels
-    public void OnDestroy()
-    {
-        SavePrefs();
-    }
+    //public void OnDestroy()
+    //{
+    //   SavePrefs();
+    //}
 }
