@@ -297,7 +297,7 @@ public class Player : MonoBehaviour
             temp.loop = false;
             temp.clip = audioInput;
             temp.volume = audioVolume;
-            temp.PlayDelayed(.25f);
+            temp.PlayDelayed(delay);
 
         }
 

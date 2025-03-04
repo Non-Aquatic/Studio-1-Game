@@ -16,8 +16,8 @@ public class typewriterUI_v2 : MonoBehaviour
 	string writer;
 	[SerializeField] private Coroutine coroutine;
 
-	[SerializeField] float delayBeforeStart = 0f;
-	[SerializeField] float timeBtwChars = 0.1f;
+	[SerializeField] float delayBeforeStart = 0.2f;
+	[SerializeField] float timeBtwChars = 0.15f;
 	[SerializeField] string leadingChar = "";
 	[SerializeField] bool leadingCharBeforeDelay = false;
 	[Space(10)] [SerializeField] private bool startOnEnable = false;
