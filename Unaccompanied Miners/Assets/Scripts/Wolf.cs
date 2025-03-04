@@ -38,7 +38,6 @@ public class Wolf : MonoBehaviour
 
     public void PerformTurn()
     {
-        Debug.Log(currentState);
         switch (currentState)
         {
             case WolfState.Stall:
@@ -59,6 +58,7 @@ public class Wolf : MonoBehaviour
         {
             Vector3 currentMove = Vector3.zero;
             float close = float.MaxValue;
+            float distanceToPlayer = float.MaxValue;
             List<Vector2Int> directions = new List<Vector2Int>()
                 {
                     new Vector2Int(nextPosition.x + 1, nextPosition.y),
@@ -71,7 +71,7 @@ public class Wolf : MonoBehaviour
             {
                 if (boardManager.IsTileTraversable(potentialMove) && !pathToMove.Contains(new Vector3(potentialMove.x, 1f, potentialMove.y)))
                 {
-                    float distanceToPlayer = Vector2.Distance(new Vector2(potentialMove.x, potentialMove.y), targetPosition);
+                    distanceToPlayer = Vector2.Distance(new Vector2(potentialMove.x, potentialMove.y), player.currentPosition);
 
                     if (distanceToPlayer < close)
                     {
