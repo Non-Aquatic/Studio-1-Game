@@ -78,8 +78,8 @@ public class UserInterface : MonoBehaviour
         //Shows tutorial if it is level 1
         if(SceneManager.GetActiveScene().name == "Level 1")
         {
-            tutPanel.SetActive(true);
-            tutShade.SetActive(true);
+            //tutPanel.SetActive(true);
+            //tutShade.SetActive(true);
         }
         //Sets several UI elements inactive
         pausePanel.SetActive(false);
@@ -243,7 +243,7 @@ public class UserInterface : MonoBehaviour
             Invoke("LoadLevel2", 10);
         }
         //If level 2, goes back to main menu after 10 seconds
-        else
+        else if (sceneName != "Tutorial 1")
         {
             Invoke("ReturnToMainMenu", 10);
         }
