@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private Vector2Int[] patrolPath; //Patrol path of each enemy
     private int currentPatrolIndex = 0; //Index of the patrol path
     private Vector2Int previousPatrolPosition;
+    public bool finished = false;
 
     public GameObject arrowLocation; //Spawn location for next move arrow
     public GameObject arrowPrefab; //Prefab for the next move arrow
@@ -54,28 +55,6 @@ public class Enemy : MonoBehaviour
     //Performs the turn for the enemy
     public void PerformTurn()
     {
-        int oneAhead = (currentPatrolIndex + 1) % patrolPath.Length;
-        int twoAhead = (currentPatrolIndex + 2) % patrolPath.Length;
-
-        Vector2Int nextTile = patrolPath[oneAhead];
-        Vector2Int nextNextTile = patrolPath[twoAhead];
-
-        if (nextTile == player.currentPosition || nextNextTile == player.currentPosition)
-        {
-            currentState = GoblinState.Chase;
-            chaseTurnsRemaining = 3; 
-            chasePath.Clear();
-            previousPatrolPosition = currentPosition; 
-        }
-        if (currentState == GoblinState.Chase && chaseTurnsRemaining <= 0)
-        {
-            currentState = GoblinState.Return;
-            returnTurnsRemaining = 3; 
-        }
-        if (currentState == GoblinState.Return && returnTurnsRemaining <= 0)
-        {
-            currentState = GoblinState.Patrol;
-        }
         switch (currentState)
         {
             case GoblinState.Patrol:
@@ -181,31 +160,82 @@ public class Enemy : MonoBehaviour
         {
             Destroy(arrowLocation);
         }
+        Vector3 newPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
+        while (Vector3.Distance(transform.position, newPosition) > 0.0001f)
+        {
+            transform.position = Vector3.Lerp(transform.position, newPosition, 15f * Time.deltaTime);
+            yield return null;
+        }
 
         //Moves towards until it reaches new position
-        while (transform.position != new Vector3(currentPosition.x,1f,currentPosition.y))
+       /* while (transform.position != new Vector3(currentPosition.x,1f,currentPosition.y))
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(currentPosition.x, 1f, currentPosition.y), 15f * Time.deltaTime);
             yield return null;
-        }
+        }*/
         //Once reached, sets animator to not move
-        animator.SetBool("IsMoving", false); 
+        animator.SetBool("IsMoving", false);
+        finished = true;
+        int oneAhead = (currentPatrolIndex + 1) % patrolPath.Length;
+        int twoAhead = (currentPatrolIndex + 2) % patrolPath.Length;
+
+        Vector2Int nextTile = patrolPath[oneAhead];
+        Vector2Int nextNextTile = patrolPath[twoAhead];
+
+        if (nextTile == player.currentPosition || nextNextTile == player.currentPosition)
+        {
+            currentState = GoblinState.Chase;
+            chaseTurnsRemaining = 3;
+            chasePath.Clear();
+            previousPatrolPosition = currentPosition;
+        }
+        if (currentState == GoblinState.Chase && chaseTurnsRemaining <= 0)
+        {
+            currentState = GoblinState.Return;
+            returnTurnsRemaining = 3;
+        }
+        if (currentState == GoblinState.Return && returnTurnsRemaining <= 0)
+        {
+            currentState = GoblinState.Patrol;
+        }
         PointToNextMove();
     }
 
     //Points arrow to next move location
     public void PointToNextMove()
     {
-        if (patrolPath != null && patrolPath.Length > 0)
+        Vector2Int targetPosition = Vector2Int.zero;
+   
+        switch (currentState)
         {
-            Vector2Int targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
-            
-            //Spawns new one in the direction of the next patrol point
+            case GoblinState.Patrol:
+                if (patrolPath != null && patrolPath.Length > 0)
+                {
+                    targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
+                }
+                break;
+
+            case GoblinState.Chase:
+                targetPosition = player.currentPosition;
+                break;
+
+            case GoblinState.Return:
+                targetPosition = chasePath[chasePath.Count - 1];
+                break;
+        }
+
+        if (targetPosition != Vector2Int.zero)
+        {
+            if (arrowLocation != null)
+            {
+                Destroy(arrowLocation); 
+            }
             arrowLocation = Instantiate(arrowPrefab, transform.position + Vector3.up, Quaternion.identity);
             Vector3 direction = new Vector3(targetPosition.x - currentPosition.x, 0f, targetPosition.y - currentPosition.y).normalized;
             arrowLocation.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
+
 
     //Plays audio with a specific delay
     public void PlayAudioDelayed(AudioClip audioInput, float delay)

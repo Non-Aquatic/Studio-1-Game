@@ -9,7 +9,7 @@ public class Wolf : MonoBehaviour
     public Player player; 
     public Vector2Int currentPosition;
     public BoardManager boardManager;
-
+    public bool finished = false;
 
     private Vector2Int targetPosition;
     private List<Vector3> pathToMove = new List<Vector3>(); 
@@ -89,6 +89,7 @@ public class Wolf : MonoBehaviour
         }
     
         ShowPath(pathToMove);
+        finished = true;
         currentState = WolfState.Move;
     }
 
@@ -124,7 +125,7 @@ public class Wolf : MonoBehaviour
             bool notAttacked = true;
             while (transform.position != moves)
             {
-                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime*20);
                 currentPosition = new Vector2Int((int)moves.x, (int)moves.z);
                 if (currentPosition == player.currentPosition && notAttacked)
                 {
@@ -135,7 +136,8 @@ public class Wolf : MonoBehaviour
             } 
         }
         pathToMove.Clear();
-        if(currentState == WolfState.Move || currentState == WolfState.Stall)
+        finished = true;
+        if (currentState == WolfState.Move || currentState == WolfState.Stall)
         {
             currentState = WolfState.Stall;
         }
@@ -152,6 +154,7 @@ public class Wolf : MonoBehaviour
         {
             currentState = WolfState.Stall;
         }
+        finished = true;
     }
     public void PerformAttack()
     {

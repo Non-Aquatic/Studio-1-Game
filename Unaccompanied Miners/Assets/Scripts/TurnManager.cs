@@ -68,22 +68,56 @@ public class TurnManager : MonoBehaviour
     }
     private IEnumerator EnemyTurnCoroutine()
     {
+        bool allEnemiesDone = false;
         yield return new WaitForSeconds(.5f);
-
+        foreach (var enemy in enemies)
+        {
+            enemy.finished = false;
+        }
+        foreach (var wolf in wolves)
+        {
+            wolf.finished = false;
+        }
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn();
-
-            CheckCollisions(enemy.currentPosition);
-            yield return new WaitForSeconds(0.1f); 
         }
         foreach (var wolf in wolves)
         {
             wolf.PerformTurn();
-
-            CheckWolfCollisions(wolf.currentPosition);
-            yield return new WaitForSeconds(0.1f);
         }
+        while (!allEnemiesDone)
+        {
+            allEnemiesDone = true;
+            foreach (var enemy in enemies)
+            {
+                if (!enemy.finished)
+                {
+                    allEnemiesDone = false; 
+                    break;
+                }
+            }
+            foreach (var wolf in wolves)
+            {
+                if (!wolf.finished)
+                {
+                    allEnemiesDone = false;
+                    break;
+                }
+            }
+            foreach (var enemy in enemies)
+            {
+                CheckCollisions(enemy.currentPosition);  
+            }
+
+            foreach (var wolf in wolves)
+            {
+                CheckWolfCollisions(wolf.currentPosition);  
+            }
+
+            yield return null; 
+        }
+
         StartPlayerTurn();
     }
     private void CheckCollisions()
