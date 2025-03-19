@@ -4869,6 +4869,7 @@ MonoBehaviour:
   player: {fileID: 691044647}
   ui: {fileID: 1177427370}
   enemies: []
+  wolves: []
   turnText: {fileID: 1379875068}
   healthText: {fileID: 1783753079}
   gemText: {fileID: 1162903480}
@@ -4889,8 +4890,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnManager: {fileID: 206796493}
   enemyPrefab: {fileID: 8676704902230241825, guid: 38be24e4fba1bc74880a6f5be04d52ee, type: 3}
-  spawnPositions: []
-  patrolPaths: []
+  wolfPrefab: {fileID: 0}
+  level: 
+  file: 
+  audioPlayersModulo: 3
 --- !u!82 &206796495
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8221,7 +8224,7 @@ MonoBehaviour:
   turnManager: {fileID: 206796493}
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
-  targetPosition: {x: 0, y: 0, z: 0}
+  watchtower: {fileID: 0}
   gemCount: 0
   health: 0
   maxHealth: 10
@@ -8231,7 +8234,6 @@ MonoBehaviour:
   takeDamage: {fileID: 8300000, guid: 8715f7d572ead284c9aff663f00fb9a7, type: 3}
   footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
   audioVolume: 0.5
-  isMoving: 0
   boardState: 
 --- !u!136 &691044648
 CapsuleCollider:
@@ -17922,6 +17924,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 162323934063865284, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: timeBtwChars
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 610094635644098758, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -18018,6 +18024,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 908744961}
+    - target: {fileID: 2806026577128445480, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2820953341256009349, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -18034,6 +18044,22 @@ PrefabInstance:
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 691044647}
+    - target: {fileID: 4776848661942406285, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: timeBtwChars
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776848661942406285, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: leadingCharBeforeDelay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334371911363293183, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: timeBtwChars
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026652678049049357, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6110018846199302218, guid: 2f4a384cf27d9694ab784b7eae4afc57, type: 3}
       propertyPath: m_Name
       value: UI
