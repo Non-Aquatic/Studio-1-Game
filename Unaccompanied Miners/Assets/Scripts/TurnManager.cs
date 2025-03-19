@@ -105,19 +105,17 @@ public class TurnManager : MonoBehaviour
                     break;
                 }
             }
-            foreach (var enemy in enemies)
-            {
-                CheckCollisions(enemy.currentPosition);  
-            }
-
-            foreach (var wolf in wolves)
-            {
-                CheckWolfCollisions(wolf.currentPosition);  
-            }
-
             yield return null; 
         }
+        foreach (var enemy in enemies)
+        {
+            CheckCollisions(enemy.currentPosition);
+        }
 
+        foreach (var wolf in wolves)
+        {
+            CheckWolfCollisions(wolf.currentPosition);
+        }
         StartPlayerTurn();
     }
     private void CheckCollisions()
@@ -138,7 +136,7 @@ public class TurnManager : MonoBehaviour
     {
         if (wolfPosition == player.currentPosition)
         {
-            player.TakeDamage(1);
+            player.TakeDamage(0);
             var wolf = enemies.FirstOrDefault(wolves => wolves.currentPosition == wolfPosition);
             //wolf.PerformAttack();
             if (player.health <= 0)

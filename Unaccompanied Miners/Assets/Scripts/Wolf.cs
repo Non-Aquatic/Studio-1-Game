@@ -125,7 +125,7 @@ public class Wolf : MonoBehaviour
             bool notAttacked = true;
             while (transform.position != moves)
             {
-                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime*20);
+                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime*5);
                 currentPosition = new Vector2Int((int)moves.x, (int)moves.z);
                 if (currentPosition == player.currentPosition && notAttacked)
                 {
@@ -161,5 +161,6 @@ public class Wolf : MonoBehaviour
         player.GetComponent<Player>().TakeDamage(2);
         restTurns = 4;
         currentState = WolfState.Rest;
+        Debug.Log("Yellow");
     }
 }
