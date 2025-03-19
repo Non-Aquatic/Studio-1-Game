@@ -34,7 +34,10 @@ public class MainMenu : MonoBehaviour
         folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
-
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath); 
+        }
         if (!File.Exists(filePathPlayer))
         {
             using(FileStream fs = File.Create(filePathPlayer))

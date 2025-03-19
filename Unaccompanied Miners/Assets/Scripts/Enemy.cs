@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private Vector2Int[] patrolPath; //Patrol path of each enemy
     private int currentPatrolIndex = 0; //Index of the patrol path
     private Vector2Int previousPatrolPosition;
-    public bool finished = false;
+    public bool finished = true;
 
     public GameObject arrowLocation; //Spawn location for next move arrow
     public GameObject arrowPrefab; //Prefab for the next move arrow
