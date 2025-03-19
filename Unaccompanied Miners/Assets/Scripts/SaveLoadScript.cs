@@ -7,7 +7,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System.Transactions;
 using UnityEngine.UI;
-using UnityEditor.TestTools.CodeCoverage;
+//using UnityEditor.TestTools.CodeCoverage;
 
 public class SaveLoadScript : MonoBehaviour
 {

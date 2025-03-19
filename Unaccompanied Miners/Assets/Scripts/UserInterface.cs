@@ -76,10 +76,10 @@ public class UserInterface : MonoBehaviour
         quotaText.text = "Quota: " + quota.ToString();
 
         //Shows tutorial if it is level 1
-        if(SceneManager.GetActiveScene().name == "Level 1")
+        if(SceneManager.GetActiveScene().name == "Tutorial 1")
         {
-            //tutPanel.SetActive(true);
-            //tutShade.SetActive(true);
+            tutPanel.SetActive(true);
+            tutShade.SetActive(true);
         }
         //Sets several UI elements inactive
         pausePanel.SetActive(false);
