@@ -9,7 +9,7 @@ public class Wolf : MonoBehaviour
     public Player player; 
     public Vector2Int currentPosition;
     public BoardManager boardManager;
-    public bool finished = false;
+    public bool finished = true;
 
     private Vector2Int targetPosition;
     private List<Vector3> pathToMove = new List<Vector3>(); 

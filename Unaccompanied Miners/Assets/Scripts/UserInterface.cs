@@ -101,7 +101,7 @@ public class UserInterface : MonoBehaviour
         menuButton.onClick.AddListener(ReturnToMenu);
 
         //Sets up path to the save file
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
     }

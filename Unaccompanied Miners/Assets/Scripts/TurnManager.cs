@@ -47,6 +47,7 @@ public class TurnManager : MonoBehaviour
         currentTurn = "Player's Turn";
         player.enabled = true;
         UpdateUI();
+        Debug.Log(player.enabled);
     }
 
     public void EndPlayerTurn()
@@ -54,7 +55,7 @@ public class TurnManager : MonoBehaviour
         player.enabled = false;
         currentTurn = "Enemy's Turn";
         CheckCollisions();
-        UpdateUI(); 
+        UpdateUI();
         StartCoroutine(EnemyTurnCoroutine());
     }
 

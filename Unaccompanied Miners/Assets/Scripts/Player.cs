@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         saveLoadScript = GetComponent<SaveLoadScript>();
