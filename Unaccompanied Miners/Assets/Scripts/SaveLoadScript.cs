@@ -7,7 +7,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System.Transactions;
 using UnityEngine.UI;
-using UnityEditor.TestTools.CodeCoverage;
+//using UnityEditor.TestTools.CodeCoverage;
 
 public class SaveLoadScript : MonoBehaviour
 {
@@ -58,7 +58,7 @@ public class SaveLoadScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         sceneName = SceneManager.GetActiveScene().name;
