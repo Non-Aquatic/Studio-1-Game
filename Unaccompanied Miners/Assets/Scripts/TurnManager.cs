@@ -18,6 +18,7 @@ public class TurnManager : MonoBehaviour
     public int quota = 1;
     public int gems = -1;
     public AudioClip deathMusic;
+    private bool happenOnce;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class TurnManager : MonoBehaviour
         {
             Debug.LogError($"Cannot find BoardManager in {this.name}");
         }
-
+        happenOnce = false;
         gems = player.gemCount;
 
         StartPlayerTurn();
@@ -178,6 +179,7 @@ public class TurnManager : MonoBehaviour
     {
         if (gems >= quota)
         {
+
             EndGame(true, false);
         }
     }
@@ -189,6 +191,11 @@ public class TurnManager : MonoBehaviour
             ui.winGame();
             PlayerPrefs.SetInt("GemsCount", gems);
             PlayerPrefs.SetInt("Quota", quota);
+            if (!happenOnce)
+            {
+                TotalGems.ChangeTotalGems(gems);
+                happenOnce = true;
+            }
             PlayerPrefs.Save();
         }
         if (didYouEscape)
@@ -196,6 +203,11 @@ public class TurnManager : MonoBehaviour
             ui.escapeGame();
             PlayerPrefs.SetInt("GemsCount", gems);
             PlayerPrefs.SetInt("Quota", quota);
+            if (!happenOnce)
+            {
+                TotalGems.ChangeTotalGems(gems);
+                happenOnce = true;
+            }
             PlayerPrefs.Save();
         }
         else if (!didYouWin) 

@@ -16,6 +16,7 @@ public class UserInterface : MonoBehaviour
     int quota = 1; //Initial quota value
     int playerHealth = 0; //Player health
     public TMP_Text gems; //Text to show the number of gems the player has collected
+    public TMP_Text knifes; //Text to show the number of gems the player has collected
     public TMP_Text level; //Text to show the current level's name
     public TMP_Text winText; //Text to show when the player wins
     //public TMP_Text loseText;
@@ -32,6 +33,7 @@ public class UserInterface : MonoBehaviour
     //UI elements for the pause menu
     public GameObject pausePanel;
     public GameObject pauseBackground;
+    public Button shopButton;
     public Button restartButton;
     public Button saveGameButton;
     public Button mainMenuButton;
@@ -76,10 +78,10 @@ public class UserInterface : MonoBehaviour
         quotaText.text = "Quota: " + quota.ToString();
 
         //Shows tutorial if it is level 1
-        if(SceneManager.GetActiveScene().name == "Level 1")
+        if(SceneManager.GetActiveScene().name == "Tutorial 1")
         {
-            //tutPanel.SetActive(true);
-            //tutShade.SetActive(true);
+            tutPanel.SetActive(true);
+            tutShade.SetActive(true);
         }
         //Sets several UI elements inactive
         pausePanel.SetActive(false);
@@ -93,6 +95,7 @@ public class UserInterface : MonoBehaviour
         closeTutButton.onClick.AddListener(CloseTutorial);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
+        shopButton.onClick.AddListener(Shop);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
         exitGameButton.onClick.AddListener(EnableQuitConfirm);
         quitButton.onClick.AddListener(ExitGame);
@@ -111,6 +114,7 @@ public class UserInterface : MonoBehaviour
     {
         //Updates gems text 
         gems.text = " " + playerScript.gemCount.ToString();
+        knifes.text = " " + Items.LoadItemData("Knife").ToString();
         //Tracks health and triggers game over if health reaches 0
         playerHealth = playerScript.health;
         if(playerScript.health <= 0)
@@ -196,6 +200,14 @@ public class UserInterface : MonoBehaviour
         isPaused = false;
         //Loads main menu
         SceneManager.LoadScene("Main Menu");
+    }
+    void Shop()
+    {
+        Time.timeScale = 1f;
+        //Sets pause bool to false
+        isPaused = false;
+        //Loads main menu
+        SceneManager.LoadScene("Shop");
     }
     //Exits game
     void ExitGame()
