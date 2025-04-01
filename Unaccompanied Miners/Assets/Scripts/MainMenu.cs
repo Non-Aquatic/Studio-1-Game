@@ -31,10 +31,13 @@ public class MainMenu : MonoBehaviour
         Screen.SetResolution(1920, 1080, true);
 
         //Checks to see if the save file exists, and if not creates it
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
-
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath); 
+        }
         if (!File.Exists(filePathPlayer))
         {
             using(FileStream fs = File.Create(filePathPlayer))

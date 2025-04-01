@@ -23,17 +23,17 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        folderPath = Path.Combine(Application.dataPath, "Paths");
+        folderPath = Path.Combine(Application.persistentDataPath, "Paths");
         
 
         string sceneName = SceneManager.GetActiveScene().name;  
         if (sceneName == "Level 1")
         {
-            filePathPaths = Path.Combine(folderPath, "Level1.txt");
+            filePathPaths = Path.Combine(Application.streamingAssetsPath, "Level1.txt");
         }
         else if (sceneName == "Level 2")
         {
-            filePathPaths = Path.Combine(folderPath, "Level2.txt");
+            filePathPaths = Path.Combine(Application.streamingAssetsPath, "Level2.txt");
         }
         else
         {

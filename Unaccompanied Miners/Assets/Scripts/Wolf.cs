@@ -9,7 +9,7 @@ public class Wolf : MonoBehaviour
     public Player player; 
     public Vector2Int currentPosition;
     public BoardManager boardManager;
-
+    public bool finished = true;
 
     private Vector2Int targetPosition;
     private List<Vector3> pathToMove = new List<Vector3>(); 
@@ -38,7 +38,6 @@ public class Wolf : MonoBehaviour
 
     public void PerformTurn()
     {
-        Debug.Log(currentState);
         switch (currentState)
         {
             case WolfState.Stall:
@@ -59,6 +58,7 @@ public class Wolf : MonoBehaviour
         {
             Vector3 currentMove = Vector3.zero;
             float close = float.MaxValue;
+            float distanceToPlayer = float.MaxValue;
             List<Vector2Int> directions = new List<Vector2Int>()
                 {
                     new Vector2Int(nextPosition.x + 1, nextPosition.y),
@@ -71,7 +71,7 @@ public class Wolf : MonoBehaviour
             {
                 if (boardManager.IsTileTraversable(potentialMove) && !pathToMove.Contains(new Vector3(potentialMove.x, 1f, potentialMove.y)))
                 {
-                    float distanceToPlayer = Vector2.Distance(new Vector2(potentialMove.x, potentialMove.y), targetPosition);
+                    distanceToPlayer = Vector2.Distance(new Vector2(potentialMove.x, potentialMove.y), player.currentPosition);
 
                     if (distanceToPlayer < close)
                     {
@@ -89,6 +89,7 @@ public class Wolf : MonoBehaviour
         }
     
         ShowPath(pathToMove);
+        finished = true;
         currentState = WolfState.Move;
     }
 
@@ -124,7 +125,7 @@ public class Wolf : MonoBehaviour
             bool notAttacked = true;
             while (transform.position != moves)
             {
-                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime*5);
                 currentPosition = new Vector2Int((int)moves.x, (int)moves.z);
                 if (currentPosition == player.currentPosition && notAttacked)
                 {
@@ -135,7 +136,8 @@ public class Wolf : MonoBehaviour
             } 
         }
         pathToMove.Clear();
-        if(currentState == WolfState.Move || currentState == WolfState.Stall)
+        finished = true;
+        if (currentState == WolfState.Move || currentState == WolfState.Stall)
         {
             currentState = WolfState.Stall;
         }
@@ -152,11 +154,13 @@ public class Wolf : MonoBehaviour
         {
             currentState = WolfState.Stall;
         }
+        finished = true;
     }
     public void PerformAttack()
     {
         player.GetComponent<Player>().TakeDamage(2);
         restTurns = 4;
         currentState = WolfState.Rest;
+        Debug.Log("Yellow");
     }
 }

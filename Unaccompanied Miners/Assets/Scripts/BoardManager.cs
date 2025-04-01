@@ -66,7 +66,7 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         //Gets the save file and gets data from it at the start
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
 

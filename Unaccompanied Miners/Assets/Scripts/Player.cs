@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         saveLoadScript = GetComponent<SaveLoadScript>();
@@ -109,6 +109,10 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.M))
             {
                 AttemptMining(currentPosition);
+            }
+            else if (Input.GetKeyDown(KeyCode.K))
+            {
+                AttemptAttack();
             }
             else if (Input.GetKeyDown(KeyCode.N))
             {
@@ -244,7 +248,45 @@ public class Player : MonoBehaviour
             StartCoroutine(stillEnder());
         }
     }
-
+    private void AttemptAttack()
+    {
+        int knifeCount = Items.LoadItemData("Knife");
+        if (knifeCount > 0)
+        {
+            foreach (var enemy in turnManager.enemies)
+            {
+                if (enemy.currentPosition == currentPosition)
+                {
+                    if (Items.UseItem("Knife"))
+                    {
+                        turnManager.enemies.Remove(enemy);
+                        Destroy(enemy.gameObject);
+                        Destroy(enemy.arrowLocation);
+                        turnManager.EndPlayerTurn();
+                    }
+                    return;  
+                }
+            }
+            foreach (var wolf in turnManager.wolves)
+            {
+                if (wolf.currentPosition == currentPosition)
+                {
+                    if (Items.UseItem("Knife"))
+                    {
+                        turnManager.wolves.Remove(wolf);
+                        Destroy(wolf.gameObject);
+                        turnManager.EndPlayerTurn();
+                    }
+                    return;
+                }
+            }
+            Debug.Log("No enemies in position");
+        }
+        else
+        {
+            Debug.Log("No knives available");
+        }
+    }
     //Saves the current board to a file and playerPrefs
     /*public void SaveBoard(Vector2Int position)
     {

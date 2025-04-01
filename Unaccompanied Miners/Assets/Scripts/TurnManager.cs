@@ -18,6 +18,7 @@ public class TurnManager : MonoBehaviour
     public int quota = 1;
     public int gems = -1;
     public AudioClip deathMusic;
+    private bool happenOnce;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class TurnManager : MonoBehaviour
         {
             Debug.LogError($"Cannot find BoardManager in {this.name}");
         }
-
+        happenOnce = false;
         gems = player.gemCount;
 
         StartPlayerTurn();
@@ -47,6 +48,7 @@ public class TurnManager : MonoBehaviour
         currentTurn = "Player's Turn";
         player.enabled = true;
         UpdateUI();
+        Debug.Log(player.enabled);
     }
 
     public void EndPlayerTurn()
@@ -54,7 +56,7 @@ public class TurnManager : MonoBehaviour
         player.enabled = false;
         currentTurn = "Enemy's Turn";
         CheckCollisions();
-        UpdateUI(); 
+        UpdateUI();
         StartCoroutine(EnemyTurnCoroutine());
     }
 
@@ -68,21 +70,53 @@ public class TurnManager : MonoBehaviour
     }
     private IEnumerator EnemyTurnCoroutine()
     {
+        bool allEnemiesDone = false;
         yield return new WaitForSeconds(.5f);
-
+        foreach (var enemy in enemies)
+        {
+            enemy.finished = false;
+        }
+        foreach (var wolf in wolves)
+        {
+            wolf.finished = false;
+        }
         foreach (var enemy in enemies)
         {
             enemy.PerformTurn();
-
-            CheckCollisions(enemy.currentPosition);
-            yield return new WaitForSeconds(0.1f); 
         }
         foreach (var wolf in wolves)
         {
             wolf.PerformTurn();
+        }
+        while (!allEnemiesDone)
+        {
+            allEnemiesDone = true;
+            foreach (var enemy in enemies)
+            {
+                if (!enemy.finished)
+                {
+                    allEnemiesDone = false; 
+                    break;
+                }
+            }
+            foreach (var wolf in wolves)
+            {
+                if (!wolf.finished)
+                {
+                    allEnemiesDone = false;
+                    break;
+                }
+            }
+            yield return null; 
+        }
+        foreach (var enemy in enemies)
+        {
+            CheckCollisions(enemy.currentPosition);
+        }
 
+        foreach (var wolf in wolves)
+        {
             CheckWolfCollisions(wolf.currentPosition);
-            yield return new WaitForSeconds(0.1f);
         }
         StartPlayerTurn();
     }
@@ -104,7 +138,7 @@ public class TurnManager : MonoBehaviour
     {
         if (wolfPosition == player.currentPosition)
         {
-            player.TakeDamage(1);
+            player.TakeDamage(0);
             var wolf = enemies.FirstOrDefault(wolves => wolves.currentPosition == wolfPosition);
             //wolf.PerformAttack();
             if (player.health <= 0)
@@ -145,6 +179,7 @@ public class TurnManager : MonoBehaviour
     {
         if (gems >= quota)
         {
+
             EndGame(true, false);
         }
     }
@@ -156,6 +191,11 @@ public class TurnManager : MonoBehaviour
             ui.winGame();
             PlayerPrefs.SetInt("GemsCount", gems);
             PlayerPrefs.SetInt("Quota", quota);
+            if (!happenOnce)
+            {
+                TotalGems.ChangeTotalGems(gems);
+                happenOnce = true;
+            }
             PlayerPrefs.Save();
         }
         if (didYouEscape)
@@ -163,6 +203,11 @@ public class TurnManager : MonoBehaviour
             ui.escapeGame();
             PlayerPrefs.SetInt("GemsCount", gems);
             PlayerPrefs.SetInt("Quota", quota);
+            if (!happenOnce)
+            {
+                TotalGems.ChangeTotalGems(gems);
+                happenOnce = true;
+            }
             PlayerPrefs.Save();
         }
         else if (!didYouWin) 
