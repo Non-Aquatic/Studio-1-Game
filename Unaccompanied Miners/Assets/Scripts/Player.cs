@@ -109,9 +109,7 @@ public class Player : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.M))
             {
-                Debug.Log(isMining);
                 AttemptMining(currentPosition);
-                Debug.Log("love");
             }
             else if (Input.GetKeyDown(KeyCode.K))
             {
