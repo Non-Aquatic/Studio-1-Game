@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class MainMenu : MonoBehaviour
 {
@@ -80,6 +81,8 @@ public class MainMenu : MonoBehaviour
         File.WriteAllText(filePathPlayer, emptyString);
         File.WriteAllText(filePathBoard, emptyString);
         PlayerPrefs.SetString(currentScene, currentScene);
+        TotalGems.ResetTotalGems();
+        Items.SaveItemData("Knife", 1);
         PlayerPrefs.Save();
         SceneManager.LoadScene("Tutorial 1");
     }

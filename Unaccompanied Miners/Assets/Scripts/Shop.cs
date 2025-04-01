@@ -41,7 +41,6 @@ public class Shop : MonoBehaviour
         playerGemText.text = " " + playerGemCount.ToString();
     }
 
-    // Handle buying a knife
     void BuyKnife()
     {
         if (playerGemCount >= -knifeCost)

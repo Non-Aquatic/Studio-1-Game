@@ -118,6 +118,7 @@ public class TurnManager : MonoBehaviour
         {
             CheckWolfCollisions(wolf.currentPosition);
         }
+        yield return new WaitForSeconds(.5f);
         StartPlayerTurn();
     }
     private void CheckCollisions()

@@ -16,6 +16,7 @@ public class UserInterface : MonoBehaviour
     int quota = 1; //Initial quota value
     int playerHealth = 0; //Player health
     public TMP_Text gems; //Text to show the number of gems the player has collected
+    public TMP_Text knifes; 
     public TMP_Text level; //Text to show the current level's name
     public TMP_Text winText; //Text to show when the player wins
     //public TMP_Text loseText;
@@ -38,6 +39,7 @@ public class UserInterface : MonoBehaviour
     public GameObject pauseBackground;
     public Button restartButton;
     public Button saveGameButton;
+    public Button shopButton;
     public Button mainMenuButton;
     public Button exitGameButton;
     private bool isPaused = false;
@@ -101,6 +103,7 @@ public class UserInterface : MonoBehaviour
         closeEscButton.onClick.AddListener(CloseEsc);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
+        shopButton.onClick.AddListener(Shop);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
         exitGameButton.onClick.AddListener(EnableQuitConfirm);
         quitButton.onClick.AddListener(ExitGame);
@@ -119,6 +122,7 @@ public class UserInterface : MonoBehaviour
     {
         //Updates gems text 
         gems.text = " " + playerScript.gemCount.ToString();
+        knifes.text = " " +  Items.LoadItemData("Knife");
         //Tracks health and triggers game over if health reaches 0
         playerHealth = playerScript.health;
         if(playerScript.health <= 0)
@@ -204,6 +208,15 @@ public class UserInterface : MonoBehaviour
         isPaused = false;
         //Loads main menu
         SceneManager.LoadScene("Main Menu");
+    }
+    void Shop()
+    {
+        //Makes sure game movment is running as normal
+        Time.timeScale = 1f;
+        //Sets pause bool to false
+        isPaused = false;
+        //Loads main menu
+        SceneManager.LoadScene("Shop");
     }
     //Exits game
     void ExitGame()

@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
 
     public float audioVolume = .5f; // Audio volume, 0-1f.
     private bool isMoving = false; //Bool for whether player is moving
+    private bool isMining = false; //Bool for whether player is moving
     public string boardState = ""; //Board state
     private float boundrySensitivity = .0001f;
 
@@ -88,7 +89,7 @@ public class Player : MonoBehaviour
         //Handles movment
         MovePlayer();
         //Handles player inputs for movement, mining, and saving
-        if (!isMoving && enabled)
+        if (!isMoving && enabled && !isMining)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -108,7 +109,9 @@ public class Player : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.M))
             {
+                Debug.Log(isMining);
                 AttemptMining(currentPosition);
+                Debug.Log("love");
             }
             else if (Input.GetKeyDown(KeyCode.K))
             {
@@ -206,6 +209,7 @@ public class Player : MonoBehaviour
         {
             //Mining animation is set to true
             animator.SetBool("IsMining", true);
+            isMining = true;
             //Plays mining sound
             PlayAudio(miningSound);
             //Rolls for mining success
@@ -354,6 +358,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         //Ends players turn
         turnManager.EndPlayerTurn();
+        isMining = false;
     }
     //Coroutine to end the damage animation after completion
     private IEnumerator damgeEnder()
@@ -366,8 +371,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator stillEnder()
     {
-        yield return new WaitForSeconds(.5f);
         turnManager.EndPlayerTurn();
+        yield return new WaitForSeconds(.5f);
+        isMining = false;
     }
 
     //Reads a specific line from the save file
