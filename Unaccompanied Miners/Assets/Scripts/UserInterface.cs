@@ -27,7 +27,11 @@ public class UserInterface : MonoBehaviour
     //UI elements for the tutorial
     public GameObject tutShade;
     public GameObject tutPanel;
+    public GameObject minePanel;
+    public GameObject escapePanel;
     public Button closeTutButton;
+    public Button closeMineButton;
+    public Button closeEscButton;
 
     //UI elements for the pause menu
     public GameObject pausePanel;
@@ -76,21 +80,25 @@ public class UserInterface : MonoBehaviour
         quotaText.text = "Quota: " + quota.ToString();
 
         //Shows tutorial if it is level 1
-        if(SceneManager.GetActiveScene().name == "Level 1")
+        if(SceneManager.GetActiveScene().name == "Tutorial 1")
         {
-            //tutPanel.SetActive(true);
+            tutPanel.SetActive(true);
             //tutShade.SetActive(true);
         }
         //Sets several UI elements inactive
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
+        minePanel.SetActive(false);
+        escapePanel.SetActive(false);
         //loseText.gameObject.SetActive(false);
         escapeText.gameObject.SetActive(false);
         quitConfirmPanel.SetActive(false);
         youLosePanel.SetActive(false);
         // Add listeners for all the UI buttons
         closeTutButton.onClick.AddListener(CloseTutorial);
+        closeMineButton.onClick.AddListener(CloseMine);
+        closeEscButton.onClick.AddListener(CloseEsc);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
@@ -291,8 +299,20 @@ public class UserInterface : MonoBehaviour
     void CloseTutorial()
     {
         tutPanel.SetActive(false);
-        tutShade.SetActive(false);
+        minePanel.SetActive(true);
     }
+
+    void CloseMine()
+    {
+        minePanel.SetActive(false);
+        escapePanel.SetActive(true);
+    }
+
+    void CloseEsc()
+    {
+        escapePanel.SetActive(false);
+    }
+
     //Handles player death
     void PlayerDied()
     {
