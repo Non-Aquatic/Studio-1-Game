@@ -183,12 +183,6 @@ public class SaveLoadScript : MonoBehaviour
                 player.currentPosition = new Vector2Int(3, 7);
                 player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
                 transform.position = player.GetTargetPosition();
-            } 
-            else if(sceneName == "Level 1")
-            {
-                player.currentPosition = new Vector2Int(0, 1);
-                player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
-                transform.position = player.GetTargetPosition();
             }
             else
             {
