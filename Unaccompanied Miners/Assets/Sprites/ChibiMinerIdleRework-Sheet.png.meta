@@ -1,0 +1,945 @@
+fileFormatVersion: 2
+guid: 98fa7b726f7ea954aadb909a0862b6cb
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 125
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d4a1f64b8c26674185b55bfe7435909
+      internalID: -2098949182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 125
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be256b2546680474db77b22eda13bc59
+      internalID: 1626440615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 125
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8aab1aa8a3b03c4e940a386697a1771
+      internalID: 1984143514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 125
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c938cb3d77a95d49946728aab24a14e
+      internalID: -785605614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 127
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a610a5370e5154fb66805ca7170d2c
+      internalID: -1287822777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 127
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dafb1ece8da3d64db0e4fff64e382d7
+      internalID: -119736624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 125
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 443276b827aceeb46a2817bbb377393d
+      internalID: -1889649677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 125
+        width: 21
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d93678e0040efaa48b37718a71dc562d
+      internalID: 1884067502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 125
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 588d4c7cc937fdd459e47e38d2cbc643
+      internalID: -1338850031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 85
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f8b44b9f0459e4408ca01d0de8e28a4
+      internalID: -2091704608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 85
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c755aa5b88e1964cb4aa39f210d6fc6
+      internalID: 433900689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 85
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35436f77dde3b60469539810efa0de29
+      internalID: -355603558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 85
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19272120cbbd0804f8b93338ba255088
+      internalID: -594586415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 87
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 416024b8184daa04fa6f8590560948b4
+      internalID: 1913447027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 87
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b3fcf8d60b94a947bfe3c00a31a370d
+      internalID: 1461582168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 85
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e57e7d4d455a5d49b48182d1a0c2f32
+      internalID: -742096723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 85
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21ff089965bd52c43a7b9c43afba32ae
+      internalID: 1476166681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 85
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e88c927cca629fc4ba96600ed8ed954e
+      internalID: -346696152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 45
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eba4fbe8aa58e654b8441fa6b820e7ff
+      internalID: -632458208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 45
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41cc3f6ce2bbfef4f9612f83159102be
+      internalID: -1283929784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 45
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32e27c85888c7c54f83704dccfb5bb5a
+      internalID: 444185824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 45
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd73044af734d44d82c1670fae7fd8e
+      internalID: 1221945730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 47
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0c5f94a99658841a6fff3da331fd11
+      internalID: -1205807010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 47
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8030575722f8b38479c70830d3b8ffab
+      internalID: 1506088684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 45
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 367b6c602b4b5d54f95c64cf346aa863
+      internalID: 782118549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 45
+        width: 31
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a76f6b400cb6af4ba52703985b80dd9
+      internalID: 541290530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 45
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c75372974216ee14dbec87f27d8285cc
+      internalID: 1718683174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 5
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad9005e97d1ba642aa1170217bc084a
+      internalID: -594872344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 5
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f73d39a34ead1ca418fab7b7e502d9e2
+      internalID: 1708758140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 5
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7278c45d49482b849a33fdbf0c2646a2
+      internalID: -267631806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 5
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efde58a26b78d9a4a8f0157b48ab7851
+      internalID: 1907241558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 8
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a36c2ee882e45a547bd450321928b23e
+      internalID: -1552276624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 8
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3594a6237f934b2419e6ef4cc96b682d
+      internalID: 1325078401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 5
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d5209cab1b3ffb4ab0498fa9f51b378
+      internalID: 313129845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 5
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 657684e295f4a524884fb96b1dedefdd
+      internalID: -1072710810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChibiMinerIdleRework-Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 5
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bab556971348dc944a437be059e3a086
+      internalID: 1483031599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 6c95fa97bd62d16468d970aa1bb8ea01
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      ChibiMinerIdleRework-Sheet_0: -2098949182
+      ChibiMinerIdleRework-Sheet_1: 1626440615
+      ChibiMinerIdleRework-Sheet_10: 433900689
+      ChibiMinerIdleRework-Sheet_11: -355603558
+      ChibiMinerIdleRework-Sheet_12: -594586415
+      ChibiMinerIdleRework-Sheet_13: 1913447027
+      ChibiMinerIdleRework-Sheet_14: 1461582168
+      ChibiMinerIdleRework-Sheet_15: -742096723
+      ChibiMinerIdleRework-Sheet_16: 1476166681
+      ChibiMinerIdleRework-Sheet_17: -346696152
+      ChibiMinerIdleRework-Sheet_18: -632458208
+      ChibiMinerIdleRework-Sheet_19: -1283929784
+      ChibiMinerIdleRework-Sheet_2: 1984143514
+      ChibiMinerIdleRework-Sheet_20: 444185824
+      ChibiMinerIdleRework-Sheet_21: 1221945730
+      ChibiMinerIdleRework-Sheet_22: -1205807010
+      ChibiMinerIdleRework-Sheet_23: 1506088684
+      ChibiMinerIdleRework-Sheet_24: 782118549
+      ChibiMinerIdleRework-Sheet_25: 541290530
+      ChibiMinerIdleRework-Sheet_26: 1718683174
+      ChibiMinerIdleRework-Sheet_27: -594872344
+      ChibiMinerIdleRework-Sheet_28: 1708758140
+      ChibiMinerIdleRework-Sheet_29: -267631806
+      ChibiMinerIdleRework-Sheet_3: -785605614
+      ChibiMinerIdleRework-Sheet_30: 1907241558
+      ChibiMinerIdleRework-Sheet_31: -1552276624
+      ChibiMinerIdleRework-Sheet_32: 1325078401
+      ChibiMinerIdleRework-Sheet_33: 313129845
+      ChibiMinerIdleRework-Sheet_34: -1072710810
+      ChibiMinerIdleRework-Sheet_35: 1483031599
+      ChibiMinerIdleRework-Sheet_4: -1287822777
+      ChibiMinerIdleRework-Sheet_5: -119736624
+      ChibiMinerIdleRework-Sheet_6: -1889649677
+      ChibiMinerIdleRework-Sheet_7: 1884067502
+      ChibiMinerIdleRework-Sheet_8: -1338850031
+      ChibiMinerIdleRework-Sheet_9: -2091704608
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
