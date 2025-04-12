@@ -261,7 +261,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 941879838, guid: 86e2709ad812c8d4da77b0992b00d0d5, type: 3}
+  m_Sprite: {fileID: -1048380963, guid: 6f945bb9f58bc494698c80c9d8afacfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -345,7 +345,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 546768472, guid: 86e2709ad812c8d4da77b0992b00d0d5, type: 3}
+  m_Sprite: {fileID: -1241174908, guid: 6f945bb9f58bc494698c80c9d8afacfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -583,7 +583,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a4fac6f8df16c42905cff140b8df83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPosition: {fileID: 0}
   Goblin0: {fileID: 2962136247936328093}
   Goblin1: {fileID: 7836302398217076323}
   Goblin2: {fileID: 2227754379582611435}
@@ -593,6 +592,7 @@ MonoBehaviour:
   Spotlight2: {fileID: 112635872530582422}
   Spotlight3: {fileID: 6399141332800192702}
   currentSpot: 0
+  PlayerPosition: {fileID: 0}
 --- !u!1 &5862973420168096890
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +666,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -956603130, guid: 86e2709ad812c8d4da77b0992b00d0d5, type: 3}
+  m_Sprite: {fileID: 1262283207, guid: 6f945bb9f58bc494698c80c9d8afacfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -879,7 +879,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1704564589, guid: 86e2709ad812c8d4da77b0992b00d0d5, type: 3}
+  m_Sprite: {fileID: 677887309, guid: 6f945bb9f58bc494698c80c9d8afacfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
