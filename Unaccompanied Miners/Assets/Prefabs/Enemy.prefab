@@ -102,11 +102,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPosition: {x: 0, y: 0}
-  attackSound: {fileID: 0}
-  footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
-  audioVolume: 0.15
+  finished: 1
   arrowLocation: {fileID: 561327387667959301}
   arrowPrefab: {fileID: 3317524280896032586, guid: 8f6851606535b8d4ab43a6db59ce130b, type: 3}
+  attackSound: {fileID: 0}
+  footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
+  player: {fileID: 0}
+  boardManager: {fileID: 0}
 --- !u!82 &3300546887202087112
 AudioSource:
   m_ObjectHideFlags: 0
@@ -244,7 +246,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 949395242, guid: 66974c23e9c0538489acc346bc9fa651, type: 3}
+  m_Sprite: {fileID: -1963012566, guid: b84811b46d87ce1499ed372ce00dbfa4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
