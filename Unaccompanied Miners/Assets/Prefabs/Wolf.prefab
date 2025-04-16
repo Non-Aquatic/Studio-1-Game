@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1602140398597965494}
   - component: {fileID: 2099739850055895902}
   - component: {fileID: 7432931145213900006}
+  - component: {fileID: -569535347680693428}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 326143709, guid: 4c948d58562680a49a26e39b76df5a6b, type: 3}
   m_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,3 +125,25 @@ MonoBehaviour:
   player: {fileID: 0}
   currentPosition: {x: 0, y: 0}
   boardManager: {fileID: 0}
+  finished: 1
+--- !u!95 &-569535347680693428
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929053639654477192}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b662e5dd5cb036942a5555f91adff040, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
