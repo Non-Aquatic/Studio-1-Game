@@ -25,14 +25,26 @@ public class UserInterface : MonoBehaviour
     private Player playerScript; //Reference to the Player script
     private String sceneName; //Current scene name
 
-    //UI elements for the tutorial
+    //UI elements for tutorial 1
     public GameObject tutShade;
     public GameObject tutPanel;
     public GameObject minePanel;
     public GameObject escapePanel;
+    public GameObject goalPanel;
     public Button closeTutButton;
     public Button closeMineButton;
     public Button closeEscButton;
+    public Button closeGoalPanel;
+
+    //UI elements for tutorial 2
+    public GameObject introGoblinPanel;
+    public GameObject knifePanel;
+    public GameObject shopPanel;
+    public GameObject escPanel2;
+    public Button closeIntroGob;
+    public Button closeKnife;
+    public Button closeShop;
+    public Button closeEsc2;
 
     //UI elements for the pause menu
     public GameObject pausePanel;
@@ -87,6 +99,12 @@ public class UserInterface : MonoBehaviour
             tutPanel.SetActive(true);
             //tutShade.SetActive(true);
         }
+
+        if (SceneManager.GetActiveScene().name == "Tutorial 2")
+        {
+            introGoblinPanel.SetActive(true); 
+        }
+
         //Sets several UI elements inactive
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
@@ -101,6 +119,11 @@ public class UserInterface : MonoBehaviour
         closeTutButton.onClick.AddListener(CloseTutorial);
         closeMineButton.onClick.AddListener(CloseMine);
         closeEscButton.onClick.AddListener(CloseEsc);
+        closeGoalPanel.onClick.AddListener(CloseGoal);
+        closeIntroGob.onClick.AddListener(CloseIntro);
+        closeKnife.onClick.AddListener(CloseKnife);
+        closeShop.onClick.AddListener(CloseShop);
+        closeEsc2.onClick.AddListener(CloseEsc2);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
         shopButton.onClick.AddListener(Shop);
@@ -324,6 +347,35 @@ public class UserInterface : MonoBehaviour
     void CloseEsc()
     {
         escapePanel.SetActive(false);
+        goalPanel.SetActive(true);
+    }
+
+    void CloseGoal()
+    {
+        goalPanel.SetActive(false);
+    }
+
+    void CloseIntro()
+    {
+        introGoblinPanel.SetActive(false);
+        knifePanel.SetActive(true);
+    }
+
+    void CloseKnife()
+    {
+        knifePanel.SetActive(false);
+        shopPanel.SetActive(true);
+    }
+
+    void CloseShop()
+    {
+        shopPanel.SetActive(false);
+        escPanel2.SetActive(true);
+    }
+
+    void CloseEsc2()
+    {
+        escPanel2.SetActive(false);
     }
 
     //Handles player death
