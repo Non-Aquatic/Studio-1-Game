@@ -179,7 +179,7 @@ public class SaveLoadScript : MonoBehaviour
         //If position is not saved, start at (0, 0)
         if (line1Level == null || savedLevel != sceneName)
         {
-            if (sceneName == "Tutorial 1")
+            if (sceneName == "Tutorial 1" || sceneName == "Tutorial 2")
             {
                 player.currentPosition = new Vector2Int(3, 7);
                 player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
@@ -196,6 +196,7 @@ public class SaveLoadScript : MonoBehaviour
                 player.currentPosition = new Vector2Int(0, 0);
                 player.SetTargetPosition(transform.position);
             }
+
         }
         //If position is saved, places player at that position
         if (line1Level != null)
@@ -210,6 +211,10 @@ public class SaveLoadScript : MonoBehaviour
                 switch (sceneName)
                 {
                     case "Tutorial 1":
+                        x = 3;
+                        y = 7;
+                        break;
+                    case "Tutorial 2":
                         x = 3;
                         y = 7;
                         break;
@@ -246,6 +251,10 @@ public class SaveLoadScript : MonoBehaviour
         else if (sceneName == "Tutorial 1")
         {
             quota = 10;
+        }
+        else if (sceneName == "Tutorial 2")
+        {
+            quota = 20;
         }
         else
         {
@@ -360,6 +369,9 @@ public class SaveLoadScript : MonoBehaviour
             {
                 case "Tutorial 1":
                     lvlPath = Path.Combine(folderPath, "Tutorial-1.txt");
+                    break;
+                case "Tutorial 2":
+                    lvlPath = Path.Combine(Application.streamingAssetsPath, "Tutorial-2.txt");
                     break;
                 case "Level 1":
                     lvlPath = Path.Combine(folderPath, "Level-1.txt");
