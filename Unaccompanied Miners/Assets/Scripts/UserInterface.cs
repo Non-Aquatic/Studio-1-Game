@@ -16,7 +16,6 @@ public class UserInterface : MonoBehaviour
     int quota = 1; //Initial quota value
     int playerHealth = 0; //Player health
     public TMP_Text gems; //Text to show the number of gems the player has collected
-    public TMP_Text knifes; 
     public TMP_Text level; //Text to show the current level's name
     public TMP_Text winText; //Text to show when the player wins
     //public TMP_Text loseText;
@@ -28,18 +27,13 @@ public class UserInterface : MonoBehaviour
     //UI elements for the tutorial
     public GameObject tutShade;
     public GameObject tutPanel;
-    public GameObject minePanel;
-    public GameObject escapePanel;
     public Button closeTutButton;
-    public Button closeMineButton;
-    public Button closeEscButton;
 
     //UI elements for the pause menu
     public GameObject pausePanel;
     public GameObject pauseBackground;
     public Button restartButton;
     public Button saveGameButton;
-    public Button shopButton;
     public Button mainMenuButton;
     public Button exitGameButton;
     private bool isPaused = false;
@@ -85,25 +79,20 @@ public class UserInterface : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Tutorial 1")
         {
             tutPanel.SetActive(true);
-            //tutShade.SetActive(true);
+            tutShade.SetActive(true);
         }
         //Sets several UI elements inactive
         pausePanel.SetActive(false);
         pauseBackground.SetActive(false);
         winText.gameObject.SetActive(false);
-        minePanel.SetActive(false);
-        escapePanel.SetActive(false);
         //loseText.gameObject.SetActive(false);
         escapeText.gameObject.SetActive(false);
         quitConfirmPanel.SetActive(false);
         youLosePanel.SetActive(false);
         // Add listeners for all the UI buttons
         closeTutButton.onClick.AddListener(CloseTutorial);
-        closeMineButton.onClick.AddListener(CloseMine);
-        closeEscButton.onClick.AddListener(CloseEsc);
         restartButton.onClick.AddListener(RestartLevel);
         saveGameButton.onClick.AddListener(SaveGame);
-        shopButton.onClick.AddListener(Shop);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
         exitGameButton.onClick.AddListener(EnableQuitConfirm);
         quitButton.onClick.AddListener(ExitGame);
@@ -112,7 +101,7 @@ public class UserInterface : MonoBehaviour
         menuButton.onClick.AddListener(ReturnToMenu);
 
         //Sets up path to the save file
-        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
+        folderPath = Path.Combine(Application.dataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
     }
@@ -122,7 +111,6 @@ public class UserInterface : MonoBehaviour
     {
         //Updates gems text 
         gems.text = " " + playerScript.gemCount.ToString();
-        knifes.text = " " +  Items.LoadItemData("Knife");
         //Tracks health and triggers game over if health reaches 0
         playerHealth = playerScript.health;
         if(playerScript.health <= 0)
@@ -208,15 +196,6 @@ public class UserInterface : MonoBehaviour
         isPaused = false;
         //Loads main menu
         SceneManager.LoadScene("Main Menu");
-    }
-    void Shop()
-    {
-        //Makes sure game movment is running as normal
-        Time.timeScale = 1f;
-        //Sets pause bool to false
-        isPaused = false;
-        //Loads main menu
-        SceneManager.LoadScene("Shop");
     }
     //Exits game
     void ExitGame()
@@ -312,20 +291,8 @@ public class UserInterface : MonoBehaviour
     void CloseTutorial()
     {
         tutPanel.SetActive(false);
-        minePanel.SetActive(true);
+        tutShade.SetActive(false);
     }
-
-    void CloseMine()
-    {
-        minePanel.SetActive(false);
-        escapePanel.SetActive(true);
-    }
-
-    void CloseEsc()
-    {
-        escapePanel.SetActive(false);
-    }
-
     //Handles player death
     void PlayerDied()
     {
