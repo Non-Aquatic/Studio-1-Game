@@ -4837,7 +4837,7 @@ MonoBehaviour:
   saveTilePrefab: {fileID: 6923171451855684081, guid: a555857676105024ab10f20686a03dc9, type: 3}
   turnManager: {fileID: 0}
   sceneName: 
-  quota: 10
+  quota: 20
   gemsSaved: 0
 --- !u!4 &206796492
 Transform:
@@ -4873,7 +4873,7 @@ MonoBehaviour:
   turnText: {fileID: 1379875068}
   healthText: {fileID: 1783753079}
   gemText: {fileID: 1162903480}
-  quota: 1
+  quota: 20
   gems: -1
   deathMusic: {fileID: 8300000, guid: 57f8100d96f6aa541a1773f3024a7f62, type: 3}
 --- !u!114 &206796494
