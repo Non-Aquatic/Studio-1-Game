@@ -7,7 +7,6 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System.Transactions;
 using UnityEngine.UI;
-//using UnityEditor.TestTools.CodeCoverage;
 
 public class SaveLoadScript : MonoBehaviour
 {
@@ -58,7 +57,7 @@ public class SaveLoadScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        folderPath = Path.Combine(Application.dataPath, "GameData");
+        folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         sceneName = SceneManager.GetActiveScene().name;
@@ -184,17 +183,12 @@ public class SaveLoadScript : MonoBehaviour
                 player.currentPosition = new Vector2Int(3, 7);
                 player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
                 transform.position = player.GetTargetPosition();
-            } 
-            else if(sceneName == "Level 1")
-            {
-                player.currentPosition = new Vector2Int(0, 1);
-                player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
-                transform.position = player.GetTargetPosition();
             }
             else
             {
-                player.currentPosition = new Vector2Int(0, 0);
-                player.SetTargetPosition(transform.position);
+                player.currentPosition = new Vector2Int(0, 1);
+                player.SetTargetPosition(new Vector3(0f, 1f, 1f));
+                transform.position = player.GetTargetPosition();
             }
 
         }
@@ -219,7 +213,7 @@ public class SaveLoadScript : MonoBehaviour
                         y = 7;
                         break;
                     case "Level 1":
-                        x = 0; 
+                        x = 0;
                         y = 1;
                         break;
                     case "Level 2":
@@ -368,18 +362,18 @@ public class SaveLoadScript : MonoBehaviour
             switch (sceneName)
             {
                 case "Tutorial 1":
-                    lvlPath = Path.Combine(folderPath, "Tutorial-1.txt");
+                    lvlPath = Path.Combine(Application.streamingAssetsPath, "Tutorial-1.txt");
                     break;
                 case "Tutorial 2":
                     lvlPath = Path.Combine(Application.streamingAssetsPath, "Tutorial-2.txt");
                     break;
                 case "Level 1":
-                    lvlPath = Path.Combine(folderPath, "Level-1.txt");
+                    lvlPath = Path.Combine(Application.streamingAssetsPath, "Level-1.txt");
                     break;
                 case "Level 2":
-                    lvlPath = Path.Combine(folderPath, "Level-2.txt");
+                    lvlPath = Path.Combine(Application.streamingAssetsPath, "Level-2.txt");
                     break;
-                default: 
+                default:
                     break;
             }
 
@@ -440,7 +434,7 @@ public class SaveLoadScript : MonoBehaviour
             }
 
         }
-        
+
     }
     public void SaveBoard(Vector2Int position)
     {

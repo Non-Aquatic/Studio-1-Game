@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour
         }
         else if (sceneName == "Tutorial 2")
         {
-            filePathPaths = Path.Combine(Application.streamingAssetsPath, "Tutorial-2.txt");
+            filePathPaths = Path.Combine(Application.streamingAssetsPath, "Tutorial2.txt");
         }
         else
         {
@@ -85,7 +85,7 @@ public class EnemyManager : MonoBehaviour
     {
         foreach (var position in wolfSpawnPositions)
         {
-            GameObject wolfInstance = Instantiate(wolfPrefab, new Vector3(position.x, 1f, position.y), Quaternion.Euler(0, 0, 0));
+            GameObject wolfInstance = Instantiate(wolfPrefab, new Vector3(position.x, 1f, position.y), Quaternion.Euler(0, -45, 0));
             Wolf wolf = wolfInstance.GetComponent<Wolf>();
             wolf.Initialize(position);
             turnManager.AddWolf(wolf);

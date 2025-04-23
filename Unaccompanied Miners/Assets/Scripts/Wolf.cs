@@ -10,6 +10,7 @@ public class Wolf : MonoBehaviour
     public Vector2Int currentPosition;
     public BoardManager boardManager;
     public bool finished = true;
+    private Animator animator; //Animator for the enemy;
 
     private Vector2Int targetPosition;
     private List<Vector3> pathToMove = new List<Vector3>(); 
@@ -20,6 +21,7 @@ public class Wolf : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         player = FindObjectOfType<Player>(); 
         boardManager = FindObjectOfType<BoardManager>();
         targetPosition = player.currentPosition;
@@ -120,9 +122,17 @@ public class Wolf : MonoBehaviour
 
     private IEnumerator MoveThroughPath()
     {
+        animator.SetBool("IsMoving", true);
         foreach (var moves in pathToMove)
         {
+            Vector3 direction = moves - transform.position;
+            int moveX = Mathf.Abs(direction.x) > 0.1f ? (int)Mathf.Sign(direction.x) : 0;
+            int moveY = Mathf.Abs(direction.z) > 0.1f ? (int)Mathf.Sign(direction.z) : 0;
+            float distance = direction.magnitude;
+            direction.Normalize();
             bool notAttacked = true;
+            animator.SetInteger("MoveX", moveX);
+            animator.SetInteger("MoveY", moveY);
             while (transform.position != moves)
             {
                 transform.position = Vector3.MoveTowards(transform.position, moves, moveSpeed*Time.deltaTime*5);
@@ -141,6 +151,7 @@ public class Wolf : MonoBehaviour
         {
             currentState = WolfState.Stall;
         }
+        animator.SetBool("IsMoving", false);
     }
 
 
@@ -159,8 +170,15 @@ public class Wolf : MonoBehaviour
     public void PerformAttack()
     {
         player.GetComponent<Player>().TakeDamage(2);
+        animator.SetBool("IsAttacking", true);
         restTurns = 4;
         currentState = WolfState.Rest;
         Debug.Log("Yellow");
+        StartCoroutine(StopAttackAnimation());
+    }
+    private IEnumerator StopAttackAnimation()
+    {
+        yield return new WaitForSeconds(.25f);
+        animator.SetBool("IsAttacking", false);
     }
 }
