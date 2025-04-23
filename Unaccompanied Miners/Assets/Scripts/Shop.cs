@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Shop : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Shop : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 TotalGems.ResetTotalGems();
+                PlayerPrefs.SetInt("MaxLevelCompleted", 0);
                 Items.SaveItemData("Knife", 1);
                 UpdateGemUI();
             }

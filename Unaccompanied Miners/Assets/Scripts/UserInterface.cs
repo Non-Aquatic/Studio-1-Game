@@ -276,20 +276,28 @@ public class UserInterface : MonoBehaviour
             string emptyString = "";
             File.WriteAllText(filePathPlayer, emptyString);
             File.WriteAllText(filePathBoard, emptyString);
-            Invoke("LoadLevel1", 10);
+            Invoke("LoadTutorial2", 10);
         }
         //If level 1, saves and loads level 2 after 10 seconds
-        if (sceneName == "Level 1")
+        /* if (sceneName == "Level 1")
         {
             string emptyString = "";
             File.WriteAllText(filePathPlayer, emptyString);
             File.WriteAllText(filePathBoard, emptyString);
             Invoke("LoadLevel2", 10);
+        }*/
+        if (sceneName != "Tutorial 1")
+        {
+            string emptyString = "";
+            File.WriteAllText(filePathPlayer, emptyString);
+            File.WriteAllText(filePathBoard, emptyString);
+            Invoke("LoadLevelSelect", 10);
         }
         //If level 2, goes back to main menu after 10 seconds
-        else if (sceneName != "Tutorial 1")
+        if (sceneName != "Tutorial 1" || sceneName != "Tutorial 2")
         {
-            Invoke("ReturnToMainMenu", 10);
+            string[] levelmax = sceneName.Split(' ');
+            PlayerPrefs.SetInt("MaxLevelCompleted", Int32.Parse(levelmax[1]));
         }
     }
     //Handles escaping the game
@@ -313,6 +321,14 @@ public class UserInterface : MonoBehaviour
     void LoadLevel2()
     {
         SceneManager.LoadScene("Level 2");
+    }
+    void LoadTutorial2()
+    {
+        SceneManager.LoadScene("Tutorial 2");
+    }
+    void LoadLevelSelect()
+    {
+        SceneManager.LoadScene("LevelSelect");
     }
     //Loads main menu
     void ReturnToMainMenu()
