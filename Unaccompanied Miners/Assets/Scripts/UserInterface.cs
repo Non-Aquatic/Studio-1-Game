@@ -308,7 +308,7 @@ public class UserInterface : MonoBehaviour
         escapeText.gameObject.SetActive(true);
         //Time.timeScale = 0f;
         //Loads main menu after 10 seconds
-        Invoke("ReturnToMainMenu", 10);
+        Invoke("LoadLevelSelect", 10);
     }
 
     //Loads level 1
