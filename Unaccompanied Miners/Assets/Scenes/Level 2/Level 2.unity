@@ -10343,8 +10343,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnManager: {fileID: 2100091460}
   enemyPrefab: {fileID: 8676704902230241825, guid: 38be24e4fba1bc74880a6f5be04d52ee, type: 3}
+  wolfPrefab: {fileID: 0}
   level: 
   file: 
+  audioPlayersModulo: 3
 --- !u!114 &2100091460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10360,6 +10362,7 @@ MonoBehaviour:
   player: {fileID: 2131680890}
   ui: {fileID: 556782465}
   enemies: []
+  wolves: []
   turnText: {fileID: 340755334}
   healthText: {fileID: 961689517}
   gemText: {fileID: 556782460}
@@ -10826,7 +10829,7 @@ MonoBehaviour:
   turnManager: {fileID: 2100091460}
   currentPosition: {x: 0, y: 0}
   moveSpeed: 5
-  targetPosition: {x: 0, y: 0, z: 0}
+  watchtower: {fileID: 0}
   gemCount: 0
   health: 1
   maxHealth: 10
@@ -10836,7 +10839,6 @@ MonoBehaviour:
   takeDamage: {fileID: 8300000, guid: 8715f7d572ead284c9aff663f00fb9a7, type: 3}
   footstepSound: {fileID: 8300000, guid: cb03c71cea5b9244884a8e13e5fdc192, type: 3}
   audioVolume: 0.5
-  isMoving: 0
   boardState: 
 --- !u!95 &2131680891
 Animator:
