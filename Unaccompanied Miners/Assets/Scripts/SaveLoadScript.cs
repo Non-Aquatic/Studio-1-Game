@@ -58,9 +58,26 @@ public class SaveLoadScript : MonoBehaviour
     void Start()
     {
         folderPath = Path.Combine(Application.persistentDataPath, "GameData");
-        filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
-        filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         sceneName = SceneManager.GetActiveScene().name;
+
+
+        filePathPlayer = folderPath + "\\PlayerData.txt";
+        filePathBoard = folderPath + "\\LevelData.txt";
+
+        if (!File.Exists(filePathPlayer))
+        {
+            Debug.LogError("No Player Data Found, creating new one");
+            var temp = File.Create(filePathPlayer);
+            temp.Close();
+            filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
+        }
+        if (!File.Exists(filePathBoard))
+        {
+            Debug.LogError("No Level Data Found, creating new one");
+            var temp = File.Create(filePathBoard);
+            temp.Close();
+            filePathBoard = Path.Combine(folderPath, "LevelData.txt");
+        }
 
         if (sceneName == "Main Menu")
         {
@@ -372,6 +389,12 @@ public class SaveLoadScript : MonoBehaviour
                     break;
                 case "Level 2":
                     lvlPath = Path.Combine(Application.streamingAssetsPath, "Level-2.txt");
+                    break;
+                case "Level 3":
+                    lvlPath = Path.Combine(Application.streamingAssetsPath, "Level-3.txt");
+                    break;
+                case "Level 4":
+                    lvlPath = Path.Combine(Application.streamingAssetsPath, "Level-4.txt");
                     break;
                 default:
                     break;
