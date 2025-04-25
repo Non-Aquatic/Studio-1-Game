@@ -35,6 +35,14 @@ public class EnemyManager : MonoBehaviour
         {
             filePathPaths = Path.Combine(Application.streamingAssetsPath, "Level2.txt");
         }
+        else if (sceneName == "Level 3")
+        {
+            filePathPaths = Path.Combine(Application.streamingAssetsPath, "Level3.txt");
+        }
+        else if (sceneName == "Level 4")
+        {
+            filePathPaths = Path.Combine(Application.streamingAssetsPath, "Level4.txt");
+        }
         else if (sceneName == "Tutorial 2")
         {
             filePathPaths = Path.Combine(Application.streamingAssetsPath, "Tutorial2.txt");
