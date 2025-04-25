@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: c2e5fe32c34630842a1cd13870b74e28
   - enabled: 1
-    path: Assets/Scenes/Level 1/Level 1.unity
-    guid: f4601ddc69868704781da65505d44d33
+    path: Assets/Scenes/LevelSelect.unity
+    guid: b37dc4c9f5beec446a010644064e4d77
+  - enabled: 1
+    path: Assets/Scenes/Shop.unity
+    guid: c0fbaae896d846248a0b85f6df87e284
   - enabled: 1
     path: Assets/Scenes/Tutorial 1/Tutorial 1.unity
     guid: d61581d151f1287468fe59543f8f6f51
@@ -18,11 +21,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial 2/Tutorial 2.unity
     guid: b37c4f6b951c52942b9854bf480acf2c
   - enabled: 1
-    path: Assets/Scenes/Shop.unity
-    guid: c0fbaae896d846248a0b85f6df87e284
+    path: Assets/Scenes/Level 1/Level 1.unity
+    guid: f4601ddc69868704781da65505d44d33
   - enabled: 1
-    path: Assets/Scenes/LevelSelect.unity
-    guid: b37dc4c9f5beec446a010644064e4d77
+    path: Assets/Scenes/Level 2/Level 2.unity
+    guid: a83763b5b63b31f4e8a6abaf24f92edf
+  - enabled: 1
+    path: Assets/Scenes/Level 3/Level 3.unity
+    guid: 51b6284ced40f5945a1c16fe352e8ae0
   - enabled: 1
     path: Assets/Scenes/Level 4/Level 4.unity
     guid: a87b8fe7588a4fc468572cb50a3d17db

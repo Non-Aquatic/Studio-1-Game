@@ -10,10 +10,12 @@ public class LevelSelect : MonoBehaviour
     public Button l1Button;
     public Button l2Button;
     public Button l3Button;
+    public Button l4Button;
     public Button mainMenuButton;
 
     void Start()
     {
+        l4Button.onClick.AddListener(GoToL4);
         l3Button.onClick.AddListener(GoToL3);
         l1Button.onClick.AddListener(GoToL1);
         l2Button.onClick.AddListener(GoToL2);
@@ -29,6 +31,7 @@ public class LevelSelect : MonoBehaviour
         l1Button.interactable = true;
         l2Button.interactable = (maxLevelCompleted >= 1);
         l3Button.interactable = (maxLevelCompleted >= 2);
+        l4Button.interactable = (maxLevelCompleted >= 3);
     }
     void GoToL1()
     {
@@ -42,6 +45,11 @@ public class LevelSelect : MonoBehaviour
     void GoToL3()
     {
         SceneManager.LoadScene("Level 3");
+    }
+
+    void GoToL4()
+    {
+        SceneManager.LoadScene("Level 4");
     }
 
     void ReturnToMenu()

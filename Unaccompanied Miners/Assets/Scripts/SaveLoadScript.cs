@@ -238,6 +238,8 @@ public class SaveLoadScript : MonoBehaviour
                         y = 0;
                         break;
                     default:
+                        x = 0;
+                        y = 0;
                         break;
                 }
             }
