@@ -12,6 +12,7 @@ public class LevelSelect : MonoBehaviour
     public Button l3Button;
     public Button l4Button;
     public Button mainMenuButton;
+    public Button shopButton;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class LevelSelect : MonoBehaviour
         l1Button.onClick.AddListener(GoToL1);
         l2Button.onClick.AddListener(GoToL2);
         mainMenuButton.onClick.AddListener(ReturnToMenu);
+        shopButton.onClick.AddListener(Shop);
         CheckLevelProgress();
 
     }
@@ -55,5 +57,9 @@ public class LevelSelect : MonoBehaviour
     void ReturnToMenu()
     {
         SceneManager.LoadScene("Main Menu");
+    }
+    void Shop()
+    {
+        SceneManager.LoadScene("Shop");
     }
 }

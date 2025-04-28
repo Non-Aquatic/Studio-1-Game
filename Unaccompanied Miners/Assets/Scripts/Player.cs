@@ -115,6 +115,10 @@ public class Player : MonoBehaviour
             {
                 AttemptAttack();
             }
+            else if (Input.GetKeyDown(KeyCode.H))
+            {
+                UseHealthPotion();
+            }
             else if (Input.GetKeyDown(KeyCode.N))
             {
                 saveLoadScript.SaveBoard(currentPosition);
@@ -177,6 +181,13 @@ public class Player : MonoBehaviour
     //Handles player taking damage
     public void TakeDamage(int damage)
     {
+        int shieldCount = Items.LoadItemData("Shield");
+        if (shieldCount > 0)
+        {
+            Items.UseItem("Shield");
+            Debug.Log("No damage shield used");
+            return;
+        }
         //Damage animation set to true
         animator.SetBool("damaged", true);
 
@@ -287,6 +298,22 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("No knives available");
+        }
+    }
+    void UseHealthPotion()
+    {
+        int potionCount = Items.LoadItemData("Potion");
+        if (potionCount > 0 && health < maxHealth)
+        {
+            int healAmount = 5;
+            health = Mathf.Min(health + healAmount, maxHealth);
+            healthBar.SetHealth(health);
+            Items.UseItem("Potion");
+            turnManager.EndPlayerTurn();
+        }
+        else
+        {
+            Debug.Log("Nope, full health or no potions");
         }
     }
     //Saves the current board to a file and playerPrefs

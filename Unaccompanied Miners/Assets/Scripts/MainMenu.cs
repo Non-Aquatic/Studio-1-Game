@@ -83,6 +83,10 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetString(currentScene, currentScene);
         TotalGems.ResetTotalGems();
         Items.SaveItemData("Knife", 1);
+        PlayerPrefs.SetInt("MaxLevelCompleted", 0);
+        Items.SaveItemData("Potion", 0);
+        Items.SaveItemData("Shield", 0);
+        Items.SaveItemData("Freedom", 0);
         PlayerPrefs.Save();
         SceneManager.LoadScene("Tutorial 1");
     }

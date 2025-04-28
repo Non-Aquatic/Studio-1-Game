@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject arrowLocation; //Spawn location for next move arrow
     public GameObject arrowPrefab; //Prefab for the next move arrow
+    public GameObject alert;
     private Animator animator; //Animator for the enemy
 
     public AudioClip attackSound; //Assigned to attacking audio clip in inspector, plays on attack
@@ -42,6 +43,7 @@ public class Enemy : MonoBehaviour
         player = FindObjectOfType<Player>();
         boardManager = FindObjectOfType<BoardManager>();
         pitchAdjustment = Random.Range(pitchLower, pitchUpper);
+        alert.SetActive(false);
     }
     //Initializes the start position and arrow for the enemy
     public void Initialize(Vector2Int startPosition, Vector2Int[] path)
@@ -176,14 +178,16 @@ public class Enemy : MonoBehaviour
         //Once reached, sets animator to not move
         animator.SetBool("IsMoving", false);
         finished = true;
-        int oneAhead = (currentPatrolIndex + 1) % patrolPath.Length;
-        int twoAhead = (currentPatrolIndex + 2) % patrolPath.Length;
+        int oneAhead = (currentPatrolIndex) % patrolPath.Length;
+        int twoAhead = (currentPatrolIndex + 1) % patrolPath.Length;
 
         Vector2Int nextTile = patrolPath[oneAhead];
         Vector2Int nextNextTile = patrolPath[twoAhead];
 
-        if (nextTile == player.currentPosition || nextNextTile == player.currentPosition)
+        if (nextTile == player.currentPosition || nextNextTile == player.currentPosition & currentState == GoblinState.Patrol)
         {
+            alert.SetActive(true);
+            StartCoroutine(AlertEnding(1f)); 
             currentState = GoblinState.Chase;
             chaseTurnsRemaining = 3;
             chasePath.Clear();
@@ -216,7 +220,7 @@ public class Enemy : MonoBehaviour
                 break;
 
             case GoblinState.Chase:
-                targetPosition = player.currentPosition;
+                targetPosition = ChasebutDontMove().Value;
                 break;
 
             case GoblinState.Return:
@@ -262,5 +266,39 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(.25f);
         animator.SetBool("IsAttacking", false);
+    }
+    private Vector2Int? ChasebutDontMove()
+    {
+        Vector2Int targetPosition = player.currentPosition;
+        float closestDistance = float.MaxValue;
+        Vector2Int? bestMove = null;
+
+        List<Vector2Int> directions = new List<Vector2Int>()
+    {
+        new Vector2Int(currentPosition.x + 1, currentPosition.y),
+        new Vector2Int(currentPosition.x - 1, currentPosition.y),
+        new Vector2Int(currentPosition.x, currentPosition.y + 1),
+        new Vector2Int(currentPosition.x, currentPosition.y - 1),
+    };
+
+        foreach (var potentialMove in directions)
+        {
+            if (boardManager.IsTileTraversable(potentialMove) && !chasePath.Contains(potentialMove))
+            {
+                float distanceToPlayer = Vector2.Distance(potentialMove, targetPosition);
+                if (distanceToPlayer < closestDistance)
+                {
+                    closestDistance = distanceToPlayer;
+                    bestMove = potentialMove;
+                }
+            }
+        }
+
+        return bestMove;
+    }
+    private IEnumerator AlertEnding(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        alert.SetActive(false); 
     }
 }

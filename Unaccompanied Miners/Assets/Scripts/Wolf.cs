@@ -102,12 +102,25 @@ public class Wolf : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var position in path)
+        for (int i = 0; i < path.Count; i++)
         {
-            Instantiate(scentTrailPrefab, new Vector3(position.x, 0.1f, position.z), Quaternion.identity, transform);
+            Vector3 position = path[i];
+
+
+            GameObject scent = Instantiate(scentTrailPrefab, new Vector3(position.x, 0.5f, position.z), Quaternion.identity, transform);
+
+            if (i == path.Count - 1) 
+            {
+                Vector3 direction = path[i] - path[i - 1];
+                scent.transform.rotation = Quaternion.LookRotation(direction);
+            }
+            else
+            {
+                Vector3 direction = path[i + 1] - path[i]; 
+                scent.transform.rotation = Quaternion.LookRotation(direction);
+            }
         }
     }
-
     private void Move()
     {
         foreach (Transform child in transform)

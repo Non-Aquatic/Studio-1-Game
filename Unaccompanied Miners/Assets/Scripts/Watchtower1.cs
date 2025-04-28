@@ -16,6 +16,11 @@ public class Watchtower1 : MonoBehaviour
     public GameObject Spotlight2;
     public GameObject Spotlight3;
 
+    public GameObject Spotlight0Soft;
+    public GameObject Spotlight1Soft;
+    public GameObject Spotlight2Soft;
+    public GameObject Spotlight3Soft;
+
     //Current spotlight position
     public int currentSpot;
     //Current player position
@@ -30,12 +35,16 @@ public class Watchtower1 : MonoBehaviour
         //Sets all goblin and spotlight positions to be inactive
         Goblin3.SetActive(false);
         Spotlight3.SetActive(false);
+        Spotlight0Soft.SetActive(false);
         Goblin0.SetActive(false);
         Spotlight0.SetActive(false);
+        Spotlight1Soft.SetActive(false);
         Goblin1.SetActive(false);
         Spotlight1.SetActive(false);
+        Spotlight2Soft.SetActive(false);
         Goblin2.SetActive(false);
         Spotlight2.SetActive(false);
+        Spotlight3Soft.SetActive(false);
 
         //Switches to initial spot based on current spot
         switch (currentSpot)
@@ -84,9 +93,11 @@ public class Watchtower1 : MonoBehaviour
         //Deactivates goblin and spotlight 3
         Goblin3.SetActive(false);
         Spotlight3.SetActive(false);
+        Spotlight0Soft.SetActive(false);
         //Activates goblin and spotlight 0
         Goblin0.SetActive(true);
         Spotlight0.SetActive(true);
+        Spotlight1Soft.SetActive(true);
         //Sets current position to 0
         currentSpot = 0;
     }
@@ -96,9 +107,11 @@ public class Watchtower1 : MonoBehaviour
         //Deactivates goblin and spotlight 0
         Goblin0.SetActive(false);
         Spotlight0.SetActive(false);
+        Spotlight1Soft.SetActive(false);
         //Activates goblin and spotlight 1
         Goblin1.SetActive(true);
         Spotlight1.SetActive(true);
+        Spotlight2Soft.SetActive(true); ;
         //Sets current position to 1
         currentSpot = 1;
     }
@@ -108,9 +121,11 @@ public class Watchtower1 : MonoBehaviour
         //Deactivates goblin and spotlight 1
         Goblin1.SetActive(false);
         Spotlight1.SetActive(false);
+        Spotlight2Soft.SetActive(false);
         //Activates goblin and spotlight 2
         Goblin2.SetActive(true);
         Spotlight2.SetActive(true);
+        Spotlight3Soft.SetActive(true);
         //Sets current position to 2
         currentSpot = 2;
     }
@@ -120,9 +135,11 @@ public class Watchtower1 : MonoBehaviour
         //Deactivates goblin and spotlight 2
         Goblin2.SetActive(false);
         Spotlight2.SetActive(false);
+        Spotlight3Soft.SetActive(false);
         //Activates goblin and spotlight 3
         Goblin3.SetActive(true);
         Spotlight3.SetActive(true);
+        Spotlight0Soft.SetActive(true);
         //Sets current position to 3
         currentSpot = 3;
     }

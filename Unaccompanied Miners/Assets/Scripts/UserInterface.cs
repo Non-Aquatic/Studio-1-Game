@@ -16,7 +16,9 @@ public class UserInterface : MonoBehaviour
     int quota = 1; //Initial quota value
     int playerHealth = 0; //Player health
     public TMP_Text gems; //Text to show the number of gems the player has collected
-    public TMP_Text knifes; 
+    public TMP_Text knifes;
+    public TMP_Text potions;
+    public TMP_Text shields;
     public TMP_Text level; //Text to show the current level's name
     public TMP_Text winText; //Text to show when the player wins
     //public TMP_Text loseText;
@@ -39,10 +41,14 @@ public class UserInterface : MonoBehaviour
     //UI elements for tutorial 2
     public GameObject introGoblinPanel;
     public GameObject knifePanel;
+    public GameObject potionPanel;
+    public GameObject shieldPanel;
     public GameObject shopPanel;
     public GameObject escPanel2;
     public Button closeIntroGob;
     public Button closeKnife;
+    public Button closePotion;
+    public Button closeShield;
     public Button closeShop;
     public Button closeEsc2;
 
@@ -122,6 +128,8 @@ public class UserInterface : MonoBehaviour
         closeGoalPanel.onClick.AddListener(CloseGoal);
         closeIntroGob.onClick.AddListener(CloseIntro);
         closeKnife.onClick.AddListener(CloseKnife);
+        closePotion.onClick.AddListener(ClosePotion);
+        closeShield.onClick.AddListener(CloseShield);
         closeShop.onClick.AddListener(CloseShop);
         closeEsc2.onClick.AddListener(CloseEsc2);
         restartButton.onClick.AddListener(RestartLevel);
@@ -146,6 +154,8 @@ public class UserInterface : MonoBehaviour
         //Updates gems text 
         gems.text = " " + playerScript.gemCount.ToString();
         knifes.text = " " +  Items.LoadItemData("Knife");
+        potions.text = " " + Items.LoadItemData("Potion");
+        shields.text = " " + Items.LoadItemData("Shield");
         //Tracks health and triggers game over if health reaches 0
         playerHealth = playerScript.health;
         if(playerScript.health <= 0)
@@ -380,6 +390,16 @@ public class UserInterface : MonoBehaviour
     void CloseKnife()
     {
         knifePanel.SetActive(false);
+        potionPanel.SetActive(true);
+    }
+    void ClosePotion()
+    {
+        potionPanel.SetActive(false);
+        shieldPanel.SetActive(true);
+    }
+    void CloseShield()
+    {
+        shieldPanel.SetActive(false);
         shopPanel.SetActive(true);
     }
 
