@@ -7450,7 +7450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use M to wait on a Normal Tile or Mine on a Brown Tile
+  m_text: Use M to wait on a Normal Tile or Mine on a Purple Tile
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
   m_sharedMaterial: {fileID: -9093783674819077460, guid: 450ea33a64cbc4241890c1cf49b856ac, type: 2}
