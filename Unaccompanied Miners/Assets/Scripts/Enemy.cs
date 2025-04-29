@@ -9,43 +9,48 @@ public class Enemy : MonoBehaviour
     public Vector2Int currentPosition; //Current position of enemy
     private Vector2Int[] patrolPath; //Patrol path of each enemy
     private int currentPatrolIndex = 0; //Index of the patrol path
-    private Vector2Int previousPatrolPosition;
-    public bool finished = true;
+    private Vector2Int previousPatrolPosition; //Previous Patrol position of the enemy
+    public bool finished = true; 
 
     public GameObject arrowLocation; //Spawn location for next move arrow
     public GameObject arrowPrefab; //Prefab for the next move arrow
-    public GameObject alert;
+    public GameObject alert; //Alert gameobject for the chase state
     private Animator animator; //Animator for the enemy
 
     public AudioClip attackSound; //Assigned to attacking audio clip in inspector, plays on attack
     public AudioClip footstepSound; //Assigned to footsetp audio clip in inspector, plays on movement
     private float audioVolume = .3f; // Audio volume, 0-1f.
-    private float pitchAdjustment;
-    private float pitchUpper = .9f;
-    private float pitchLower = .7f;
-    private float clipDelay = 0f;
+    private float pitchAdjustment; //Randomized pitch adjustment for goblin sounds
+    private float pitchUpper = .9f; //Higher end of pitch adjustments
+    private float pitchLower = .7f; //Lower end of pitch adjustments
+    private float clipDelay = 0f; //Delay amount for the goblin sounds
 
-    public Player player; 
-    public BoardManager boardManager;
+    public Player player;  //Reference to the player
+    public BoardManager boardManager; //Reference to the board
 
-    private enum GoblinState { Patrol, Chase, Return }
-    private GoblinState currentState = GoblinState.Patrol;
+    private enum GoblinState { Patrol, Chase, Return } //Different possible states of the goblin
+    private GoblinState currentState = GoblinState.Patrol; //Current state of the goblin
 
-    private int chaseTurnsRemaining = 3;
-    private int returnTurnsRemaining = 3;
+    private int chaseTurnsRemaining = 3; //Current amount of chase turns remaining, max is 3
+    private int returnTurnsRemaining = 3;//Current amount of return turns remaining, max is 3
 
-    private List<Vector2Int> chasePath = new List<Vector2Int>();
+    private List<Vector2Int> chasePath = new List<Vector2Int>(); //Current chase path of the goblin
 
-    //Gets animator component for the enemy for animations
     private void Start()
     {
+        //Gets animator component for the enemy for animations
         animator = GetComponent<Animator>();
+        //Finds the reference to the player in the scene
         player = FindObjectOfType<Player>();
+        //Finds the reference to the board manager in the scene
         boardManager = FindObjectOfType<BoardManager>();
+        //Randomly chooses a pitch adjustment between the min and max
         pitchAdjustment = Random.Range(pitchLower, pitchUpper);
+        //Deactivates the alert object
         alert.SetActive(false);
     }
-    //Initializes the start position and arrow for the enemy
+
+    //Initializes the start position, pathing, and arrow for the enemy
     public void Initialize(Vector2Int startPosition, Vector2Int[] path)
     {
         currentPosition = startPosition;
@@ -54,9 +59,11 @@ public class Enemy : MonoBehaviour
         MoveTowardsTarget();
         PointToNextMove();
     }
+
     //Performs the turn for the enemy
     public void PerformTurn()
     {
+        //Chooses the action to perform based on the state
         switch (currentState)
         {
             case GoblinState.Patrol:
@@ -72,8 +79,10 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+    //Enemy patrols through predetermined positions
     public void Patrol()
     {
+        //Chooses the next patrol positon as its next movement location and cycles to the next one
         if (patrolPath != null && patrolPath.Length > 0)
         {
             //Sets to next patrol point and makes footsteps
@@ -87,8 +96,10 @@ public class Enemy : MonoBehaviour
         }
 
     }
+    //Enemey chases the player
     private void ChasePlayer()
     {
+        //If the goblin has not done three turns of chasing
         if (chaseTurnsRemaining > 0)
         {
             Vector2Int targetPosition = player.currentPosition;
@@ -96,6 +107,7 @@ public class Enemy : MonoBehaviour
             Vector3 closestMove = Vector3.zero;
             float closestDistance = float.MaxValue;
 
+            //Chooses from all four directions as sees which one is closest to the player, a valid location, and has not already been traveled on 
             List<Vector2Int> directions = new List<Vector2Int>()
             {
                 new Vector2Int(currentPosition.x + 1, currentPosition.y),
@@ -117,7 +129,7 @@ public class Enemy : MonoBehaviour
                     }
                 }
             }
-
+            //It chooses that space and adds it to the chase path adn sets it as its next movement location
             if (closestMove != Vector3.zero)
             {
                 chasePath.Add(currentPosition); 
@@ -129,8 +141,10 @@ public class Enemy : MonoBehaviour
             chaseTurnsRemaining--;
         }
     }
+    //Enemey returns back to patrolling
     private void ReturnToPatrol()
     {
+        //Goes bacl through the inverse of the chase path step by step untill it returns to where it was before
         if (returnTurnsRemaining > 0 && chasePath.Count > 0)
         {
             Vector2Int returnStep = chasePath[chasePath.Count - 1];
@@ -162,6 +176,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(arrowLocation);
         }
+        //Moves enemy using lerp until it gets extremely close to the desired position
         Vector3 newPosition = new Vector3(currentPosition.x, 1f, currentPosition.y);
         while (Vector3.Distance(transform.position, newPosition) > 0.0001f)
         {
@@ -178,28 +193,37 @@ public class Enemy : MonoBehaviour
         //Once reached, sets animator to not move
         animator.SetBool("IsMoving", false);
         finished = true;
+        //Sets the new positions that are two infront of the goblin
         int oneAhead = (currentPatrolIndex) % patrolPath.Length;
         int twoAhead = (currentPatrolIndex + 1) % patrolPath.Length;
 
         Vector2Int nextTile = patrolPath[oneAhead];
         Vector2Int nextNextTile = patrolPath[twoAhead];
 
+        //Changes states depending on whether the goblin meets the criteria
+        //Goes from Patrol to Chase if the player is within two spaces of the goblin
         if (nextTile == player.currentPosition || nextNextTile == player.currentPosition & currentState == GoblinState.Patrol)
         {
+            //Activates alert to warn player that the goblin is chasing the player
             alert.SetActive(true);
             StartCoroutine(AlertEnding(1f)); 
+            //Changes state to chase
             currentState = GoblinState.Chase;
             chaseTurnsRemaining = 3;
             chasePath.Clear();
             previousPatrolPosition = currentPosition;
         }
+        //Goes from Chase to Return if the goblin has chased for 3 turns
         if (currentState == GoblinState.Chase && chaseTurnsRemaining <= 0)
         {
+            //Changes state to return
             currentState = GoblinState.Return;
             returnTurnsRemaining = 3;
         }
+        //Goes from Return to Patrol if the goblin has returned back to its original spot 
         if (currentState == GoblinState.Return && returnTurnsRemaining <= 0)
         {
+            //Changes state to return
             currentState = GoblinState.Patrol;
         }
         PointToNextMove();
@@ -212,17 +236,18 @@ public class Enemy : MonoBehaviour
    
         switch (currentState)
         {
+            //If in patrol it points to next patrol point
             case GoblinState.Patrol:
                 if (patrolPath != null && patrolPath.Length > 0)
                 {
                     targetPosition = patrolPath[currentPatrolIndex % patrolPath.Length];
                 }
                 break;
-
+            //If in chase it points to next position nearest to the player
             case GoblinState.Chase:
-                targetPosition = ChasebutDontMove().Value;
+                targetPosition = ChasebutDontMove();
                 break;
-
+            //If in return it points to next position in the inverse of the chase path
             case GoblinState.Return:
                 targetPosition = chasePath[chasePath.Count - 1];
                 break;
@@ -230,12 +255,14 @@ public class Enemy : MonoBehaviour
 
         if (targetPosition != Vector2Int.zero)
         {
+            //Gets rid of old arrow
             if (arrowLocation != null)
             {
                 Destroy(arrowLocation); 
             }
             arrowLocation = Instantiate(arrowPrefab, transform.position + Vector3.up, Quaternion.identity);
             Vector3 direction = new Vector3(targetPosition.x - currentPosition.x, 0f, targetPosition.y - currentPosition.y).normalized;
+            //Makes sure old arrow points in correct location
             arrowLocation.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
@@ -267,11 +294,12 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         animator.SetBool("IsAttacking", false);
     }
-    private Vector2Int? ChasebutDontMove()
+    //Does the exact same thing as the Chase Player but doen't move the player in order to determine where the arrow points beforehand
+    private Vector2Int ChasebutDontMove()
     {
         Vector2Int targetPosition = player.currentPosition;
         float closestDistance = float.MaxValue;
-        Vector2Int? bestMove = null;
+        Vector2Int bestMove = Vector2Int.zero;
 
         List<Vector2Int> directions = new List<Vector2Int>()
     {
@@ -296,6 +324,7 @@ public class Enemy : MonoBehaviour
 
         return bestMove;
     }
+    //Waits for a bit before deactivating the alert
     private IEnumerator AlertEnding(float delay)
     {
         yield return new WaitForSeconds(delay);

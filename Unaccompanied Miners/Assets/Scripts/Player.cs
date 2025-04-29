@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f; //Speed of player
     private Vector3 targetPosition; //Next position of player
     private Animator animator; //Animator for the player
-    public Watchtower watchtower;
+    public Watchtower watchtower; //Reference to teh watchtower if the level has any
 
     //Player stats
     public int gemCount; //Gems acquired 
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     private bool isMoving = false; //Bool for whether player is moving
     private bool isMining = false; //Bool for whether player is moving
     public string boardState = ""; //Board state
-    private float boundrySensitivity = .0001f;
+    private float boundrySensitivity = .0001f; //Distance for movement with lerp 
 
     string folderPath; // Path to the GameData folder
     string filePathPlayer; //Path to the Player save file
@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        //Gathers the necessary locations for the files neeeded for gameplay
         folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
@@ -88,7 +89,7 @@ public class Player : MonoBehaviour
     {
         //Handles movment
         MovePlayer();
-        //Handles player inputs for movement, mining, and saving
+        //Handles player inputs for movement, mining, items and saving
         if (!isMoving && enabled && !isMining)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -126,6 +127,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+    //Moves the player
     private void MovePlayer()
     {
         transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime * 2.5f);
@@ -138,6 +140,7 @@ public class Player : MonoBehaviour
             if (isMoving == true)
             {
                 isMoving = false;
+                //If there is a watchtower it only moves when the player does
                 if (watchtower != null && watchtower.gameObject.activeSelf)
                 {
                     watchtower.SwapPosition();
@@ -147,6 +150,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+    //Sees if the player can move
     private void AttemptMove(Vector2Int direction)
     {
         Vector2Int targetPosition = currentPosition + direction;
@@ -256,20 +260,25 @@ public class Player : MonoBehaviour
             //Starts coroutine to end mining animation
             StartCoroutine(miningEnder());
         }
+        //Otherwise stil allows the player to stand still and not move
         else
         {
             StartCoroutine(stillEnder());
         }
     }
+    //Attempts to attack enemy at a specific position
     private void AttemptAttack()
     {
+        //Checks how many knifes the player curently has
         int knifeCount = Items.LoadItemData("Knife");
         if (knifeCount > 0)
         {
+            //Checks to see if any Goblin is in the same location as the player
             foreach (var enemy in turnManager.enemies)
             {
                 if (enemy.currentPosition == currentPosition)
                 {
+                    //If they are use the knife to destroy the goblin and its arrow, lose 1 knife
                     if (Items.UseItem("Knife"))
                     {
                         turnManager.enemies.Remove(enemy);
@@ -280,10 +289,12 @@ public class Player : MonoBehaviour
                     return;  
                 }
             }
+            //Checks to see if any Wolf is in the same location as the player
             foreach (var wolf in turnManager.wolves)
             {
                 if (wolf.currentPosition == currentPosition)
                 {
+                    //If they are use the knife to destroy the wolf, lose 1 knife
                     if (Items.UseItem("Knife"))
                     {
                         turnManager.wolves.Remove(wolf);
@@ -293,16 +304,19 @@ public class Player : MonoBehaviour
                     return;
                 }
             }
-            Debug.Log("No enemies in position");
+            Debug.Log("No enemies here");
         }
         else
         {
-            Debug.Log("No knives available");
+            Debug.Log("No knives");
         }
     }
+    //Attempts to use a healing potion
     void UseHealthPotion()
     {
+        //Checks how many potions the player curently has
         int potionCount = Items.LoadItemData("Potion");
+        //If the player has at least one and is not at full health use it 
         if (potionCount > 0 && health < maxHealth)
         {
             int healAmount = 5;
@@ -393,7 +407,7 @@ public class Player : MonoBehaviour
         //Damage animation is set to false
         animator.SetBool("damaged", false);
     }
-
+    //Coroutine to allow the player to stall
     private IEnumerator stillEnder()
     {
         turnManager.EndPlayerTurn();
@@ -437,12 +451,12 @@ public class Player : MonoBehaviour
         turnManager.EndGame(false, true);
     }
 
-
+    //Gets the current target position
     public Vector3 GetTargetPosition()
     {
         return targetPosition;
     }
-
+    //Sets the current target position
     public void SetTargetPosition(Vector3 newTargetPosition)
     {
         targetPosition = newTargetPosition;

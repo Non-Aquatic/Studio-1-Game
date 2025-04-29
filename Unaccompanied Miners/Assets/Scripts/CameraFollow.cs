@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//Simple script that follows the location of the player
+//Simple script that allows the camera to follow the location of the player
 public class CameraFollow : MonoBehaviour
 {
     int cameraAdjustment = 4;

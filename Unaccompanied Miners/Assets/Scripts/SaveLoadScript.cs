@@ -10,17 +10,17 @@ using UnityEngine.UI;
 
 public class SaveLoadScript : MonoBehaviour
 {
-    public Player player;
+    public Player player; //Reference to the Player
     public string boardState = ""; //Board state
     string folderPath; // Path to the GameData folder
     string filePathPlayer; //Path to the Player save file
     string filePathBoard; //Path to the level save file
-    string lvlPath;
+    string lvlPath; //Path to the premade level file
 
     public BoardManager boardManager;
     private String sceneName; //Current scene name
-    public int quota = 0;
-    int gemsSaved = 0;
+    public int quota = 0; //Current player quota
+    int gemsSaved = 0; //Current gems aquired
     string savedLevel = ""; //Name of saved level
 
     //2D array for the grid layout of the game
@@ -57,6 +57,7 @@ public class SaveLoadScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Grabs the locations of the files and the scene name
         folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         sceneName = SceneManager.GetActiveScene().name;
 
@@ -64,6 +65,7 @@ public class SaveLoadScript : MonoBehaviour
         filePathPlayer = folderPath + "\\PlayerData.txt";
         filePathBoard = folderPath + "\\LevelData.txt";
 
+        //Creates new files if none are found
         if (!File.Exists(filePathPlayer))
         {
             Debug.LogError("No Player Data Found, creating new one");
@@ -78,7 +80,7 @@ public class SaveLoadScript : MonoBehaviour
             temp.Close();
             filePathBoard = Path.Combine(folderPath, "LevelData.txt");
         }
-
+        //If in main menu gets reference to button, else gets the reference to the player
         if (sceneName == "Main Menu")
         {
             //player = new Player();
@@ -169,7 +171,7 @@ public class SaveLoadScript : MonoBehaviour
 
     void ReadFile()
     {
-
+        //Gathers the information from the scene and the files
         sceneName = SceneManager.GetActiveScene().name;
         FileInfo fileInfoPlayer = new FileInfo(filePathPlayer);
         FileInfo fileInfoBoard = new FileInfo(filePathBoard);
@@ -192,15 +194,17 @@ public class SaveLoadScript : MonoBehaviour
         //Reads saved player position from file if avaliable
         string line1Level = ReadLine(filePathBoard, 1);
 
-        //If position is not saved, start at (0, 0)
+        //If position is not saved, places players at predetermined locations
         if (line1Level == null || savedLevel != sceneName)
         {
+            //If it is the tutorials, start at (3, 7)
             if (sceneName == "Tutorial 1" || sceneName == "Tutorial 2")
             {
                 player.currentPosition = new Vector2Int(3, 7);
                 player.SetTargetPosition(new Vector3(player.currentPosition.x, 1f, player.currentPosition.y));
                 transform.position = player.GetTargetPosition();
             }
+            //If it is any other level, start at (0, 1)
             else
             {
                 player.currentPosition = new Vector2Int(0, 1);
@@ -273,7 +277,7 @@ public class SaveLoadScript : MonoBehaviour
         {
             quota = 35;
         }
-
+        //Gathers information from the board manager and saves it 
         boardManager.sceneName = sceneName;
         boardManager.quota = quota;
         boardManager.gemsSaved = gemsSaved;
@@ -310,8 +314,10 @@ public class SaveLoadScript : MonoBehaviour
         }
         return null;
     }
+    //Reads the entire board from a file
     void ReadBoard(FileInfo levelData)
     {
+        //If you go into a different level or there is no data in the levelData, load the default level information
         if (levelData.Length == 0 || savedLevel != sceneName)
         {
             /*//Default grid layout for level one
@@ -378,6 +384,7 @@ public class SaveLoadScript : MonoBehaviour
                 };
             }*/
             //string loadingScene = PlayerPrefs.GetString(currentScene);
+            //Chooses which file to read based on the scene name
             switch (sceneName)
             {
                 case "Tutorial 1":
@@ -401,7 +408,7 @@ public class SaveLoadScript : MonoBehaviour
                 default:
                     break;
             }
-
+            //Reads the level layout and builds the grid layout
             using (StreamReader reader = new StreamReader(lvlPath))
             {
                 string line;
@@ -461,6 +468,7 @@ public class SaveLoadScript : MonoBehaviour
         }
 
     }
+    //Saves the current board state into a file
     public void SaveBoard(Vector2Int position)
     {
         boardState = string.Empty;

@@ -5,18 +5,22 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//Script for the ending screen
 public class Finale : MonoBehaviour
 {
+    // Reference to text and main menu button
     public TMP_Text textMesh;
     public Button mainMenu;
 
+    //Data fro the text
     Mesh mesh;
-
     Vector3[] vertices;
 
+    //Length of words in the text
     List<int> wordIndexes;
     List<int> wordLengths;
 
+    //Gradient in order to make it rainbow
     public Gradient rainbow;
 
     void Start()
@@ -34,15 +38,16 @@ public class Finale : MonoBehaviour
         mainMenu.onClick.AddListener(MainMenu);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Grabs the mesh data from the text and places the color within it
         textMesh.ForceMeshUpdate();
         mesh = textMesh.mesh;
         vertices = mesh.vertices;
 
         Color[] colors = mesh.colors;
 
+        //For every word garbs each letter and applys a rainbow affect on all 4 vertices (saw it online)
         for (int w = 0; w < wordIndexes.Count; w++)
         {
             int wordIndex = wordIndexes[w];
@@ -59,10 +64,12 @@ public class Finale : MonoBehaviour
                 colors[index + 3] = rainbow.Evaluate(Mathf.Repeat(Time.time + vertices[index + 3].x * 0.001f, 1f));
             }
         }
+        //Sets the mesh with rainbow coloring
         mesh.vertices = vertices;
         mesh.colors = colors;
         textMesh.canvasRenderer.SetMesh(mesh);
     }
+    //Method to take the player back to the main menu
     public void MainMenu()
     {
         SceneManager.LoadScene("Main Menu");

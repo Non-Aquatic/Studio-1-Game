@@ -24,8 +24,9 @@ public class BoardManager : MonoBehaviour
     public int gemsSaved = 0; //Number of gems saved
     //string savedLevel = ""; //Name of saved level
 
+    //Paths to the save file
     string folderPath;
-    string filePathPlayer; //Path to the save file
+    string filePathPlayer; 
     string filePathBoard;
 
     //2D array for the grid layout of the game
@@ -57,6 +58,7 @@ public class BoardManager : MonoBehaviour
     //    { 1, 1, 1, 2, 1, 1, 1 }
     //};
 
+    //2D array for the grid
     public int[,] gridLayout;
 
 
@@ -210,6 +212,7 @@ public class BoardManager : MonoBehaviour
         #endregion
     }
 
+    //Sets the grid layout to the grid when loading in
     public void SetGrid(int[,] newGrid)
     {
         gridLayout = newGrid;
@@ -227,19 +230,23 @@ public class BoardManager : MonoBehaviour
             {
                 GameObject tilePrefab;
                 // Choose the correct tile prefab for each space based on gridLayout values
+                //1 is normal walkable tiles
                 if (gridLayout[y, x] == 1)
                 {
                     tilePrefab = traversableTilePrefab;
                 }
+                //2 is minable tiles
                 else if (gridLayout[y, x] == 2)
                 {
                     gemSpaces++;
                     tilePrefab = miningTilePrefab; 
                 }
+                //3 is saving tiles
                 else if (gridLayout[y, x] == 3)
                 {
                     tilePrefab = saveTilePrefab;
                 }
+                //All of others or 0 are unwalkable tiles
                 else
                 {
                     tilePrefab = nonTraversableTilePrefab;
@@ -266,7 +273,7 @@ public class BoardManager : MonoBehaviour
         }
 
         gemSpacesLeft = gemSpaces;
-        // Assign gems to mining tiles randomly
+        // Assign gems to mining tiles randomly depending on the amount of gem tiles there are 
         gemCounts = new int[gridLayout.GetLength(0), gridLayout.GetLength(1)];
         for (int y = 0; y < gemCounts.GetLength(0); y++)
         {
@@ -300,10 +307,6 @@ public class BoardManager : MonoBehaviour
                 }
             }
         }
-
-        //string temp = 
-
-
     }
     //Replaces the tiles at specific locations
     //For example: if a Gem node runs out of gems it becomes a regular one

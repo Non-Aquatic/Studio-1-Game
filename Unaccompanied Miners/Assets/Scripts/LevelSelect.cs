@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class LevelSelect : MonoBehaviour
 {
+    //References to all 4 level buttons, the main menu button, and the shop button
     public Button l1Button;
     public Button l2Button;
     public Button l3Button;
@@ -14,6 +15,7 @@ public class LevelSelect : MonoBehaviour
     public Button mainMenuButton;
     public Button shopButton;
 
+    //Adds listeners to all buttons as sees the highest level the player has beaten
     void Start()
     {
         l4Button.onClick.AddListener(GoToL4);
@@ -25,6 +27,8 @@ public class LevelSelect : MonoBehaviour
         CheckLevelProgress();
 
     }
+    //Checks the highest level the player has beaten and unlocks all up to +1 of that leevl
+    //For example: If the player has beaten level 2 then levels 1,2,3 are unlocked but not level 4
     void CheckLevelProgress()
     {
 
@@ -35,6 +39,7 @@ public class LevelSelect : MonoBehaviour
         l3Button.interactable = (maxLevelCompleted >= 2);
         l4Button.interactable = (maxLevelCompleted >= 3);
     }
+    //Methods to travel to all levels
     void GoToL1()
     {
         SceneManager.LoadScene("Level 1");
@@ -53,11 +58,12 @@ public class LevelSelect : MonoBehaviour
     {
         SceneManager.LoadScene("Level 4");
     }
-
+    //Method to go to main menu
     void ReturnToMenu()
     {
         SceneManager.LoadScene("Main Menu");
     }
+    //Method to go to the shop
     void Shop()
     {
         SceneManager.LoadScene("Shop");

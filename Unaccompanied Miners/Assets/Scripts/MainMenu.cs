@@ -35,10 +35,12 @@ public class MainMenu : MonoBehaviour
         folderPath = Path.Combine(Application.persistentDataPath, "GameData");
         filePathPlayer = Path.Combine(folderPath, "PlayerData.txt");
         filePathBoard = Path.Combine(folderPath, "LevelData.txt");
+        //If the folder doesn't exist the game creates it
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath); 
         }
+        //If the player file doesn't exist the game creates it
         if (!File.Exists(filePathPlayer))
         {
             using(FileStream fs = File.Create(filePathPlayer))
@@ -46,7 +48,7 @@ public class MainMenu : MonoBehaviour
 
             }
         }
-
+        //If the board file doesn't exist the game creates it
         if (!File.Exists(filePathBoard))
         {
             using (FileStream fs = File.Create(filePathBoard))
@@ -75,7 +77,7 @@ public class MainMenu : MonoBehaviour
     //Starts a new game
     void NewGame()
     {
-        //Clears save file and loads first level
+        //Clears save file and loads first tutorial level
         string emptyString = "";
         string currentScene = "Tutorial 1";
         File.WriteAllText(filePathPlayer, emptyString);
