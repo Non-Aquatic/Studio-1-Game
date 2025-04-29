@@ -16,9 +16,9 @@ public class UserInterface : MonoBehaviour
     int quota = 1; //Initial quota value
     int playerHealth = 0; //Player health
     public TMP_Text gems; //Text to show the number of gems the player has collected
-    public TMP_Text knifes;
-    public TMP_Text potions;
-    public TMP_Text shields;
+    public TMP_Text knifes;//Text to show the number of knifes the player has 
+    public TMP_Text potions;//Text to show the number of potions the player has 
+    public TMP_Text shields;//Text to show the number of shields the player has 
     public TMP_Text level; //Text to show the current level's name
     public TMP_Text winText; //Text to show when the player wins
     //public TMP_Text loseText;
@@ -74,7 +74,8 @@ public class UserInterface : MonoBehaviour
     public Button menuButton;
     bool hasDied = false; //Bool to check if the player has died
 
-    string folderPath; //Path to the save file
+    //Path to the save file
+    string folderPath; 
     string filePathPlayer;
     string filePathBoard;
     private SaveLoadScript saveScript;
@@ -99,7 +100,7 @@ public class UserInterface : MonoBehaviour
         SetQuota();
         quotaText.text = "Quota: " + quota.ToString();
 
-        //Shows tutorial if it is level 1
+        //Shows tutorial if it is tutorial 1 or 2
         if(SceneManager.GetActiveScene().name == "Tutorial 1")
         {
             tutPanel.SetActive(true);
@@ -280,7 +281,7 @@ public class UserInterface : MonoBehaviour
         //Disables player input
         playerScript.enabled = false;
         Debug.Log(sceneName);
-        //If Tutorial 1, saves and loads level 1 after 10 seconds
+        //If Tutorial 1, saves and loads tutorial 2 after 10 seconds
         if (sceneName == "Tutorial 1")
         {
             string emptyString = "";
@@ -296,6 +297,7 @@ public class UserInterface : MonoBehaviour
             File.WriteAllText(filePathBoard, emptyString);
             Invoke("LoadLevel2", 10);
         }*/
+        //If any other level, saves and loads level select after 10 seconds
         if (sceneName != "Tutorial 1")
         {
             string emptyString = "";
@@ -303,7 +305,7 @@ public class UserInterface : MonoBehaviour
             File.WriteAllText(filePathBoard, emptyString);
             Invoke("LoadLevelSelect", 10);
         }
-        //If level 2, goes back to main menu after 10 seconds
+        //If not a tutorial level,sets the max level completed to that level
         if (sceneName != "Tutorial 1" || sceneName != "Tutorial 2")
         {
             string[] levelmax = sceneName.Split(' ');
@@ -332,10 +334,12 @@ public class UserInterface : MonoBehaviour
     {
         SceneManager.LoadScene("Level 2");
     }
+    //Loads tutorial 2
     void LoadTutorial2()
     {
         SceneManager.LoadScene("Tutorial 2");
     }
+    //Loads level select
     void LoadLevelSelect()
     {
         SceneManager.LoadScene("LevelSelect");
@@ -357,7 +361,7 @@ public class UserInterface : MonoBehaviour
         pausePanel.SetActive(false);
         quitConfirmPanel.SetActive(true);
     }
-    //Closes the tutorial
+    //Closes the each of the tutorial prompts
     void CloseTutorial()
     {
         tutPanel.SetActive(false);

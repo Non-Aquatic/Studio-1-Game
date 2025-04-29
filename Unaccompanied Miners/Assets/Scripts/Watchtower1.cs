@@ -16,6 +16,7 @@ public class Watchtower1 : MonoBehaviour
     public GameObject Spotlight2;
     public GameObject Spotlight3;
 
+    //Different positions for spotlight indicator
     public GameObject Spotlight0Soft;
     public GameObject Spotlight1Soft;
     public GameObject Spotlight2Soft;
@@ -32,7 +33,7 @@ public class Watchtower1 : MonoBehaviour
 
     public void Start()
     {
-        //Sets all goblin and spotlight positions to be inactive
+        //Sets all goblin, spotlight, and spotlight indicator positions to be inactive
         Goblin3.SetActive(false);
         Spotlight3.SetActive(false);
         Spotlight0Soft.SetActive(false);
@@ -87,56 +88,56 @@ public class Watchtower1 : MonoBehaviour
             SwapTo0();
         }
     }
-    //Switches to spot 0 for goblin and spotlight
+    //Switches to spot 0 for Goblin, spotlight, and spotlight indicator
     public void SwapTo0()
     {
-        //Deactivates goblin and spotlight 3
+        //Deactivates goblin 3, spotlight 3, and spotlight indicator 0
         Goblin3.SetActive(false);
         Spotlight3.SetActive(false);
         Spotlight0Soft.SetActive(false);
-        //Activates goblin and spotlight 0
+        //Activates goblin 0, spotlight 0, and spotlight indicator 1
         Goblin0.SetActive(true);
         Spotlight0.SetActive(true);
         Spotlight1Soft.SetActive(true);
         //Sets current position to 0
         currentSpot = 0;
     }
-    //Switches to spot 1 for goblin and spotlight
+    //Switches to spot 1 for Goblin, spotlight, and spotlight indicator
     public void SwapTo1()
     {
-        //Deactivates goblin and spotlight 0
+        //Deactivates goblin 0, spotlight 0, and spotlight indicator 1
         Goblin0.SetActive(false);
         Spotlight0.SetActive(false);
         Spotlight1Soft.SetActive(false);
-        //Activates goblin and spotlight 1
+        //Activates goblin 1, spotlight 1, and spotlight indicator 2
         Goblin1.SetActive(true);
         Spotlight1.SetActive(true);
         Spotlight2Soft.SetActive(true); ;
         //Sets current position to 1
         currentSpot = 1;
     }
-    //Switches to spot 2 for goblin and spotlight
+    //Switches to spot 2 for Goblin, spotlight, and spotlight indicator
     public void SwapTo2()
     {
-        //Deactivates goblin and spotlight 1
+        //Deactivates goblin 1, spotlight 1, and spotlight indicator 2
         Goblin1.SetActive(false);
         Spotlight1.SetActive(false);
         Spotlight2Soft.SetActive(false);
-        //Activates goblin and spotlight 2
+        //Activates goblin 2, spotlight 2, and spotlight indicator 3
         Goblin2.SetActive(true);
         Spotlight2.SetActive(true);
         Spotlight3Soft.SetActive(true);
         //Sets current position to 2
         currentSpot = 2;
     }
-    //Switches to spot 3 for goblin and spotlight
+    //Switches to spot 3 for Goblin, spotlight, and spotlight indicator
     public void SwapTo3()
     {
-        //Deactivates goblin and spotlight 2
+        //Deactivates goblin 2, spotlight 2, and spotlight indicator 3
         Goblin2.SetActive(false);
         Spotlight2.SetActive(false);
         Spotlight3Soft.SetActive(false);
-        //Activates goblin and spotlight 3
+        //Activates goblin 3, spotlight 3, and spotlight indicator 0
         Goblin3.SetActive(true);
         Spotlight3.SetActive(true);
         Spotlight0Soft.SetActive(true);
