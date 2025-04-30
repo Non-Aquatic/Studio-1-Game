@@ -10367,7 +10367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnManager: {fileID: 2100091460}
   enemyPrefab: {fileID: 8676704902230241825, guid: 38be24e4fba1bc74880a6f5be04d52ee, type: 3}
-  wolfPrefab: {fileID: 0}
+  wolfPrefab: {fileID: 1929053639654477192, guid: bf1445c79c63db24b892e6d6459dc4ec, type: 3}
   level: 
   file: 
   audioPlayersModulo: 3

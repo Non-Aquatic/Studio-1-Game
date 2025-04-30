@@ -166,6 +166,7 @@ public class Watchtower : MonoBehaviour
         //If the player calls turn manager to do anything, switch to the next spot
         if (player.turnManager.IsInvoking())
         {
+            
             SwapPosition();
         }
         //Check the current spotlight damage zones
